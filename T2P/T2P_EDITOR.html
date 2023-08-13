@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ru" class="scrolled" style="background:#000;margin:0px;height:100%;width:100%;font-family: 'Open Sans', sans-serif;">
+<head>
+	<meta charset="UTF-8">
+	<title>T2P editor</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAeAB4AAD/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAEAAAAAAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD8+6K3bfT4THBHHa6bNJJHCwaaaXLb/LVixSUBcSSYA29FbJyvzPg0i1vTHcRwWuw7iIFlP7yPCkOyGbcGA8xSokADqgzjcxAOforoJdJtP7TX9zDGrGKGOL5sNJIWA81fOYqBsbO2ToYzjqDDNY295pKutvZ20ki7w8bvtHyb8AtM27AyrAopVuhODkAh8PT29jG032qC3uvNT5ZvNCFFeOQY8tGJJZMckYA6EkFSwGn217Mqzw+SrxmNrhXYOu1ty5WM5IYqQWjwdgJUcqcuigDo5LvS/t1tcrdxia1kV40TKxEgg5bZbRleg5CsWxj5cA1naldQ2+mQ29rcWsm5dk/kQlQwUJglmjV/mYFiuWGQDxwBm0UAf//Z" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="apple-touch-icon" sizes="180x180" href="/icon.jpg">
+	<meta name="theme-color" content="#222"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content='true' name='HandheldFriendly'/>
+	<meta content='800' name='MobileOptimized'/>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="description" content="Сборник пректов для студентов">
+	<meta name="keywords" content="ИТМО, СППО, ВТ">
+	<meta name="author" content="T">
+	<meta http-equiv="Cache-Control" content="public, max-age=86400">
+	<style>
+	body {
+		margin:0px;
+		height:100%;
+		width:100%;
+		color: #fff;
+	}
+	.scrolled::-webkit-scrollbar {
+		width: 5px;
+		height: 5px; 
+		cursor:pointer;
+	}
+	
+	.scrolled::-webkit-scrollbar-track {
+		background: #fff2;
+		border-radius: 2px;
+	}
+	
+	.scrolled::-webkit-scrollbar-thumb {
+		background-color: #fff;
+		border-radius: 2px;
+		border: 0px;
+	}
+	.bodydiv {
+		margin: 5px;
+		border-radius: 5px;
+		background:#222;
+		border: 1px solid #fff2;
+		overflow: auto;
+	}
+	.btnMenu {
+		cursor: pointer;
+		color: #fff;
+		/*border: 0;*/
+		padding: 4px 0px;
+		font-size: 16px;
+		height:100%;
+		width:calc(50% - 4px);
+		/*background-color: inherit;*/
+		
+		margin: 5px;
+		border-radius: 5px;
+		background: #222;
+		border: 1px solid #fff2;
+	}
+	button.btnMenu.btnMenuActive {
+		background-color: #87e;
+		border-radius: 5px;
+	}
+	button.btnMenu.btnMenuActive:hover {
+		background-color: #98f;
+	}
+	button.btnMenu.btnMenuActiveble:active {
+		background-color: #98f;
+		border-radius: 5px;
+	}
+	.btnMenu:hover {
+		background-color: #aaa2;
+	}
+	.selectedMenu {
+		background-color: #0F01;
+	}
+	.divlable {
+		margin: 0;
+		text-align: center;
+		font-size: 20px;
+		border-bottom: 1px solid #fff2;
+		padding: 6px;
+		height: 23px;
+	}
+	.target_input, .target_output {
+		position: absolute;
+		top: 36px;
+		left: 0px;
+		right: 0px;
+		bottom:0px;
+		overflow: auto;
+	}
+	.istext input {
+		border-radius: 3px;
+		margin: 5px;
+		width: calc(100% - 18px);
+		color: #FFF;
+		box-shadow: 0px 0px 0 3px #0006;
+		background: #0003;
+	}
+	.ishtml input {
+		border-radius: 3px;
+		margin: 1px;
+		width: 32px;
+		color: #FFF;
+		box-shadow: 0px 0px 0 3px #0006;
+		background: #0003;
+	}
+	.target_input textarea, .target_output textarea {
+		margin: 5px;
+		width: calc(100% - 18px);
+		height: calc(100% - 18px);
+		color: #FFF;
+		box-shadow: 0px 0px 0 3px #0006;
+		background: #0003;
+	}
+	.target_input pre, .target_output pre {
+		margin: 5px;
+		display: inline-block;
+		
+	}
+	.target_input select {
+		margin: 1px;
+		background: #0003;
+		color: #FFF;
+		border-radius: 3px;
+		padding: 3px;
+		box-shadow: 0px 0px 0 3px #0006;
+	}
+	.target_input option {
+		background: #222;
+		color: #FFF;
+	}
+	.target_input.istext textarea {
+		width: calc(100% - 20px);
+		height: calc(100% - 20px);
+	}
+	/*istext ishtml geln inline_pre*/
+	</style>
+	
+	<link rel="stylesheet" type="text/css" href="LIB/codemirror.css">
+	<link rel="stylesheet" type="text/css" href="LIB/codemirror_lib/show-hint.css">
+	<link rel="stylesheet" type="text/css" href="LIB/codemirror_lib/night.css">
+	<link rel="stylesheet" type="text/css" href="LIB/codemirror_lib/lint.css">
+	
+	<script src="LIB/mathjax.js?v=1"></script>
+	<script src="LIB/purify.js?v=1"></script>
+	<script src="LIB/codemirror.js?v=1"></script>
+	<script src="LIB/codemirror_lib/javascript.js?v=1"></script>
+	<script src="LIB/codemirror_lib/python.js?v=1"></script>
+	<script src="LIB/codemirror_lib/show-hint.js?v=1"></script>
+	<script src="LIB/codemirror_lib/jshint.js?v=1"></script>
+	<script src="LIB/codemirror_lib/javascript-hint.js?v=1"></script>
+	<script src="LIB/codemirror_lib/lint.js?v=1"></script>
+	<script src="LIB/codemirror_lib/javascript-lint.js?v=1"></script>
+	
+	<script src="LIB/jspdf.min.js?v=1"></script>
+	<script src="LIB/linker.js?v=1"></script>
+	<script src="LIB/jspdf_lib/jspdf.plugin.autotable.min.js?v=1"></script>
+	
+	<script src="LIB/linker_lib/brython.js?v=1"></script>
+	<script src="LIB/JSZip.js?v=1"></script>
+	
+	<script type="text/javascript">
+		var system_output = { out: (s)=>{}, err: (s)=>{} };
+		var in_sandbox = false;
+		MathJax.Hub.processSectionDelay=0;
+		
+		function findGetParameter(parameterName) {
+			var result = '', tmp = [];
+			location.search
+				.substr(1)
+				.split("&")
+				.forEach(function (item) {
+					tmp = item.split("=");
+					if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+				});
+			return result;
+		}
+		var Base64 = {
+
+			// private property
+			_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+			// public method for encoding
+			encode : function (input) {
+				var output = "";
+				var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+				var i = 0;
+
+				input = Base64._utf8_encode(input);
+
+				while (i < input.length) {
+
+					chr1 = input.charCodeAt(i++);
+					chr2 = input.charCodeAt(i++);
+					chr3 = input.charCodeAt(i++);
+
+					enc1 = chr1 >> 2;
+					enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+					enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+					enc4 = chr3 & 63;
+
+					if (isNaN(chr2)) {
+						enc3 = enc4 = 64;
+					} else if (isNaN(chr3)) {
+						enc4 = 64;
+					}
+
+					output = output +
+					this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
+					this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
+				}
+				return output;
+			},
+
+			// public method for decoding
+			decode : function (input) {
+				var output = "";
+				var chr1, chr2, chr3;
+				var enc1, enc2, enc3, enc4;
+				var i = 0;
+
+				input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+				while (i < input.length) {
+
+					enc1 = this._keyStr.indexOf(input.charAt(i++));
+					enc2 = this._keyStr.indexOf(input.charAt(i++));
+					enc3 = this._keyStr.indexOf(input.charAt(i++));
+					enc4 = this._keyStr.indexOf(input.charAt(i++));
+
+					chr1 = (enc1 << 2) | (enc2 >> 4);
+					chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+					chr3 = ((enc3 & 3) << 6) | enc4;
+
+					output = output + String.fromCharCode(chr1);
+
+					if (enc3 != 64) {
+						output = output + String.fromCharCode(chr2);
+					}
+					if (enc4 != 64) {
+						output = output + String.fromCharCode(chr3);
+					}
+				}
+
+				output = Base64._utf8_decode(output);
+
+				return output;
+			},
+
+			// private method for UTF-8 encoding
+			_utf8_encode : function (string) {
+				string = string.replace(/\r\n/g,"\n");
+				var utftext = "";
+
+				for (var n = 0; n < string.length; n++) {
+
+					var c = string.charCodeAt(n);
+
+					if (c < 128) {
+						utftext += String.fromCharCode(c);
+					}
+					else if((c > 127) && (c < 2048)) {
+						utftext += String.fromCharCode((c >> 6) | 192);
+						utftext += String.fromCharCode((c & 63) | 128);
+					}
+					else {
+						utftext += String.fromCharCode((c >> 12) | 224);
+						utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+						utftext += String.fromCharCode((c & 63) | 128);
+					}
+				}
+				return utftext;
+			},
+
+			// private method for UTF-8 decoding
+			_utf8_decode : function (utftext) {
+				var string = "";
+				var i = 0;
+				var c = c1 = c2 = 0;
+
+				while ( i < utftext.length ) {
+
+					c = utftext.charCodeAt(i);
+
+					if (c < 128) {
+						string += String.fromCharCode(c);
+						i++;
+					}
+					else if((c > 191) && (c < 224)) {
+						c2 = utftext.charCodeAt(i+1);
+						string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+						i += 2;
+					}
+					else {
+						c2 = utftext.charCodeAt(i+1);
+						c3 = utftext.charCodeAt(i+2);
+						string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+						i += 3;
+					}
+				}
+				return string;
+			}
+		}
+		
+		function stringify(obj) {
+			let result = '';
+			if (Array.isArray(obj)) {
+				result += '[';
+				for (let i = 0; i < obj.length; i++) {
+					result += stringify(obj[i]) + ',';
+				}
+				if (result.length > 1) {
+					result = result.slice(0, -1);
+				}
+				result += ']';
+			} else if (typeof obj === 'object' && obj !== null) {
+				result += '{';
+				for (let key in obj) {
+					if (obj.hasOwnProperty(key)) {
+						result += '"' + key + '":' + stringify(obj[key]) + ',';
+					}
+				}
+				if (result.length > 1) {
+					result = result.slice(0, -1);
+				}
+				result += '}';
+			} else {
+				result += typeof obj === 'string' ? '"' + obj + '"' : String(obj);
+			}
+			return result;
+		}
+		
+		function __load_file(URL, callback) {
+			fetch(URL, {}).then((response) => response.text()).then((t) => {
+						callback(t);
+					});
+		}
+		
+		function __onload() {
+			__load_file('T2P_scripts/'+findGetParameter('id').padStart(6,'0')+'.js?v='+(+new Date()), (x) => {
+				load3();
+				load2();
+				myCodeMirror.setValue(x);
+				myCodeMirror.performLint();
+				addEventListener("resize", __resize);
+				addEventListener("resize", ()=>{[myCodeMirror,printCM].map(e=>e.refresh());});
+				[myCodeMirror,printCM].map(e=>e.refresh());
+				__resize();
+				setInterval(__resize,1000);
+			});
+		}
+		
+		function __resize() {
+			var h = document.body.clientWidth;
+			if (h>600) {
+				if (current_layout != 0)
+					set_layout(0);
+			} else if (current_layout == 0) {
+				set_layout(1);
+			}
+			
+		}
+		
+		var current_layout = 0;
+		
+		function set_layout(layout) {
+			var body_open_editor_btn = document.getElementById('body_open_editor_btn');
+			var body_open_IO_btn = document.getElementById('body_open_IO_btn');
+			var body_setup_btn = document.getElementById('body_setup_btn');
+			var body_publish_btn = document.getElementById('body_publish_btn');
+			var body_editor_div = document.getElementById('body_editor_div');
+			var body_print_div = document.getElementById('body_print_div');
+			var body_right_div = document.getElementById('body_right_div');
+			var input_div = document.getElementById('input_div');
+			var output_div = document.getElementById('output_div');
+			
+			if (layout == 0) {
+				current_layout = 0;
+				body_open_editor_btn.style.display = 'none';
+				body_open_IO_btn.style.display = 'none';
+				
+				body_setup_btn.style.display = '';
+				body_setup_btn.style.borderRadius = '0 0 5px 0';
+				body_setup_btn.style.borderLeft = '0';
+				body_setup_btn.style.borderRight = '';
+				body_setup_btn.style.left = '0';
+				body_setup_btn.style.right = '';
+				body_setup_btn.style.marginLeft = '0';
+				body_setup_btn.style.width = 'calc(25% - 5px)';
+				
+				body_publish_btn.style.display = '';
+				body_publish_btn.style.left = 'calc(25% + 5px)';
+				body_publish_btn.style.right = '';
+				body_publish_btn.style.marginRight = '';
+				body_publish_btn.style.width = 'calc(25% - 10px)';
+				body_publish_btn.style.borderRight = '';
+				body_publish_btn.style.borderRadius = '0 0 5px 5px';
+				
+				body_editor_div.style.display = '';
+				body_editor_div.style.borderRadius = '0px 5px 5px 0px';
+				body_editor_div.style.width = 'calc(50% - 5px)';
+				
+				body_print_div.style.display = '';
+				body_print_div.style.borderRadius = '0 5px 0 0';
+				body_print_div.style.width = 'calc(50% - 5px)';
+				
+				body_right_div.style.display = '';
+				body_right_div.style.top = '0';
+				body_right_div.style.width = 'calc(50% - 5px)';
+				
+				input_div.style.borderRadius = '0 0 0 5px';
+				input_div.style.borderTop = '0';
+				input_div.style.borderLeft = '';
+				
+				output_div.style.borderRadius = '5px 0 0 0';
+				
+				myCodeMirror.refresh();
+			} else if (layout == 1) {
+				current_layout = 1;
+				body_open_editor_btn.style.display = '';
+				body_open_IO_btn.style.display = 'none';
+				
+				body_setup_btn.style.display = '';
+				body_setup_btn.style.borderRadius = '0 0 0 5px';
+				body_setup_btn.style.borderLeft = '';
+				body_setup_btn.style.borderRight = '0px';
+				body_setup_btn.style.left = '';
+				body_setup_btn.style.right = '0';
+				body_setup_btn.style.marginLeft = '';
+				body_setup_btn.style.marginRight = '0';
+				body_setup_btn.style.width = 'calc(50% - 5px)';
+				
+				body_publish_btn.style.display = 'none';
+				body_publish_btn.style.left = 'calc(25% + 5px)';
+				body_publish_btn.style.right = '';
+				body_publish_btn.style.marginRight = '';
+				body_publish_btn.style.borderRadius = '0 0 5px 5px';
+				body_publish_btn.style.borderRight = '';
+				body_publish_btn.style.width = 'calc(25% - 10px)';
+				
+				body_editor_div.style.display = 'none';
+				body_editor_div.style.borderRadius = '0px 5px 5px 0px';
+				body_editor_div.style.width = 'calc(50% - 5px)';
+				
+				body_print_div.style.display = 'none';
+				body_print_div.style.borderRadius = '0 5px 0 0';
+				body_print_div.style.width = 'calc(50% - 5px)';
+				
+				body_right_div.style.display = '';
+				body_right_div.style.top = '34px';
+				body_right_div.style.width = '100%';
+				
+				input_div.style.borderRadius = '0 0 0 0';
+				input_div.style.borderTop = '';
+				input_div.style.borderLeft = '0';
+				
+				output_div.style.borderRadius = '0 0 0 0';
+			} else {
+				current_layout = 2;
+				body_open_editor_btn.style.display = 'none';
+				body_open_IO_btn.style.display = '';
+				
+				body_setup_btn.style.display = '';
+				body_setup_btn.style.display = 'none';
+				
+				body_publish_btn.style.display = '';
+				body_publish_btn.style.left = '';
+				body_publish_btn.style.right = '0';
+				body_publish_btn.style.marginRight = '0';
+				body_publish_btn.style.width = 'calc(50% - 5px)';
+				body_publish_btn.style.borderRadius = '0 0 0 5px';
+				body_publish_btn.style.borderRight = '0px';
+				
+				body_editor_div.style.display = '';
+				body_editor_div.style.borderRadius = '0 0 0 0';
+				body_editor_div.style.width = '100%';
+				
+				body_print_div.style.display = '';
+				body_print_div.style.borderRadius = '0 0 0 0';
+				body_print_div.style.width = '100%';
+				
+				body_right_div.style.display = 'none';
+				
+				myCodeMirror.refresh();
+			}
+		}
+		
+	</script>
+</head>
+<body onload="__onload();">
+	<!--<div class="scrolled">
+	</div>-->
+	<button id="body_open_editor_btn" class="btnMenu btnMenuActiveble" style="display:none;position:absolute;top:0;left:0;height:25px;width:calc(50% - 5px);margin-top:0;margin-left:0;border-top: 0;border-left: 0;border-radius:0 0 5px 0;padding-left: 3px;" onclick="set_layout(2);">editor</button>
+	<button id="body_open_IO_btn" class="btnMenu btnMenuActiveble" style="display:none;position:absolute;top:0;left:0;height:25px;width:calc(50% - 5px);margin-top:0;margin-left:0;border-top: 0;border-left: 0;border-radius:0 0 5px 0;padding-left: 3px;" onclick="set_layout(1);">IO</button>
+	
+	<button id="body_setup_btn" class="btnMenu btnMenuActiveble" style="position:absolute;top:0;left:0;height:25px;width:calc(25% - 5px);margin-top:0;margin-left:0;border-top: 0;border-left: 0;border-radius:0 0 5px 0;padding-left: 3px;" onclick="location.href='T2P.html'">home</button>
+	<button id="body_publish_btn" class="btnMenu btnMenuActiveble" style="position:absolute;top:0;left:calc(25% + 5px);height:25px;width:calc(25% - 10px);margin-top:0;margin-left:0;border-top: 0;border-radius:0 0 5px 5px;padding-left: 3px;" onclick="location.href='https://github.com/205826/205826.github.io';">publish</button>
+	<div id="body_editor_div" class="bodydiv" style="position:absolute;top:29px;left:0;height:calc(80% - 22.5px);width:calc(50% - 5px);margin-left:0;border-left: 0;border-radius:0 5px 5px 0;">
+		<textarea id="myTextarea" style="height:100%;width:100%"></textarea>
+		<script>
+			var myCodeMirror;
+			var myGlobalScope;
+			function load2() {
+				myGlobalScope = {};
+				var __HtmlState = {input:'noinit',output:'noinit'};
+				CodeMirror.registerHelper("lint", "python", (s)=>{
+								var err = updateMyGlobalScope(s);
+								if (myCodeMirror && myCodeMirror.setOption) 
+									myCodeMirror.setOption('hintOptions', {globalScope: myGlobalScope});
+								var myGlobals={};
+								Object.keys(myGlobalScope).map(x=>{myGlobals[x] = false});
+								return err||[];
+							});
+				myCodeMirror = CodeMirror.fromTextArea(document.getElementById('myTextarea'), {
+					lineNumbers: true,
+					mode:  "javascript",
+					gutters: ["CodeMirror-lint-markers"],
+					extraKeys: {"Ctrl-Space": "autocomplete"},
+					lint: {
+						options: {
+							esversion: 11,
+							preCompilationFunction: (s)=>{
+								var err = updateMyGlobalScope(s);
+								if (myCodeMirror && myCodeMirror.setOption) 
+									myCodeMirror.setOption('hintOptions', {globalScope: myGlobalScope});
+								var myGlobals={};
+								Object.keys(myGlobalScope).map(x=>{myGlobals[x] = false});
+								return {globals: myGlobals, error:  err};
+							},
+							globals: { "jspdf": false },
+							undef: true,
+							unused: true,
+							freeze: true,
+							loopfunc: true,
+							finalCompilationFunction: ()=>{}
+						}
+					},
+					hintOptions: {globalScope: myGlobalScope},
+					theme: "night",
+				});
+				myCodeMirror.on("keyup", function (cm, event) {
+					
+					if (!cm.state.completionActive &&
+						/["0-9\.a-zA-Zа-яА-Я\/]/.test(myCodeMirror.getLine(myCodeMirror.getCursor().line)[myCodeMirror.getCursor().ch-1]||'') &&
+						!~'Control,ArrowLeft,ArrowRight,ArrowDown,ArrowUp'.split(',').indexOf(event.key)) { 
+						CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
+						console.log(event);
+					}
+				});
+				function updateMyGlobalScope(s) {
+					var options = {}; //{input: T2P_input, output: T2P_output};
+					myGlobalScope = {};
+					var ret = [];
+					var ret_push = (line, mess)=>{
+							ret.push({
+								message: mess,
+								severity: "error",
+								from: CodeMirror.Pos(line, 0),
+								to: CodeMirror.Pos(line, 1000)
+							});
+						};
+					var ld = Linker.link_lib("IO",myGlobalScope);
+					if (ld==0) {
+						ret_push(0, 'IO error');
+						return ret;
+					}else if (ld==1) {
+						ret_push(0, 'Loading IO-library');
+					}
+					var need_update_after = false;
+					s.split('\n').map((x,i)=>[x,i]).filter(line=>/\s*\/\/\s*\-/.test(line[0])).map(line=>{
+						if (!/^\/\/\- [a-zA-Z_\.]+: .*/.test(line[0])) {
+							ret_push(line[1], 'Not option key-pair! RegExp: ^//- [a-zA-Z_\.]+: .*');
+							return 0;
+						}
+						var keyval = line[0].match(/^\/\/\- ([a-zA-Z_\.]+): (.*)/);
+						keyval[2] = keyval[2];
+						if (keyval[1] == 'import') {
+							ld = Linker.link_lib(keyval[2],myGlobalScope);
+							if (!ld) {
+								ret_push(line[1], 'Can\'t link');
+								return 0;
+							}
+							if (ld==1) {
+								ret_push(line[1], 'Loading library');
+								need_update_after = true;
+							}
+							return 0;
+						}
+						if (options[keyval[1]] === undefined)
+							options[keyval[1]] = [line[1],keyval[2]];
+						else
+							options[keyval[1]][1] += '\n'+keyval[2];
+						
+					});
+					Object.keys(options).map(x=>{options[x][1]=options[x][1].replace(/(\$\$[\s\S]+?\$\$)/g, (m,p1,offset,str)=>p1.replace(/\\([\\nrt])/g, (m,p1)=>(p1=='n'?'\\\\n':(p1=='r'?'\\\\r':(p1=='t'?'\\\\t':(p1=='\\'?'\\\\\\\\':'')))))).replace(/\\([\\nrt])/g, (m,p1)=>(p1=='n'?'\n':(p1=='r'?'\r':(p1=='t'?'\t':(p1=='\\'?'\\':'')))));});
+					parse_options(options, ret_push);
+					myGlobalScope.option = options;
+					if (need_update_after) setTimeout(()=>{myCodeMirror.performLint();}, 100);
+					console.log(ret);
+					if (!ret.length && !need_update_after) run_prog(s,options, (line, ch, line2, ch2, mess)=>{
+							ret.push({
+								message: mess,
+								severity: "error",
+								from: CodeMirror.Pos(line-1, ch-1),
+								to: CodeMirror.Pos(line2-1, ch2)
+							});
+						});
+					console.log('123213123');
+					return ret.length?ret:0;
+				}
+				
+				
+				function parse_options(opt, callback) {
+					if (['name', 'author', 'semester', 'input', 'output', 'input_default_value'].filter(x=>{if (!opt[x]) callback(0, 'Key "'+x+'" not found'); return !opt[x]; }).length) return;
+					myGlobalScope['get_options'] = ()=>{return JSON.parse(JSON.stringify(opt));};
+					
+					
+					var sep=0;
+					if (opt.input[1]=='number' || opt.input[1]=='inline_string')
+						sep = 20;
+					if (opt.input[1]=='text')
+						sep = 40;
+					if (opt.input[1]=='html' || opt.input[1]=='html_gl')
+						sep = 60;
+					
+					if (sep<30) {
+						if (opt.output[1]=='pdf') sep = 20;
+						if (opt.output[1]=='inline_string') sep = 50;
+					} else {
+						if (opt.output[1]=='pdf') sep = 30;
+						if (opt.output[1]=='inline_string') sep = 80;
+					}
+					if (!opt['language'])
+						opt['language'] = [0, 'js'];
+					
+					for (var key in opt) {
+						if (key[0] == '_') continue;
+						if (key[0] == '.') continue;
+						var prs = {
+							'name': (val,callerr)=> {},
+							'author': (val,callerr)=> {},
+							'semester': (val,callerr)=> {},
+							'description': (val,callerr)=> {},
+							'faculty': (val,callerr)=> {},
+							'online': (val,callerr)=> {},
+							'language': (val,callerr)=> {
+								if (!~'js,py'.split(',').indexOf(val)) callerr();
+								if (val == 'py') {
+									ld = Linker.link_lib('brython',myGlobalScope);
+									if (ld==1) { callerr(); }
+									if (myCodeMirror.options.mode!='python') {myCodeMirror.setOption('mode','python'); } setTimeout(()=>{myCodeMirror.refresh();},1);
+								} else {
+									if (myCodeMirror.options.mode!='javascript') {myCodeMirror.setOption('mode','javascript'); setTimeout(()=>{myCodeMirror.refresh();},1);}
+								}
+							},
+							'input_default_value': (val,callerr)=> {},
+							'input': (val,callerr)=> {
+								if (!~'text,number,inline_string,html,html_gl'.split(',').indexOf(val)) callerr();
+								var si='<h3 class="divlable">input</h3>';
+								if (val == 'inline_string') si += '<div class="target_input istext"><input type="text" value="'+opt.input_default_value[1].replace(/"/g,'&#34;')+'"\\></div>';
+								if (val == 'number') si += '<div class="target_input istext"><input type="number" value="'+(opt.input_default_value[1].replace(/[^\-0-9]/g,''))+'"\\></div>';
+								if (val == 'html') si += '<div class="target_input ishtml scrolled">'+DOMPurify.sanitize(opt.input_default_value[1].replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'$$'+Base64.encode(p1)+'$$')).replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'<script type="math\/tex">'+Base64.decode(p1).replace(/<\//g,'')+'<\/script>')+'</div>'; //.replace(/\$\$([\S\s]+)\$\$/g,'<mathjax>$1</mathjax>')
+								if (val == 'text') si += '<div class="target_input istext scrolled"><textarea class="scrolled">'+opt.input_default_value[1]+'</textarea></div>';
+								if (val == 'html_gl') si += '<div class="target_input ishtml geln scrolled">' + DOMPurify.sanitize(opt.input_default_value[1].replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'$$'+Base64.encode(p1)+'$$')).replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'<script type="math\/tex">'+Base64.decode(p1).replace(/</g,'&lt;').replace(/>/g,'&gt;')+'<\/script>') + '</div>';
+
+//- input_default_value: <p style="margin:5px; font-size:25px">Задача 6</p>
+//- input_default_value: <p style="margin:5px;">Найти кофициенты</p>
+//- input_default_value: $$\tilde{e}_0 = \Bigg($$ 
+//- input_default_value: <div style="display: inline-block;position: relative;top: 22px;"><input><br><input><br><input></div>
+//- input_default_value: $$\Bigg)\tilde{e}_0 = \begin{pmatrix} 5 \\ 9 \\ 11 \\ \end{pmatrix}$$
+
+								
+								if (sep!=0) {
+									document.getElementById('input_div').innerHTML = si;
+									'input,textarea,select'.split(',').map((e)=>{
+										Array.from(document.getElementById('input_div').getElementsByTagName(e)).map(e=>e.addEventListener('input', function() {
+											setTimeout(x=>{run_prog(myCodeMirror.getValue());},10);
+										}, false));
+									});
+									if (val == 'html' || val == 'html_gl') MathJax.Hub.Update(document.getElementById('input_div'));
+									document.getElementById('input_div').style.height = 'calc('+sep+'% - 5px)';
+								}
+							},
+							'output': (val,callerr)=> {
+								if (!~'text,inline_string,html,pdf'.split(',').indexOf(val)) callerr();
+								var so='<h3 class="divlable">output</h3>';
+								if (val == 'inline_string') {so += '<div class="target_output istext"><pre id="target_output_pre" class="inline_pre"></pre></div>'; system_output.out = (s) => {if (typeof s == 'number') document.getElementById('target_output_pre').innerHTML = ''; else document.getElementById('target_output_pre').innerText += s.replace(/\t/g,'    ').replace(/\n/g,' ');}; }
+								if (val == 'html') {so += '<div class="target_output ishtml scrolled" id="target_output_div"></div>'; system_output.out = (s) => {if (typeof s == 'number') document.getElementById('target_output_div').innerHTML = ''; else document.getElementById('target_output_div').innerHTML += DOMPurify.sanitize(s.replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'$$'+Base64.encode(p1)+'$$')).replace(/\$\$c2F2ZSBidXR0b24=\$\$/g,'<input onclick="saveAs(files_content, \'T2P_\'+(+new Date())+\'.zip\');" style="margin: 5px;width: calc(100% - 10px);" type="button" value="Сохранить файлы">').replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'<script type="math\/tex">'+Base64.decode(p1).replace(/<\//g,'')+'<\/script>'); MathJax.Hub.Update(document.getElementById('target_output_div'));}; }
+								if (val == 'text') {so += '<div class="target_output istext scrolled"><pre id="target_output_pre"></pre></div>'; system_output.out = (s) => {if (typeof s == 'number') document.getElementById('target_output_pre').innerHTML = ''; else document.getElementById('target_output_pre').innerText += s.replace(/\t/g,'    ');}; }
+								if (val == 'pdf') so += '<div class="target_output ishtml scrolled">...</div>';
+								if (sep!=0) {
+									document.getElementById('output_div').innerHTML = so;
+									document.getElementById('output_div').style.height = 'calc('+(100-sep)+'% - 5px)';
+								}
+							}
+						};
+						if (!prs[key]) {callback(opt[key][0], 'Undefined key "'+key+'". You can use keys starting on "_" or "."');}
+						else
+						prs[key](opt[key][1],()=>{callback(opt[key][0], 'Undefined value "'+opt[key][1]+'"');});
+					}
+					console.log(opt);
+					
+				}
+				myCodeMirror.setSize("100%", "100%");
+			}
+			var defopt;
+			var files_content=0;
+			function run_prog(s,opt,prerr) {
+				files_content=0;
+				if (opt) defopt=opt; else opt=defopt;
+				try {
+					system_output.out(1);
+					system_output.err(1);
+					if (opt.language && opt.language[1] == 'py') {
+						var myGlobals={};
+						Object.keys(myGlobalScope).map(x=>{myGlobals[x] = false});
+						try{
+							__BRYTHON__.python_to_js(normalizePython(s));
+						}catch(err){
+							prerr(err.lineno,err.offset,err.end_lineno,err.end_offset,err.msg);
+							system_output.err('at {line: '+err.lineno+', ch: '+err.offset+'}: '+err.msg);
+							return 0;
+						}
+					} else {
+						var myGlobals={};
+						Object.keys(myGlobalScope).map(x=>{myGlobals[x] = false});
+						JSHINT.jshint(s, {esversion: 11,
+								globals: myGlobals,
+								undef: true,
+								freeze: true,
+								loopfunc: true});
+						if (JSHINT.errors.length > 0) {
+							system_output.err(JSHINT.errors.map(x=>'at {line: '+x.line+', ch: '+x.character+'}: '+x.reason).join('\n'));
+							return 0;
+						}
+					}
+					var inputs = [];
+					var target_input = document.getElementsByClassName('target_input')[0];
+					if (!target_input) return 1;
+					'input,textarea,select'.split(',').map((e)=>{
+						inputs = inputs.concat(Array.from(document.getElementsByClassName('target_input')[0].getElementsByTagName(e)).map((ee)=>{
+							return {
+								"name": ee.name,
+								"value": (e=='input'&&ee.type=='checkbox'?ee.checked:ee.value),
+								"id": ee.id,
+								"classes": ee.className
+							};
+						}));
+					});
+					console.log(inputs);
+					console.log('kek1');
+					safe_data_callback_eval({
+							"option": opt,
+							"inputs": inputs,
+							"script": ((opt.language && opt.language[1] == 'py')?normalizePython(s):s),
+							"libs": ((opt.language && opt.language[1] == 'py')?[': brython']:[]).concat(s.match(/^\/\/\- import: (.*)/mg)||[]).map(x=>x.split(': ')[1]),
+							'language': ((opt.language && opt.language[1] == 'py')?'py':'js')
+						}, (r)=>{
+							if (typeof r !== 'object') {system_output.err(r+''); return;}
+							system_output.err(((typeof r[0] == 'number')?'Программа завершилась с кодом '+r[0]:'Программа вернула '+r[0])+'\n');
+							
+							var files = r[3];
+							if (Object.keys(files).length) {
+								var zip = new JSZip();
+								Object.keys(files).map(x=>zip.file(x, files[x], {base64: true, binary: true}));
+								zip.generateAsync({type:"blob", compression: "DEFLATE", compressionOptions: { level: 9 }}).then(function (content) {
+									files_content=content;
+									system_output.out(1);
+									system_output.out(r[1]+'$$save button$$');
+								});
+							} else {
+								system_output.out(1);
+								system_output.out(r[1]+'');
+							}
+							system_output.err(r[2]+'');
+							
+						});
+					return 0;
+				} catch (e) {system_output.err(e+''); return 1;}
+			}
+			
+			function normalizePython(s) {
+				var libs = (s.match(/^\/\/\- import: (.*)/mg)||[]).map(x=>x.split(': ')[1]);
+				return 'from browser import window;input=window.input;'+libs.map(x=>x+'=window.'+x).join(';')+s.replace(/\/\/- .*/g,'');
+			}
+		</script>
+	</div>
+	<div id="body_print_div" class="bodydiv" style="position:absolute;bottom:0;left:0;height:calc(20% - 22.5px);width:calc(50% - 5px);margin-bottom:0;margin-left:0;border-bottom: 0;border-left: 0;border-radius:0 5px 0 0;">
+		<textarea id="print_textarea" style="height:100%;width:100%">debug output</textarea>
+		<script>
+			var printCM;
+			function load3(){
+				printCM = CodeMirror.fromTextArea(document.getElementById('print_textarea'), {
+					lineNumbers: true,
+					theme: "night",
+					readOnly: true,
+					mode: 'text'
+				});
+				printCM.setSize("100%", "100%");
+			}
+			system_output.err = (s)=>{if (typeof s == 'number') printCM.setValue(''); else printCM.replaceRange(s,{line:printCM.lineCount()-1, ch:printCM.getLine(printCM.lineCount()-1).length},{line:printCM.lineCount()-1, ch:printCM.getLine(printCM.lineCount()-1).length})}
+		</script>
+	</div>
+	<div id="body_right_div" style="position:absolute;right:0;top:0;bottom:0;width:calc(50% - 5px);">
+		<div class="bodydiv" id="input_div" style="position:absolute;top:0;right:0;height:calc(50% - 5px);width:100%;margin-top:0;margin-right:0;border-top: 0;border-right: 0;border-radius:0 0 0 5px;"></div>
+		<div class="bodydiv" id="output_div" style="position:absolute;bottom:0;right:0;height:calc(50% - 5px);width:100%;margin-bottom:0;margin-right:0;border-bottom: 0;border-right: 0;border-radius:5px 0 0 0;"></div>
+	</div>
+	<iframe id="mysandbox" sandbox="allow-scripts" style="position:absolute;top:0;left:0;display:none;height:10px;width:10px;" ></iframe>
+</body>
+</html>

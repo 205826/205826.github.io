@@ -1,0 +1,6 @@
+var random = {
+	aboba3 : ()=>{}
+	
+	
+	
+}

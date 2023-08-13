@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru" class="scrolled" style="background:#000;margin:0px;height:100%;width:100%;font-family: 'Open Sans', sans-serif;">
+<head>
+	<meta charset="UTF-8">
+	<title>T2P</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAeAB4AAD/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAEAAAAAAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD8+6K3bfT4THBHHa6bNJJHCwaaaXLb/LVixSUBcSSYA29FbJyvzPg0i1vTHcRwWuw7iIFlP7yPCkOyGbcGA8xSokADqgzjcxAOforoJdJtP7TX9zDGrGKGOL5sNJIWA81fOYqBsbO2ToYzjqDDNY295pKutvZ20ki7w8bvtHyb8AtM27AyrAopVuhODkAh8PT29jG032qC3uvNT5ZvNCFFeOQY8tGJJZMckYA6EkFSwGn217Mqzw+SrxmNrhXYOu1ty5WM5IYqQWjwdgJUcqcuigDo5LvS/t1tcrdxia1kV40TKxEgg5bZbRleg5CsWxj5cA1naldQ2+mQ29rcWsm5dk/kQlQwUJglmjV/mYFiuWGQDxwBm0UAf//Z" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="apple-touch-icon" sizes="180x180" href="/icon.jpg">
+	<meta name="theme-color" content="#222"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content='true' name='HandheldFriendly'/>
+	<meta content='800' name='MobileOptimized'/>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="description" content="Сборник пректов для студентов">
+	<meta name="keywords" content="ИТМО, СППО, ВТ">
+	<meta name="author" content="T">
+	<meta http-equiv="Cache-Control" content="public, max-age=86400">
+<!--
+ _________   _____   _______   
+|  _   _  | / ___ `.|_   __ \  
+|_/ | | \_||_/___) |  | |__) | 
+    | |     .'____.'  |  ___/  
+   _| |_   / /_____  _| |_     
+  |_____|  |_______||_____|    
+                               
+-->
+	<style>
+	body {
+		margin:0px;
+		height:100%;
+		width:100%;
+		color: #fff;
+	}
+	
+	
+	.tab {
+		margin: 5px;
+		margin-top: 0px;
+		background: #222;
+		overflow: hidden;
+		border: 1px solid #fff2;
+		border-top: none;
+		border-bottom-right-radius: 5px;
+		border-bottom-left-radius: 5px;
+	}
+	
+	.tab button {
+		font-size: 16px;
+		color: #fff;
+		background-color: inherit;
+		float: left;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		padding: 10px 16px;
+		transition: 0.3s;
+	}
+	
+	.tab button:hover {
+		background-color: #aaa1;
+	}
+	
+	.tab button.active {
+		background-color: #87e;
+		border-radius: 5px;
+	}
+	
+	.tab button.active:hover {
+		background-color: #98f;
+	}
+	
+	.tabcontent {
+		margin: 5px;
+		border-radius: 5px;
+		background:#222;
+		display: none;
+		padding: 6px 12px;
+		border: 1px solid #fff2;
+		overflow: auto;
+	}
+	
+	.tabcontent h3 {
+		text-align: center;
+	}
+	
+	.scrolled::-webkit-scrollbar {
+		width: 5px;
+		height: 5px; 
+		cursor:pointer;
+	}
+	
+	.scrolled::-webkit-scrollbar-track {
+		background: #fff2;
+		border-radius: 2px;
+	}
+	
+	.scrolled::-webkit-scrollbar-thumb {
+		background-color: #fff;
+		border-radius: 2px;
+		border: 0px;
+	}
+	.tkeys {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	.tkeys th {
+		text-align: center;
+		border: 1px solid #fff2;
+	}
+	.tkeys td {
+		text-align: center;
+		border: 1px solid #fff2;
+	}
+	.needkey {
+		background: #f002;
+	}
+	.needifkey {
+		background: #ff02;
+	}
+	
+	
+	.tprogs {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	.tprogs th {
+		text-align: center;
+		border: 2px solid #fff2;
+		background: #222;
+		padding: 5px;
+	}
+	.tprogs td {
+		cursor: pointer;
+		text-align: center;
+		border: 2px solid #fff2;
+		padding: 5px;
+	}
+	.tprogs tr:hover {
+		background: #fff2;
+		transition: 0.3s;
+	}
+	
+	var {
+		white-space: nowrap;
+		background: #444;
+		color: #fff;
+		border: 0px solid #bbb;
+		border-radius: 3px;
+		padding-top: 0px;
+		padding-right: 5px;
+		padding-bottom: 0px;
+		padding-left: 5px;
+		font-style: inherit;
+		margin-right: 5px;
+		margin-left: 2px;
+	}
+	var.nw {
+		color: #777;
+	}
+	</style>
+	
+	<script type="text/javascript">
+		function openTab(evt, cityName) {
+			var i, tabcontent, tablinks;
+			if (!evt) evt = {}, evt.currentTarget = document.getElementsByClassName("tablinks")[0];
+			
+			tabcontent = document.getElementsByClassName("tabcontent");
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
+			
+			tablinks = document.getElementsByClassName("tablinks");
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			}
+			
+			document.getElementById(cityName).style.display = "block";
+			evt.currentTarget.className += " active";
+			__resize();
+		}
+		
+		function timeConverter(UNIX_timestamp){
+			var a = new Date(UNIX_timestamp * 1000);
+			var f = (n=>(n+100+'').slice(1));
+			var year = a.getFullYear();
+			var month = f(a.getMonth()+1);
+			var date = f(a.getDate());
+			var hour = f(a.getHours());
+			var min = f(a.getMinutes());
+			var sec = f(a.getSeconds());
+			var time = hour + ':' + min + ':' + sec+'<br>'+date + '.' + month + '.' + year;
+			return time;
+		}
+		
+		function __load_file(URL, callback) {
+			fetch(URL, {}).then((response) => response.text()).then((t) => {
+						callback(t);
+					});
+		}
+		
+		function __onload() {
+			__load_file('T2P_scripts/_list.json?v='+(+new Date())/*'/T2P_API.php?login='+localStorage.getItem('__TID_login__')+'&password='+localStorage.getItem('__TID_password__')*/, (x) => {
+				document.getElementsByClassName("tablinks")[0].onclick();
+				addEventListener("resize", __resize);
+				__table_gen(JSON.parse(x));
+				__resize();
+				setInterval(__resize,1000);
+			});
+		}
+		
+		function __table_gen(a) {
+			var s = '';
+			a.map((e)=>s+='<tr onclick="__open('+e.id+')"><td>'+e.name+'</td><td>'+e.description+'</td><td>'+e.semester+'</td><td>'+e.faculty+'</td><td>'+e.author+'</td></tr>');
+			document.getElementById('progectlist').innerHTML = s;
+		}
+		
+		function __open(id) {
+			location.href='T2P_EDITOR.html?id='+id;
+		}
+		
+		function __resize() {
+			var tab = document.getElementsByClassName('tab')[0];
+			var tablinks = document.getElementsByClassName('tablinks');
+			var w = Math.floor(tab.clientWidth/Math.min(Math.max(Math.floor(tab.clientWidth/150),1),tablinks.length)-0.1);
+			Array.from(tablinks).map(e=>{e.style.width = w+'px'});
+			
+			var tabcontent = document.getElementsByClassName('tabcontent');
+			w = Math.max(Math.floor(window.innerHeight-tab.clientHeight-25),300);
+			Array.from(tabcontent).map(e=>{e.style.height = w+'px'});
+			
+			Array.from(document.getElementsByClassName('smartdiv')).map(d=>{
+				var need = Math.floor(Math.max(d.parentElement.clientWidth-25,Array.from(d.children).reduce((e,q)=>Math.max(e,q.clientWidth-10),0)))+'px';
+				if (d.style.width != need)
+					d.style.width = need, setTimeout(__resize,10);
+			});
+		}
+		
+	</script>
+</head>
+<body onload="__onload();">
+	<div class="tab">
+		<button class="tablinks" onclick="openTab(event, 'projects')">Проекты</button>
+		<button class="tablinks" onclick="openTab(event, 'api')">API</button>
+		<button class="tablinks" onclick="openTab(event, 'setup')">Настройки</button>
+		<button class="tablinks" onclick="openTab(event, 'account')">Аккаунт</button>
+	</div>
+	
+	<div id="projects" class="tabcontent scrolled"><div class="smartdiv">
+		<h3>Проекты</h3>
+		<table class="tprogs">
+			<thead>
+				<tr>
+					<th>Название</th> <th>Описание</th> <th>Семестр</th> <th>Факультет</th> <th>Автор</th>
+				</tr>
+			</thead>
+			<tbody id="progectlist">
+			</tbody>
+		</table>
+	</div></div>
+	
+	<div id="api" class="tabcontent scrolled"><div class="smartdiv">
+		<h3>API</h3>
+		<p>Каждый желайщий может добавить ссвои скрипты, внеся лепту в историю T2P.</p>
+		<p>Любой проект T2P начинается с преамбулы. Каждая строчка которой начинается на <var>//- </var>. Пробел в конце обязателен. После <var>//- </var> следует ключ и значение через <var>: </var> (пробел тоже обязателен). При повторе ключа значение конкатенируется с прошлым значением и переводом строки. Например:</p>
+		<pre style="width: min-content;">//- name: Очень точный калькулятор
+//- description: Переписаная версия калькулятора одного из моих проектов
+//- author: T
+//- semester: any
+//- input: inline_string
+//- input_default_value: 2 + 2
+//- output: text
+//- import: math
+//- import: calc</pre>
+		<p>Список всех ключей:</p>
+		<table class="tkeys">
+			<thead>
+				<tr>
+					<th>key</th> <th>need</th> <th>values</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr> <td class="needkey">name</td> <td>always</td> <td>string</td> </tr>
+				<tr> <td>description</td> <td>-</td> <td>string</td> </tr>
+				<tr> <td class="needkey">author</td> <td>always</td> <td>string</td> </tr>
+				<tr> <td class="needkey">semester</td> <td>always</td> <td><var>any</var> || int</td> </tr>
+				<tr> <td>faculty</td> <td>-</td> <td>string</td> </tr>
+				<tr> <td class="needkey">input</td> <td>always</td> <td><var>text</var> || <var>number</var> || <var>inline_string</var> || <var>html</var> || <var>html_gl</var></td> </tr>
+				<tr> <td class="needifkey">input_default_value</td> <td><var>input: number</var></td> <td class="nw">int</td> </tr>
+				<tr> <td class="needifkey">input_default_value</td> <td>not <var>input: number</var></td> <td>string</td> </tr>
+				<tr> <td class="needkey">output</td> <td>always</td> <td><var>text</var> || <var>inline_string</var> || <var>html</var> || <var class="nw">pdf</var> </tr>
+				<tr> <td>online</td> <td>-</td> <td><var>true</var> || <var>false</var></td> </tr>
+				<tr> <td>import</td> <td>-</td> <td><var class="nw">utils</var> || <var>math</var> || <var class="nw">calc</var> || <var class="nw">random</var> || <var class="nw">url_loader</var> </tr>
+				<tr> <td>language</td> <td>-</td> <td><var>js</var> (default) || <var>py</var> || <var class="nw">markdown_js</var> || <var class="nw">ts</var> </tr>
+			</tbody>
+		</table>
+		<p>Используемые библиотеки: <a target="_blank" href="https://github.com/parallax/jsPDF">jsPDF</a>, <a target="_blank" href="https://github.com/simonbengtsson/jsPDF-AutoTable">jsPDF.autoTable</a>, <a target="_blank" href="https://dima.mysoftware.ru/proj/calc/calc.html">calc</a>, <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">math</a>, <a target="_blank" href="https://codemirror.net/5/doc/manual.html">CodeMirror</a>, <a target="_blank" href="https://docs.mathjax.org/en/latest/">MathJax</a>.</p>
+		
+		<p>После преамбулы следует программа написаная на JavaScript (если language не определено или его значение js). Например:</p>
+		<pre>//- ....
+
+var res = calc(input().read_all());
+if (res.error) return {error: res.error};
+
+return {output: res.toDec()};
+</pre>
+	</div></div>
+	
+	<div id="setup" class="tabcontent">
+		<h3>Настройки</h3>
+		<p>Ключ генерации: <input value="test"> <input type="button" value="regen"> (если проект использует <var>output: pdf</var> или <var>import: random</var> результат будет зависеть от этого ключа)</p>
+	</div>
+	
+	<div id="account" class="tabcontent">
+		<h3>Аккаунт</h3>
+		<s>Войти</s>
+		<s>Выйти</s>
+	</div>
+	
+</body>
+</html>

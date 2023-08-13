@@ -1,0 +1,65 @@
+/* Loosely based on the Midnight Textmate theme */
+
+.cm-s-night.CodeMirror { background: #222; color: #f8f8f8; }
+.cm-s-night div.CodeMirror-selected { background: #447; }
+.cm-s-night .CodeMirror-line::selection, .cm-s-night .CodeMirror-line > span::selection, .cm-s-night .CodeMirror-line > span > span::selection { background: rgba(68, 68, 119, .99); }
+.cm-s-night .CodeMirror-line::-moz-selection, .cm-s-night .CodeMirror-line > span::-moz-selection, .cm-s-night .CodeMirror-line > span > span::-moz-selection { background: rgba(68, 68, 119, .99); }
+.cm-s-night .CodeMirror-gutters { background: #252525; border-right: 1px solid #aaa; }
+.cm-s-night .CodeMirror-guttermarker { color: white; }
+.cm-s-night .CodeMirror-guttermarker-subtle { color: #bbb; }
+.cm-s-night .CodeMirror-linenumber { color: #f8f8f8; }
+.cm-s-night .CodeMirror-cursor { border-left: 1px solid white; }
+
+.cm-s-night span.cm-comment { color: #87e; }
+.cm-s-night span.cm-string, .cm-s-night span.cm-string-2 { color: #55b5db; }
+.cm-s-night span.cm-number { color: #cd3f45; }
+.cm-s-night span.cm-variable { color: #55b5db; }
+.cm-s-night span.cm-variable-2 { color: #a074c4; }
+.cm-s-night span.cm-def { color: #55b5db; }
+.cm-s-night span.cm-keyword { color: #ff79c6; }
+.cm-s-night span.cm-operator { color: #9fca56; }
+.cm-s-night span.cm-atom { color: #cd3f45; }
+.cm-s-night span.cm-meta { color: #55b5db; }
+.cm-s-night span.cm-tag { color: #55b5db; }
+.cm-s-night span.cm-attribute { color: #9fca56; }
+.cm-s-night span.cm-qualifier { color: #9fca56; }
+.cm-s-night span.cm-property { color: #a074c4; }
+.cm-s-night span.cm-variable-3, .cm-s-night span.cm-type { color: #9fca56; }
+.cm-s-night span.cm-builtin { color: #9fca56; }
+.cm-s-night span.cm-bracket { color: #8da6ce; }
+.cm-s-night span.cm-special { color: #ff9e59; }
+.cm-s-night span.cm-link { color: #845dc4; }
+.cm-s-night span.cm-error { color: #9d1e15; }
+
+.cm-s-night .CodeMirror-activeline-background { background: #1C005A; }
+.cm-s-night .CodeMirror-matchingbracket { outline:1px solid grey; color:white !important; }
+
+.CodeMirror-hscrollbar {
+	right: 5px !important;
+}
+
+.CodeMirror-vscrollbar{
+	bottom: 5px !important;
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar, .CodeMirror-vscrollbar::-webkit-scrollbar {
+	width: 5px;
+	height: 5px; 
+	cursor:pointer;
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-track, .CodeMirror-vscrollbar::-webkit-scrollbar-track {
+	background: #fff2;
+	border-radius: 2px;
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-thumb, .CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
+	background-color: #fff;
+	border-radius: 2px;
+	border: 0px;
+}
+
+.CodeMirror-scrollbar-filler {
+	height: 5px !important;
+	width: 5px !important;
+}
