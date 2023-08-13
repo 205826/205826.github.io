@@ -199,7 +199,7 @@
 		}
 		
 		function __onload() {
-			__load_file('T2P_scripts/_list.json?v='+(+new Date())/*'/T2P_API.php?login='+localStorage.getItem('__TID_login__')+'&password='+localStorage.getItem('__TID_password__')*/, (x) => {
+			__load_file('T2P_scripts/list.json?v='+(+new Date())/*'/T2P_API.php?login='+localStorage.getItem('__TID_login__')+'&password='+localStorage.getItem('__TID_password__')*/, (x) => {
 				document.getElementsByClassName("tablinks")[0].onclick();
 				addEventListener("resize", __resize);
 				__table_gen(JSON.parse(x));
