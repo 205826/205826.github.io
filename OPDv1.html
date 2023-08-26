@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" style="width: 100%;height:100%;background:linear-gradient(163deg, #004869, #004667);color:#fff;font-family: 'Open Sans', sans-serif;">
+	<head>
+		<meta charset="UTF-8">
+		<title>OPDv1</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="theme-color" content="#004869"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta content='true' name='HandheldFriendly'/>
+		<meta content='800' name='MobileOptimized'/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta http-equiv="Cache-Control" content="public, max-age=86400">
+		<script type="text/javascript">
+			function _onload() {
+				gen();
+			}
+			var commands=[
+				[1,'CLA',a=>0,0.01],
+				[1,'NOT',a=>65535-a,0.1],
+				[1,'ASL',a=>(2*a)&65535,0.1],
+				[-1,'ROL',(a,b,c)=>(2*a+c)&65535,0.1],
+				[-1,'ROR',(a,b,c)=>Math.floor(a/2)+c*0x8000,0.1],
+				[1,'ASR',a=>Math.floor(a/2),0.1],
+				[1,'INC',a=>(a+1)&65535,0.05],
+				[1,'DEC',a=>(a+65535)&65535,0.05],
+				[1,'NEG',a=>65536-a,0.05],
+				
+				[2,'AND',(a,b)=>a&b,0.2],
+				[2,'OR',(a,b)=>a|b,0.2],
+				[2,'ADD',(a,b)=>(a+b)&65535,0.2],
+				[-2,'ADC',(a,b,c)=>(a+b+c)&65535,0.2],
+				[2,'SUB',(a,b)=>(a-b+65536)&65535,0.2]
+			];
+			var stats = JSON.parse(localStorage.getItem('__opdv1_stats__')||'[]');
+			var sum = commands.map(a=>a[3]).reduce((a,b)=>a+b);
+			var res = '0000';
+			var resdata = ['', new Date()];
+			new Array(new Date() % 10000).fill(0).map(x=>Math.random());
+			function gen() {
+				var rnd = sum*Math.random();
+				var icom=0;
+				commands.map((x,i)=>{
+					if (rnd>commands.slice(0,i).map(x=>x[3]).reduce((a,b)=>a+b,0))
+						icom=i;
+				});
+				var e = commands[icom];
+				var abc = [Math.floor(Math.random()*65536)&65535,Math.floor(Math.random()*65536)&65535,Math.round(Math.random())&1];
+				var i2s = ((i)=>(65536+i).toString(16).slice(1).toUpperCase());
+				var t='';
+				if (e[0]==1)
+					t = e[1]+' <var>'+i2s(abc[0])+'</var>';
+				if (e[0]==2)
+					t = '<var>'+i2s(abc[0])+'</var> '+e[1]+' <var>'+i2s(abc[1])+'</var>';
+				if (e[0]==-1)
+					t = e[1]+' <var>'+i2s(abc[0])+'</var> (C = <var>'+abc[2]+'</var>)';
+				if (e[0]==-2)
+					t = '<var>'+i2s(abc[0])+'</var> '+e[1]+' <var>'+i2s(abc[1])+'</var> (C = <var>'+abc[2]+'</var>)';
+				
+				res = i2s(e[2](abc[0],abc[1],abc[2]));
+				resdata = [e[1], new Date()];
+				document.getElementById('task_id').innerHTML = t;
+				document.getElementById('output_id').value = '';
+				document.getElementById('output_id').focus();
+				
+				
+				
+				console.log(t);
+				
+			}
+			
+			function on_inp() {
+				_test_field('output_id', /[^\dA-Fa-f]/g, 4);
+				
+				var e=document.getElementById('output_id');
+				e.style.background='';
+				if (e.value.length == 4)
+					if (e.value.toUpperCase()==res) {
+						stats.push([resdata[0],+new Date(),+resdata[1]]);
+						while (stats.length>1000) stats.shift();
+						localStorage.setItem('__opdv1_stats__', JSON.stringify(stats));
+						gen();
+					} else
+						e.style.background='#F002';
+				
+			}
+			
+			function _test_field(s, reg) {
+				var e=document.getElementById(s);
+				if (e.value != e.value.replace(reg,''))
+					e.value = e.value.replace(reg,'');
+				if (e.value != e.value.slice(0,4))
+					e.value = e.value.slice(0,4);
+			}
+		</script>
+		<style>
+			body {
+				margin: 0px;
+				height: 100%;
+				width: 100%;
+				color: #fff;
+				text-shadow: 2px 2px 3px black;
+			}
+			body > div {
+				font-size:16px;
+				position:absolute;
+				top:50%;
+				left:50%;
+				transform: translate(-50%, -50%);
+				width: 370px;
+			}
+			body > div var {
+				font-family: monospace;
+				font-size:20px;
+				font-style: normal;
+				border: solid 1px #0004;
+				background: #0002;
+				border-radius:5px;
+				padding:5px;
+				letter-spacing:2px;
+			}
+			body > div input {
+				font-family: monospace;
+				font-size:20px;
+				font-style: normal;
+				border: solid 1px #0004;
+				background: #0002;
+				border-radius:5px;
+				padding:5px;
+				letter-spacing:2px;
+				color:#fff;
+				width: 60px;
+				text-shadow: 2px 2px 3px black;
+			}
+			
+		</style>
+	</head>
+	<body onload="_onload();">
+		<div><div style="display: contents;" id="task_id"><var>FFFF</var> ADC <var>FFFF</var></div> = <input id="output_id" type="text" value="" oninput="on_inp();"><input value="?" type="button" style="width: 24px; margin-left:5px;" onclick="alert('Ответ: '+res);"></div>
+		<font style="position:absolute;right:1px;bottom:1px;font-size:10px;">v1</font>
+	</body>
+</html>

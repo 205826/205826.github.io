@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ru" style="width: 100%;height:100%;background:linear-gradient(163deg, #17252a, #2b7a78);color:#fff;font-family: 'Open Sans', sans-serif;">
+	<head>
+		<meta charset="UTF-8">
+		<title>code2colors</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="theme-color" content="#004869"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta content='true' name='HandheldFriendly'/>
+		<meta content='800' name='MobileOptimized'/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="description" content="Раскрашивание программного кода">
+		<meta name="keywords" content="Раскрашивание, Code, Programm, Code to Colors">
+		<meta http-equiv="Cache-Control" content="public, max-age=86400">
+		<script src="zopfli.min.js"></script>
+		<script type="text/javascript">
+		function string_hash(s) {
+			var hash = 0, i, chr;
+			if (s.length === 0) return hash;
+			for (i = 0; i < s.length; i++) {
+				chr = s.charCodeAt(i);
+				hash = ((hash << 5) - hash) + chr;
+				hash |= 0; // Convert to 32bit integer
+			}
+			return hash;
+		}
+		var UML_COMPRESS_CASH = {};
+		var UML_STYLE_CASH = {};
+		function encode64_(e) {
+			for (r = "",
+			i = 0; i < e.length; i += 3)
+				i + 2 == e.length ? r += append3bytes(e[i], e[i + 1], 0) : i + 1 == e.length ? r += append3bytes(e[i], 0, 0) : r += append3bytes(e[i], e[i + 1], e[i + 2]);
+			return r
+		}
+		function append3bytes(e, n, t) {
+			return c1 = e >> 2,
+			c2 = (3 & e) << 4 | n >> 4,
+			c3 = (15 & n) << 2 | t >> 6,
+			c4 = 63 & t,
+			r = "",
+			r += encode6bit(63 & c1),
+			r += encode6bit(63 & c2),
+			r += encode6bit(63 & c3),
+			r += encode6bit(63 & c4),
+			r
+		}
+		function encode6bit(e) {
+			return e < 10 ? String.fromCharCode(48 + e) : (e -= 10) < 26 ? String.fromCharCode(65 + e) : (e -= 26) < 26 ? String.fromCharCode(97 + e) : 0 == (e -= 26) ? "-" : 1 == e ? "_" : "?"
+		}
+		var encodedStr = function(s) {
+			return s.replace(/./gm, function(s) {
+				// return "&#" + s.charCodeAt(0) + ";";
+				return (s.match(/[a-z0-9\s]+/i)) ? s : "&#" + s.charCodeAt(0) + ";";
+			});
+		};
+		</script>
+		
+		<script type="text/javascript">
+			function code2style(s){
+				var _background,fr={};
+				try {
+					_background = document.getElementById('table1_row0').children[1].children[0].value;
+					fr.string = [document.getElementById('table1_row1').children[1].children[0].value,document.getElementById('table1_row1').children[2].children[0].checked,document.getElementById('table1_row1').children[3].children[0].checked,document.getElementById('table1_row1').children[4].children[0].value];
+				} catch (err) {return ['1',err.message+'']}
+				try {
+					fr.coments = [document.getElementById('table1_row2').children[1].children[0].value,document.getElementById('table1_row2').children[2].children[0].checked,document.getElementById('table1_row2').children[3].children[0].checked,document.getElementById('table1_row2').children[4].children[0].value];
+				} catch (err) {return  ['2',err.message+'']}
+				try {
+					fr.key_chars = [document.getElementById('table1_row3').children[1].children[0].value,document.getElementById('table1_row3').children[2].children[0].checked,document.getElementById('table1_row3').children[3].children[0].checked,document.getElementById('table1_row3').children[4].children[0].value];
+				} catch (err) {return  ['3',err.message+'']}
+				try {
+					fr.numbers = [document.getElementById('table1_row4').children[1].children[0].value,document.getElementById('table1_row4').children[2].children[0].checked,document.getElementById('table1_row4').children[3].children[0].checked,document.getElementById('table1_row4').children[4].children[0].value];
+				} catch (err) {return  ['4',err.message+'']}
+				try {
+					fr.primitives = [document.getElementById('table1_row5').children[1].children[0].value,document.getElementById('table1_row5').children[2].children[0].checked,document.getElementById('table1_row5').children[3].children[0].checked,document.getElementById('table1_row5').children[4].children[0].value];
+				} catch (err) {return  ['5',err.message+'']}
+				try {
+					fr.key_words = [document.getElementById('table1_row6').children[1].children[0].value,document.getElementById('table1_row6').children[2].children[0].checked,document.getElementById('table1_row6').children[3].children[0].checked,document.getElementById('table1_row6').children[4].children[0].value];
+				} catch (err) {return  ['6',err.message+'']}
+				try {
+					fr.key_words2 = [document.getElementById('table1_row7').children[1].children[0].value,document.getElementById('table1_row7').children[2].children[0].checked,document.getElementById('table1_row7').children[3].children[0].checked,document.getElementById('table1_row7').children[4].children[0].value];
+					fr.key_words3 = [document.getElementById('table1_row8').children[1].children[0].value,document.getElementById('table1_row8').children[2].children[0].checked,document.getElementById('table1_row8').children[3].children[0].checked,document.getElementById('table1_row8').children[4].children[0].value];
+					fr.key_words4 = [document.getElementById('table1_row9').children[1].children[0].value,document.getElementById('table1_row9').children[2].children[0].checked,document.getElementById('table1_row9').children[3].children[0].checked,document.getElementById('table1_row9').children[4].children[0].value];
+					fr.key_words5 = [document.getElementById('table1_row10').children[1].children[0].value,document.getElementById('table1_row10').children[2].children[0].checked,document.getElementById('table1_row10').children[3].children[0].checked,document.getElementById('table1_row10').children[4].children[0].value];
+					fr.key_words6 = [document.getElementById('table1_row11').children[1].children[0].value,document.getElementById('table1_row11').children[2].children[0].checked,document.getElementById('table1_row11').children[3].children[0].checked,document.getElementById('table1_row11').children[4].children[0].value];
+					fr.def_text = [document.getElementById('table1_row12').children[1].children[0].value,document.getElementById('table1_row12').children[2].children[0].checked,document.getElementById('table1_row12').children[3].children[0].checked];
+				} catch (err) {return  ['7',err.message+'']}
+				try {
+					fr.numbering = [document.getElementById('table1_row13').children[1].children[0].value,document.getElementById('table1_row13').children[2].children[0].checked,document.getElementById('table1_row13').children[3].children[0].checked,document.getElementById('table1_row13').children[4].children[0].value];
+					fr.space_in_tab = [document.getElementById('table2_row0').children[1].children[0].value];
+				} catch (err) {return  ['9',err.message+'']}
+				// (?<=) (?=[\s\(\))])
+				// __separator__
+				var hash = string_hash(s+'|||'+_background+'||'+JSON.stringify(fr));
+				if (UML_STYLE_CASH[hash]) {return UML_STYLE_CASH[hash];}
+				console.log(hash);
+				var antyXSS=((s)=>s.replace(/</g,'&#60;').replace(/>/g,'&#62;'));
+				var keys = ['string', 'coments', 'key_chars', 'numbers', 'primitives', 'key_words', 'key_words2', 'key_words3', 'key_words4', 'key_words5', 'key_words6'];
+				var out = '';
+				var jast_out = '_';
+				var real_out = '';
+				try {
+					for (var j=0; j<keys.length; j++){
+						var color_b_regx=fr[keys[j]];
+						if (color_b_regx[3].trim()=='')
+							color_b_regx[3] = []
+						else
+							color_b_regx[3] = color_b_regx[3].split('__separator__');
+						
+					}
+					s = '\n'+s+'\n'
+					while (s!='') {
+						var f=0;
+						for (var j=0; j<keys.length; j++){
+							var color_b_regx=fr[keys[j]];
+							if (color_b_regx[3].length == 0) continue;
+							var regx_split = color_b_regx[3];//.split('__separator__');
+							if (regx_split.length!=3 && regx_split.length!=2 && regx_split.length!=1)
+								return [j+1+'','__separator__ error'];
+							
+							var m=s.match(new RegExp('^'+regx_split[regx_split.length-1]+(regx_split.length==2?'(?=['+regx_split[0]+'])':'')+(regx_split.length==3?'(?=['+regx_split[1]+'])':''),'g'));
+							if (m!==null && m.length>0 && m[0]!=''){
+								if ((regx_split.length==2 || regx_split.length==3) && !jast_out[jast_out.length-1].match(new RegExp('['+regx_split[0]+']'),'g'))
+									continue;
+								var mm=m[0];
+								
+								out+='<font style="color:'+color_b_regx[0]+';font-weight:'+(color_b_regx[1]?'bolder':'normal')+';font-style:'+(color_b_regx[2]?'italic':'normal')+';">'+antyXSS(mm)+'</font>';
+								jast_out+=mm;
+								s = s.slice(mm.length);
+								f=1;
+								break;
+							}
+						}
+						
+						if (f==0) {
+							out+=antyXSS(s[0]);
+							jast_out+=s[0];
+							s = s.slice(1);
+						}
+					}
+					var numbering_cnt=0;
+					var last_num=(out.slice(1,-1).split('\n').length+'').length;
+					var number2string=((i)=>{return '<font style="color:'+fr.numbering[0]+';font-weight:'+(fr.numbering[1]?'bolder':'normal')+';font-style:'+(fr.numbering[2]?'italic':'normal')+';">'+(fr.numbering[3].replace(/\$nonum(.*?)\$/g,'$1'.repeat(last_num-(i+'').length)).replace(/\$num\$/g,i))+'</font>'});
+					real_out = '<pre style="background:'+_background+';color:'+fr.def_text[0]+';font-weight:'+(fr.def_text[1]?'bolder':'normal')+';font-style:'+(fr.def_text[2]?'italic':'normal')+';">'+number2string(++numbering_cnt)+out.slice(1,-1).replace(/\n/g,()=>('<br>'+number2string(++numbering_cnt))).replace(/\t/g,' '.repeat(fr.space_in_tab[0]))+'</pre>';
+				} catch (err) {return  ['exe',err.message+'']}
+				UML_STYLE_CASH[hash] = real_out;
+				return real_out;
+			}
+			
+			function _onload() {
+				var e=document.getElementsByTagName('textarea')[0];
+				if (localStorage.getItem('__prog__')) {
+					e.value = localStorage.getItem('__prog__');
+				}
+				
+				
+				e.addEventListener('input', function() {
+					onedit(e.value);
+				}, false);
+				onedit(e.value);
+				setTimeout(()=>{onedit(e.value)},1000);
+				Object.values(document.getElementsByTagName('input')).map((e2)=>{e2.oninput=(()=>{setTimeout(()=>{onedit(e.value)},100)});});
+				var calcFiles=(event) => {
+					var fileread_map={};
+					var fileread_arrmap=[];
+					var fileread_cnt=0;
+					for (const file of event.target.files) 
+						if (file.type.indexOf('archive')<0 && file.size<1000000 && (file.type.indexOf('text')>=0 || file.type=='')) {
+							var name=file.webkitRelativePath||file.name;
+							fileread_arrmap.push(name);
+							fileread_map[name] = '__FILE__: "'+(file.webkitRelativePath||file.name)+'"'+'\n';
+							var fr = new FileReader(); 
+							fr.onloadend = function() {
+								fileread_map[this.__tag] += this.result;
+								fileread_cnt++;
+								if (fileread_cnt==fileread_arrmap.length)
+									document.getElementsByTagName('textarea')[0].value=fileread_arrmap.map((s)=>fileread_map[s]).join('\n');
+							};
+							fr.__tag=name;
+							fr.readAsText(file); 
+						}
+				};
+				document.getElementById("file_input_dir").addEventListener("change", calcFiles, false);
+				document.getElementById("file_input").addEventListener("change", calcFiles, false);
+			}
+			function onedit(s) {
+				var file_title = document.getElementById('table2_row1').children[1].children[0].value;
+				localStorage.setItem('__prog__', s);
+
+				var lines=s.split('\n');
+				var colect_inp=[];
+				var output_HTML='';
+				for (line of lines) {
+					if (/^__FILE__: ".*"/.test(line)) {
+						if (colect_inp.join('')!=0) {
+							try {
+								output_HTML+=code2style(colect_inp.join('\n'));
+							} catch (err) {return [line,err.message+'']}
+						}
+						output_HTML+=file_title.replace('$name$',line.replace(/^__FILE__: "(.*)"/,'$1'));
+						colect_inp=[];
+					}else
+						colect_inp.push(line);
+				}
+				if (colect_inp.join('')!=0)
+						output_HTML+=code2style(colect_inp.join('\n'));
+				document.getElementById('output_div').innerHTML = output_HTML;
+				
+				need_parse_UML(s);
+				
+				document.getElementById('uml_output_div').innerHTML = '';
+			}
+			
+			var ttt=-1;
+			var actual_s = '';
+			function need_parse_UML(s) {
+				actual_s = s;
+				
+				if (ttt!=-1)
+					clearTimeout(ttt), ttt=-1;
+				
+				if (ttt==-1)
+					ttt=setTimeout(()=>{
+						ttt=-1;
+						console.log('kek');
+						
+						var _background = document.getElementById('table1_row0').children[1].children[0].value;
+						var def_text = [document.getElementById('table1_row12').children[1].children[0].value,document.getElementById('table1_row12').children[2].children[0].checked,document.getElementById('table1_row12').children[3].children[0].checked];
+						document.getElementById('uml_output_div').innerHTML = '<pre style="background:'+_background+';color:'+def_text[0]+';font-weight:'+(def_text[1]?'bolder':'normal')+';font-style:'+(def_text[2]?'italic':'normal')+';">'+encodedStr(parseUML2(s))+'</pre>';
+					},500);
+			}
+			
+			function parseUML2(s) {
+				files = [];
+				var in_java_file = false;
+				for (line of (s+'\n__FILE__: ""').split('\n'))
+					if (/^__FILE__: ".*\.java"/.test(line))
+						in_java_file = true, files.push(['','',[]]); /*input_file, package, classes[full name, name, varible[], methods[]]*/
+					else if (/^__FILE__: ".*"/.test(line))
+						in_java_file = false;
+					else if (in_java_file == true)
+						files[files.length-1][0]+=line+'\n';
+				
+				for (var i = 0; i<files.length; i++) {
+					files[i][1] = files[i][0].match(/package\s+(\S*?)\s*;/);
+					if (files[i][1])
+						files[i][1] = files[i][1][1];
+					else
+						files[i][1] = '';
+				}
+				
+				//for (var i = 0; i<files.length; i++)
+				//	files[i][0] = files[i][0].replace(/\/\*[\S\s]*?\*\//g,'').replace(/\/\/.*/g,'');
+				var classes=[];
+				for (var i = 0; i < files.length; i++) {
+					var file = files[i][0];
+					
+					
+					// 0 - in global
+					// 1 - in class
+					var state = 0;
+					var addChar = (s)=>{if (state > 0) files[i][2][files[i][2].length-1][state==1?1:2] += s}
+					// 0 - def
+					// 1 - in comment /**/
+					// 2 - in comment //
+					// 3 - in string "
+					// 4 - in string '
+					var in_sub_string = 0;
+					
+					for (var j = 0; j < file.length; j++)
+						if (in_sub_string == 1) {
+							if (file[j-1] == '*' && file[j] == '/') in_sub_string = 0;
+							
+						} else if (in_sub_string == 2) {
+							if (file[j] == '\n') in_sub_string = 0;
+							
+						} else if (in_sub_string == 3) {
+							if (file[j-1] != '\\' && file[j] == '"') in_sub_string = 0;
+							addChar(file[j]);
+							
+						} else if (in_sub_string == 4) {
+							if (file[j-1] != '\\' && file[j] == "'") in_sub_string = 0;
+							addChar(file[j]);
+							
+						} else if (file[j] == '/' && file[j+1] == '*') {
+							in_sub_string = 1;
+							
+						} else if (file[j] == '/' && file[j+1] == '/') {
+							in_sub_string = 2;
+							
+						} else if (file[j] == '"') {
+							in_sub_string = 3;
+							addChar(file[j]);
+							
+						} else if (file[j] == "'") {
+							in_sub_string = 4;
+							addChar(file[j]);
+							
+						} else if (file[j] == '{' && state == 0) {
+							state++;
+							files[i][2].push([j, '', '', '', []]);
+							//addChar(file[j]);
+							
+						} else if (file[j] == '{' && state == 1) {
+							//files[i][2][3].push(j);
+							addChar('{}');
+							state++;
+							addChar(file[j]);
+							
+						} else if (file[j] == '{') {
+							state++;
+							addChar(file[j]);
+							
+						} else if (file[j]=='}') {
+							if (state != 1) addChar(file[j]);
+							if (state>0) state--;
+							
+						} else addChar(file[j]);
+					parse_class_name = function(s){
+						w = 0;
+						f = !0;
+						s = s.replace(/\n/g,'');
+						return s.replace(/(extends|implements)/g,'$1\n').split('').filter(x=>{
+							if (x=='<') w++;
+							var r=w<=0;
+							if (x=='>') w--;
+							if (x=='\n') {f=!r;return !1;}
+							return r||f;
+						}).join('');
+					};
+					for (var j = 0; j < files[i][2].length; j++) {
+						files[i][2][j][0] = parse_class_name(file.slice(0,files[i][2][j][0]).match(/(.*)\s*$/)[1].trim());
+						files[i][2][j][1] = files[i][2][j][1].replace(/@\S*/g,'').replace(/\s*{}/g,'{}').replace(/}/g,'}\n').replace(/;/g,';\n').replace(/\s*\n\s*/g,'\n').trim();
+						files[i][2][j][3] = files[i][2][j][3];
+						if (files[i][2][j][0].match(/class\s+(\S+)/)) files[i][2][j][3] = files[i][2][j][0].match(/class\s+([^\s<]+)/)[1];
+						if (files[i][2][j][0].match(/interface\s+(\S+)/)) files[i][2][j][3] = files[i][2][j][0].match(/interface\s+([^\s<]+)/)[1];
+						if (files[i][2][j][0].match(/enum\s+(\S+)/)) files[i][2][j][3] = files[i][2][j][0].match(/enum\s+([^\s<]+)/)[1];
+						classes.push([files[i][2][j][3], files[i][1]]);
+						
+						files[i][2][j][4] = (files[i][2][j][1].match(/(?<=new\s+)[^\s \(\){}\[\];<>]+/g)||[]).concat(files[i][2][j][2].match(/(?<=new\s+)[^\s \(\){}\[\];<>]+/g)||[]);
+					}
+				}
+				
+				var rnd_seed = 0;
+				
+				var UML = '@startuml\nscale max 4000 width\n';
+				var rnd__ = ()=>{rnd_seed += 14983; rnd_seed = rnd_seed%15013; return '-'.repeat(~~(Math.abs(rnd_seed)%100/100>.7)+1)};
+				for (i = 0; i<files.length; i++){
+					var _package = files[i][1];
+					for (j = 0; j<files[i][2].length; j++){
+						var _first_line = files[i][2][j][0].replace(/(public|private|protected|)\s+/,'');
+						for (k = 0;k<classes.length; k++)
+							_first_line = _first_line.replace(new RegExp('\\b'+classes[k][0]+'\\b',''), classes[k][1]==''?classes[k][0]:classes[k][1]+'.'+classes[k][0])
+						
+						var _body = files[i][2][j][1];
+						UML+=_first_line.replace(/final\s+/,'')+' {\n';
+						UML+=(_body+'\n').replace(/{}/g, '').replace(/;\n/g, '\n').replace(/private\s+/g,'-').replace(/protected\s+/g,'#').replace(/(public)\s+/g,'+');
+						UML+='}\n';
+						// classes.Lips -o enums.Texts
+						var iiii=10;
+						UML+=files[i][2][j][4].filter(x=>classes.map(y=>y[0]).indexOf(x)>=0).map(x=>(iiii-- > 0?'':"'!>10 ")+(_package==''?'':_package+'.')+files[i][2][j][3] + ' '+rnd__()+'down[#AAA]'+rnd__()+'o ' + (classes.filter(y=>y[0]==x)[0][1]==''?'':classes.filter(y=>y[0]==x)[0][1]+'.')+x).join('\n');
+						UML+='\n\n';
+					}
+				}
+				UML += '@enduml\n';
+				function compressUML(s) {
+					console.log(s.length);
+					var hash = string_hash(s);
+					if (UML_COMPRESS_CASH[hash]) {return UML_COMPRESS_CASH[hash]}
+					s = unescape(encodeURIComponent(s));
+					var arr = [];
+					for (var i = 0; i < s.length; i++) {
+						arr.push(s.charCodeAt(i));
+					}
+					var compressor = new Zopfli.RawDeflate(arr, {iterations:100});
+					var compressed = compressor.compress();
+					UML_COMPRESS_CASH[hash] = encode64_(compressed);
+					return UML_COMPRESS_CASH[hash];
+				}
+				function compress(inp) {
+					//UTF8
+					var pre = '/uml/';
+					var s = unescape(encodeURIComponent(inp));
+					var s2 = unescape(encodeURIComponent(inp.replace('scale max 4000 width\n','')));
+					var dest = "https://www.plantuml.com/plantuml" + pre + compressUML(s);
+					var dest2 = "https://www.plantuml.com/plantuml/png/" + compressUML(s);
+					var dest3 = "https://www.plantuml.com/plantuml/svg/" + compressUML(s2);
+					document.getElementById('uml_a').href = dest;
+					document.getElementById('uml_png').href = dest2;
+					document.getElementById('uml_svg').href = dest3;
+				}
+				compress(UML);
+				return UML;//JSON.stringify(files, null, "  ");//.join('\n==========\n')
+			}
+			
+			
+			function CopyToClipboard(containerid) {
+				if (window.getSelection) {
+					if (window.getSelection().empty) { // Chrome
+						window.getSelection().empty();
+					} else if (window.getSelection().removeAllRanges) { // Firefox
+						window.getSelection().removeAllRanges();
+					}
+				} else if (document.selection) { // IE?
+					document.selection.empty();
+				}
+				
+				if (document.selection) {
+					var range = document.body.createTextRange();
+					range.moveToElementText(document.getElementById(containerid));
+					range.select().createTextRange();
+					document.execCommand("copy");
+				} else if (window.getSelection) {
+					var range = document.createRange();
+					range.selectNode(document.getElementById(containerid));
+					window.getSelection().addRange(range);
+					document.execCommand("copy");
+				}
+			}
+			function buttclicktag(e,ee) {
+				var needopen=e.style.display=='';
+				ee.innerHTML=needopen?'Показать':'Скрыть';
+				e.style.display=needopen?'none':'';
+			}
+			function download() {
+				fetch(document.getElementById('uml_svg').href, {
+					"referrer": "",
+					"referrerPolicy": "strict-origin-when-cross-origin",
+					"body": null,
+					"method": "GET",
+					"mode": "cors",
+					"credentials": "omit"
+				}).then((response) => response.text()).then((s) => {
+					function copyStylesInline(destinationNode, sourceNode) {
+						var containerElements = ["svg","g"];
+						for (var cd = 0; cd < destinationNode.childNodes.length; cd++) {
+							var child = destinationNode.childNodes[cd];
+							if (containerElements.indexOf(child.tagName) != -1) {
+								 copyStylesInline(child, sourceNode.childNodes[cd]);
+								 continue;
+							}
+							//console.log(sourceNode.childNodes[cd]);
+							var style = sourceNode.childNodes[cd].currentStyle || window.getComputedStyle(sourceNode.childNodes[cd]);
+							if (style == "undefined" || style == null) continue;
+							for (var st = 0; st < style.length; st++){
+								 child.style.setProperty(style[st], style.getPropertyValue(style[st]));
+							}
+						}
+					}
+					
+					function triggerDownload (imgURI, fileName) {
+						var evt = new MouseEvent("click", {
+							view: window,
+							bubbles: false,
+							cancelable: true
+						});
+						var a = document.createElement("a");
+						a.setAttribute("download", fileName);
+						a.setAttribute("href", imgURI);
+						a.setAttribute("target", '_blank');
+						a.dispatchEvent(evt);
+					}
+					
+					function downloadSvg(svg, fileName, w, h) {
+						var copy = svg.cloneNode(true);
+						copyStylesInline(copy, svg);
+						var canvas = document.createElement("canvas");
+						var bbox = svg.getBBox();
+						canvas.width = w;
+						canvas.height = h;
+						var ctx = canvas.getContext("2d");
+						ctx.fillStyle = "#fff";
+						ctx.fillRect(0, 0, w, h);
+						var data = (new XMLSerializer()).serializeToString(copy);
+						var DOMURL = window.URL || window.webkitURL || window;
+						var img = new Image();
+						var svgBlob = new Blob([data], {type: "image/svg+xml;charset=utf-8"});
+						var url = DOMURL.createObjectURL(svgBlob);
+						img.onload = function () {
+							ctx.drawImage(img, 0, 0, w, h);
+							DOMURL.revokeObjectURL(url);
+							if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob)
+							{
+									var blob = canvas.msToBlob();
+									navigator.msSaveOrOpenBlob(blob, fileName);
+							} 
+							else {
+									var imgURI = canvas
+											.toDataURL("image/png")
+											.replace("image/png", "image/octet-stream");
+									triggerDownload(imgURI, fileName);
+							}
+							document.removeChild(canvas);
+						};
+						img.src = url;
+					}
+					//<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="1275.5027px" preserveAspectRatio="none" style="width:4000px;height:1275px;background:#FFFFFF;" version="1.1" viewBox="0 0 4000 1275" width="4000.4211px" zoomAndPan="magnify"><defs/>
+					var svgtag = document.getElementById('mysvg');
+					svgtag.style.display='';
+					var height = ~~s.match(/height="(\d*)/)[1];
+					var width = ~~s.match(/width="(\d*)/)[1];
+					var needwidth = prompt('write need width (default: '+width+', max 16000)');
+					if (0<~~needwidth<=16000) needwidth=~~needwidth; else needwidth = width;
+					
+					
+					svgtag.setAttribute("height", height+'px');
+					svgtag.setAttribute("width", width+'px');
+					svgtag.setAttribute("viewBox", s.match(/viewBox="(.*?)"/)[1]);
+					svgtag.innerHTML = s.match(/<svg .*?>(.*)<\/svg>/)[1].replace(/<!--.*?-->/g,'')
+					setTimeout(()=>{downloadSvg(svgtag,'uml.png', needwidth, Math.round(height/width*needwidth));svgtag.style.display='none';},100);
+				});
+			}
+		</script>
+		<style>
+			body {
+				margin: 0px;
+				text-shadow: -1px 2px 3px #000a;
+			}
+			body a {
+				color: #fff;
+			}
+			div::-webkit-scrollbar {
+				width: 10px;
+				height: 10px; 
+			}
+			div::-webkit-scrollbar-track {
+				background: linear-gradient(180deg, #17252a, #1d2e35);
+				box-shadow: inset -1px 1px 3px 1px #0007;
+				border-radius: 5px;
+			}
+			div::-webkit-scrollbar-thumb {
+				background-color: #3AAFA9;
+				border-radius: 5px;
+				border: 2px solid #2b7a78;
+			}
+			textarea::-webkit-scrollbar {
+				width: 12px;
+				height: 12px; 
+				cursor:pointer;
+			}
+			textarea::-webkit-scrollbar-track {
+				background: #ff000000;
+				border-radius: 5px;
+			}
+			textarea::-webkit-scrollbar-thumb {
+				background-color: white;
+				border-radius: 6px;
+				border: 3px solid #444446;
+			}
+			
+			
+			
+			pre::-webkit-scrollbar {
+				width: 12px;
+				height: 12px; 
+				cursor:pointer;
+			}
+			pre::-webkit-scrollbar-track {
+				background: #ff000000;
+				border-radius: 5px;
+			}
+			pre::-webkit-scrollbar-thumb {
+				background-color: white;
+				border-radius: 6px;
+				border: 3px solid #444446;
+			}
+			
+			.headDiv {
+				text-align: center;
+				font-size: 26px;
+				color: #def2f1;
+				margin: 5px;
+				margin-bottom: 0px;
+				background: #0002;
+				border-radius: 10px;
+				box-shadow: inset -1px 1px 1px 2px #0002;
+				padding: 5px;
+			}
+			.bodyDiv {
+				position: absolute;
+				top: 45px;
+				left: 0;
+				right: 0;
+				bottom: 25px;
+				font-size: 16px;
+				color: #def2f1;
+				margin: 5px;
+				margin-bottom: 0px;
+				background: #0002;
+				border-radius: 5px;
+				box-shadow: inset -1px 1px 1px 2px #0002;
+				padding: 5px;
+				overflow: auto;
+			}
+			.bodyDiv > h3 {
+				margin: 5px;
+				font-size: 16px;
+			}
+			.bodyDiv > textarea {
+				overflow: auto;
+				resize: vertical;
+				width: calc(100% - 10px);
+				padding: 5px;
+				border-radius: 5px;
+				background: #0002;
+				color: #fff;
+			}
+			.table_conteiner > table {
+				border-collapse: collapse; 
+				width: calc(100% - 10px);
+			}
+			.table_conteiner > table tr {
+				border-top: 5pt solid #0000;
+			}
+			.table_conteiner > table .checkboxinp {
+				width: 20px;
+			}
+			.table_conteiner > table .reginp {
+				width: 100%;
+				background: #0002;
+				color: #fff;
+				padding: 2px;
+				border-radius: 5px;
+			}
+			.table_conteiner > table .tabletext {
+				padding: 5px;
+				width: 160px;
+			}
+			.colorinp input {
+				background: #0002;
+				color: #fff;
+				width: 60px;
+				padding: 2px;
+				border-radius: 5px;
+			}
+			.colorinp {
+				width: 70px;
+			}
+			.footerDiv {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				text-align: end;
+				font-size: 11px;
+				margin: 5px;
+				margin-bottom: 0px;
+				background: #0002;
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
+				box-shadow: inset -1px 1px 1px 2px #0002;
+				padding: 5px;
+			}
+			pre {
+				margin: 0px;
+				padding: 6px;
+				border-radius: 6px;
+				overflow: auto;
+				text-shadow: 0px 0px 0px #000a;
+			}
+			h4 {
+				text-shadow: 0px 0px 0px #000a;
+			}
+			p {
+				margin: 5px 0px 0px 10px;
+			}
+			.inputFile {
+				margin: 0px 0px 5px 15px;
+			}
+			button {
+				margin-left: 7px;
+				background: #0000;
+				border: 2px solid #fffb;
+				border-radius: 8px;
+				color: #fff;
+			}
+		</style>
+	<body  onload="_onload();">
+		<div class="headDiv">code2colors</div>
+		<div class="bodyDiv">
+			<h3>Программа</h3>
+			<p>Вы можете загрузить 1 или более файла</p>
+			<input class="inputFile" type="file" id="file_input" multiple="multiple">
+			<p>или директорию с файлами</p>
+			<input class="inputFile" type="file" id="file_input_dir" webkitdirectory  multiple="multiple">
+			<textarea wrap="off" rows="12">__FILE__: "kek.sh"
+sudo rm -rf / # патч Бармина
+
+ls -R | grep "\..*:" | sed "s/://" | sed "s/^\./ls -1dp \./" | sed "s/$/\/\*/" | sh | grep -v "/$" | grep "\/c[^\/]*$" | xargs wc -l | sort -r
+__FILE__: "lol.java"
+import ru.ifmo.se.pokemon.*;
+
+// Лабораторная работа №2
+
+// == Battle ==
+// == Battle ==
+// == Battle ==
+
+public class lab2 {
+    public static void main(String[] args){
+        Battle b = new Battle();
+        Pokemon p1 = new Dialga("Dialga", 1);
+        Pokemon p2 = new Munchlax("Munchlax", 1);
+        Pokemon p3 = new Snorlax("Snorlax", 2);
+        Pokemon p4 = new Litwick("Litwick", 1);
+        Pokemon p5 = new Lampent("Lampent", 2);
+        Pokemon p6 = new Chandelure("Chandelure", 3);
+        b.addAlly(p1);
+        b.addAlly(p2);
+        b.addAlly(p3);
+        b.addFoe(p4);
+        b.addFoe(p5);
+        b.addFoe(p6);
+        b.go();
+    }
+}
+
+// == Pokemons ==
+// == Pokemons ==
+// == Pokemons ==
+
+class Dialga extends Pokemon{
+	public Dialga(String name, int level){
+		super(name, level);
+		setStats(100, 120, 120, 150, 100, 90);
+		setType(Type.STEEL, Type.DRAGON);
+		setMove(new ShadowClaw(), new ScaryFace(), new Thunderbolt(), new Blizzard());
+	}
+}
+</textarea>
+			<h3>Настройки <button class="buttclicktagclass" onclick="buttclicktag(document.getElementById('setup_table'),this)">Показать</button></h3>
+			<div id="setup_table" class="table_conteiner" style="display:none;">
+				<table>
+					<tr id="table1_row0"><td class="tabletext">Фон: </td>             <td class="colorinp"><input type="text" value="#FFF"/></td> <td class="checkboxinp"></td> <td class="checkboxinp"></td> <td></td></tr>
+					<tr id="table1_row1"><td class="tabletext">Строки: </td>          <td class="colorinp"><input type="text" value="#F00"/></td> <td class="checkboxinp"><input type="checkbox"></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="(&#34;&#34;|''|``|&#34;.*?[^\\]&#34;|'.*?[^\\]'|`(.|\n|\r)*?[^\\]`)"/></td></tr>
+					<tr id="table1_row2"><td class="tabletext">Коментарии: </td>      <td class="colorinp"><input type="text" value="#373"/></td> <td class="checkboxinp"><input type="checkbox" checked></td> <td class="checkboxinp"><input type="checkbox" checked></td> <td><input type="text" class="reginp" value="(#.*|\/\/.*|\/\*[\s\S]*?\*\/)"/></td></tr>
+					<tr id="table1_row3"><td class="tabletext">Ключевые символы: </td><td class="colorinp"><input type="text" value="#262"/></td> <td class="checkboxinp"><input type="checkbox" checked></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="[\.\*;:\(\){}\[\]\-\+/\\%,=!<>\|&]"/></td></tr>
+					<tr id="table1_row4"><td class="tabletext">Числа: </td>           <td class="colorinp"><input type="text" value="#00b"/></td> <td class="checkboxinp"><input type="checkbox"></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="\s\.\*;:\(\){}\[\]\-\+/\\%,=!<>__separator__(([1-9]\d*|0)(\.\d+)?|0b[01]+|0[0-7]+|0x[0-9A-Fa-f])"/></td></tr>
+					<tr id="table1_row5"><td class="tabletext">Примитивы: </td>       <td class="colorinp"><input type="text" value="#22F"/></td> <td class="checkboxinp"><input type="checkbox" checked></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="\s\.\*;:\(\){}\[\]\-\+/\\%,=!<>__separator__(var|String|List|Array|byte|short|int|long|float|double|boolean|char)"/></td></tr>
+					<tr id="table1_row6"><td class="tabletext">Ключевые слова: </td>  <td class="colorinp"><input type="text" value="#190"/></td> <td class="checkboxinp"><input type="checkbox" checked></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="\s\.\*;:\(\){}\[\]\-\+/\\%,=!<>__separator__(abstract|class|const|enum|final|instaceof|interface|native|package|private|protected|public|static|strictfp|synchronized|transient|void|volatile|________|read|write|append|pop|strip|split|join|open|print|list|len|map|reversed|range|filter)"/></td></tr>
+					<tr id="table1_row7"><td class="tabletext">Ключевые слова2: </td> <td class="colorinp"><input type="text" value="#990"/></td> <td class="checkboxinp"><input type="checkbox" checked></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="\s\.\*;:\(\){}\[\]\-\+/\\%,=!<>__separator__(def|import|in|lambda|nonlocal|or|and|with|as|________|new|extends|super|import|finally|if|for|goto|do|else|break|case|catch|assert|continue|default|implements|return|switch|this|throw|throws|try|while|______|wc|sh|ksh|bash|xargs|sudo|alias|apropos|apt-cdrom|apt-get|arch|badblocks|bunzip2|cal|cat|cd|cd-paranoia|cdrecord|chage|chattr|chgrp|chmod|chown|clock|comm|cp|date|dd|df|dhclient|dmidecode|dos2unix|dpkg|dpkg-query|du|dump|e2fsck|echo|ethtool|fdformat|find|free|fsck|fuser|gpg|grep|groupadd|groupdel|groupmod|grpck|gunzip|gzip|hdparm|head|host|hostname|ifconfig|ifdown|ifup|ip|iptables|iwconfig|iwlist|kill|last|ldd|less|ln|locate|logout|ls|lsattr|lsmod|lsof|lspci|lsusb|man|mii-tool|mkbootdisk|mkdir|mke2fs|mkfs|mkisofs|mkswap|more|mount|mv|nbtscan|netstat|newgrp|nmblookup|pacman|passwd|paste|ps|pstree|pwck|pwd|rar|recode|restore|rm|rmdir|route|rpm|rpm2cpio|rpmbuild|rsync|sed|shutdown|smartctl|smbclient|smbget|sort|strace|swapon|tac|tail|tar|tcpdump|top|touch|tree|umount|uname|unix2dos|unrar|unzip|useradd|userdel|usermod|watch|wget|whatis|whereis|which|yum|zip)"/></td></tr>
+					<tr id="table1_row8"><td class="tabletext">Ключевые слова3: </td> <td class="colorinp"><input type="text" value="#088"/></td> <td class="checkboxinp"><input type="checkbox" checked></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="\s\.\*;:\(\){}\[\]\-\+/\\%,=!<>__separator__([A-Z][a-z]+([A-Z][a-z]+)*)"/></td></tr>
+					<tr id="table1_row9"><td class="tabletext">Ключевые слова4: </td> <td class="colorinp"><input type="text" value="#660"/></td> <td class="checkboxinp"><input type="checkbox"></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="\.__separator__\s\.\*;:\(\){}\[\]\-\+/\\%,=!<>__separator__([A-Za-z]+)"/></td></tr>
+					<tr id="table1_row10"><td class="tabletext">Ключевые слова5: </td> <td class="colorinp"><input type="text" value="#C00"/></td> <td class="checkboxinp"><input type="checkbox"></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="\s__separator__@[A-Za-z]+"/></td></tr>
+					<tr id="table1_row11"><td class="tabletext">Ключевые слова6: </td> <td class="colorinp"><input type="text" value="#F00"/></td> <td class="checkboxinp"><input type="checkbox" checked></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value=""/></td></tr>
+					<tr id="table1_row12"><td class="tabletext">Основной текст: </td>  <td class="colorinp"><input type="text" value="#000"/></td> <td class="checkboxinp"><input type="checkbox"></td> <td class="checkboxinp"><input type="checkbox"></td> <td></td></tr>
+					<tr id="table1_row13"><td class="tabletext">Нумерация строк: </td> <td class="colorinp"><input type="text" value="#000"/></td> <td class="checkboxinp"><input type="checkbox"></td> <td class="checkboxinp"><input type="checkbox"></td> <td><input type="text" class="reginp" value="&#38;nbsp;$nonum $$num$&#38;nbsp;│&#38;nbsp;"/></td></tr>
+				</table>
+				<table>
+					<tr id="table2_row0"><td class="tabletext">Пробелов в табуляции: </td>     <td><input type="number" min="1" max="32" value="4" class="reginp"/></td></tr>
+					<tr id="table2_row1"><td class="tabletext">Шаблон заголовка файла: </td>   <td><input type="text" class="reginp" value="<h4 style=&#34;margin: 5px 0px;color: #000;background: #FFF;text-align: center;padding: 3px;font-size: 20px;border-radius: 10px;&#34;>$name$</h4>"/></td></tr>
+				</table>
+			</div>
+			<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" style="" viewBox="0 0 1 1" id="mysvg"></svg>
+			<h3><a id="uml_a" target="_blank">Диаграмма классов реализованной объектной модели</a> <a id="uml_png" target="_blank">[PNG]</a> <a id="uml_svg" target="_blank">[SVG]</a> <button class="buttclicktagclass" onclick="download();">Скачать PNG</button>  <button class="buttclicktagclass" onclick="CopyToClipboard('uml_output_div');">Копировать</button></h3>
+			<div id="uml_output_div">
+			</div>
+			<h3>Результат <button class="buttclicktagclass" onclick="CopyToClipboard('output_div');">Копировать</button></h3>
+			<div id="output_div">
+			</div>
+		</div>
+		<div class="footerDiv">Сайт создан ___</div>
+	</body>
+</html>
