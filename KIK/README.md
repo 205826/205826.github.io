@@ -1,5 +1,5 @@
 ## Письмо
-![](./KIK/mail.png)
+![](./mail.png)
 
 ## Архив
-[KIK.ZIP](./KIK/Кик.zip)
+[KIK.ZIP](./Кик.zip)
