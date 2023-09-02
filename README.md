@@ -1,5 +1,5 @@
 # Во славу \<T\>!
-* [Гайд по I курсу](http://imtjl.github.io/1st-year-guide)
+* [Гайд по I курсу](https://github.com/Imtjl/1st-year-guide/)
 * [Генераторы ответов](./T2P/T2P.html)
 * [Калькулятор](./calc.html)
 * [UML-генератор & раскраска программы для копирования в ворд](./C2C.html)
