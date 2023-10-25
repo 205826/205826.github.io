@@ -348,7 +348,7 @@
 				for (i = 0; i<files.length; i++){
 					var _package = files[i][1];
 					for (j = 0; j<files[i][2].length; j++){
-						var _first_line = files[i][2][j][0].replace(/(public|private|protected|)\s+/,'');
+						var _first_line = files[i][2][j][0].replace(/(public|private|protected)\s+/,'');
 						for (k = 0;k<classes.length; k++)
 							_first_line = _first_line.replace(new RegExp('\\b'+classes[k][0]+'\\b',''), classes[k][1]==''?classes[k][0]:classes[k][1]+'.'+classes[k][0])
 						
