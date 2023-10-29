@@ -16,6 +16,14 @@
 		"author": "T"
 	},
 	{
+		"id": 3,
+		"name": "discrete mathematics HW4",
+		"description": "discrete mathematics HW4",
+		"semester": "1",
+		"faculty": "ВТ",
+		"author": "owl from hogvarts (GUI by <T>)"
+	},
+	{
 		"id": 199995,
 		"name": "первая лабораторная по вебу",
 		"description": "Разработать PHP-скрипт, определяющий попадание точки на координатной...",
