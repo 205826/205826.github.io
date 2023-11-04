@@ -863,7 +863,7 @@ const divide = function divide(dividendInput, dividerInput) {
 };
 function isDivisionValid(currentReminder, dividendInput, dividerInput) {
     // copy registers (they should not be mutated)
-    const semiFirstStep = new Step({ title: "пробное вычитание" });
+    const semiFirstStep = new Step({ title: "пробное вычитание/сложение" });
     const dividend = dividendInput.snapshot();
     const divider = dividerInput.snapshot();
     const currentReminderHigh = new Register(currentReminder.highHalf);
@@ -873,17 +873,28 @@ function isDivisionValid(currentReminder, dividendInput, dividerInput) {
         // left shift dividend by one bit
         currentReminder.shiftLeft();
         semiFirstStep.operandDescription.push(new OperandDescription("<-R", currentReminder));
+		const BLow = new Register(Byte.fill(divider.WIDTH)).set(0);
+		BLow.subtract(divider);
+        semiFirstStep.operandDescription.push(new OperandDescription("B[доп]", BLow));
         currentReminderHigh.subtract(divider);
         semiFirstStep.operandDescription.push(new OperandDescription("R[1]", currentReminder, "после вычитания"));
         // subtract divider from high byte of dividend
     }
     else {
+        semiFirstStep.withComments("знаки делимого и делителя разные");
         // add divider with low byte of dividend
+		const BLow = new Register(Byte.fill(divider.WIDTH*2)).set(0);
+		BLow.add(divider);
+        semiFirstStep.operandDescription.push(new OperandDescription("B[пр]", BLow));
         currentReminder.add(divider);
+        semiFirstStep.operandDescription.push(new OperandDescription("R[1]", currentReminder));
         // left shift result by 1 bit
         currentReminder.shiftLeft();
+        semiFirstStep.operandDescription.push(new OperandDescription("<-R", currentReminder));
         // add divider with high byte of dividend
+        semiFirstStep.operandDescription.push(new OperandDescription("B[пр]", divider));
         currentReminderHigh.add(divider);
+        semiFirstStep.operandDescription.push(new OperandDescription("R[1]", currentReminder));
     }
     const firstBit = +(currentReminder.sign == divider.sign);
     currentReminder.shiftRight();
