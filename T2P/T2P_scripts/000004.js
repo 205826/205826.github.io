@@ -1,6 +1,6 @@
 //- name: discrete mathematics HW5
 //- description: discrete mathematics HW5
-//- author: owl from hogvarts (GUI by <T>)
+//- author: owl from hogvarts (GUI by &#60;T&#62;)
 //- semester: 1
 //- faculty: ВТ
 //- input: inline_string
