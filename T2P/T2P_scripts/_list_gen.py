@@ -19,6 +19,7 @@ for file_name in glob.glob("*.js"):
     
 
 
-f = open("_list.json", "w", encoding="utf-8")
+
+f = open("list.json", "w", encoding="utf-8")
 f.write(json.dumps(json_array, indent='\t', ensure_ascii=False))
 f.close()

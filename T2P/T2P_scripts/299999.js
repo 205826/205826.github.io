@@ -187,5 +187,4 @@ input.all.map(x=>x.id=='BA'?A=x.value.split('\n').map(x=>x.split(' ').map(x=>+x)
   var rez =M_tos(M_FSR(M_stepped(A)),true);
   out+='4.'+(rez==M_tos([],true)?M_tos([],true):rez)+'<br>';
 })();
-output.print(out+deb);
-return 0;
+return out+deb;

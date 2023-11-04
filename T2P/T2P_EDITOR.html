@@ -109,6 +109,7 @@
 		box-shadow: 0px 0px 0 3px #0006;
 		background: #0003;
 	}
+	
 	.target_input textarea, .target_output textarea {
 		margin: 5px;
 		width: calc(100% - 18px);
@@ -119,9 +120,33 @@
 	}
 	.target_input pre, .target_output pre {
 		margin: 5px;
-		display: inline-block;
-		
+		display: inline-block;	
 	}
+	.target_input table, .target_output table {
+		border-collapse: collapse;
+		border: 2px solid #fff;
+		text-align:center;
+	}
+	.target_input th, .target_output th {
+		border: 2px solid #fff;
+	}
+	.target_input td, .target_output td {
+		border: 2px solid #fff;
+	}
+	
+	#target_output_div.copystyle {
+		color:#000;
+		background:#fff;
+	}
+	#target_output_div.copystyle table {
+		border-collapse: collapse;
+		border: 2px solid #000;
+		text-align: center;
+	}
+	#target_output_div.copystyle th, #target_output_div.copystyle td {
+		border: 2px solid #000;
+	}
+	
 	.target_input select {
 		margin: 1px;
 		background: #0003;
@@ -695,6 +720,14 @@
 								if (val == 'pdf') so += '<div class="target_output ishtml scrolled">...</div>';
 								if (sep!=0) {
 									document.getElementById('output_div').innerHTML = so;
+									if(document.getElementById('target_output_div'))
+										document.getElementById('target_output_div').oncopy=()=>{
+											var e=document.getElementById('target_output_div');
+											e.classList.add("copystyle");
+											window.setTimeout(function() {
+												e.classList.remove("copystyle");
+											}, 0);
+										};
 									document.getElementById('output_div').style.height = 'calc('+(100-sep)+'% - 5px)';
 								}
 							}
