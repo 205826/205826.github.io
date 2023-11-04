@@ -4,7 +4,7 @@
 //- semester: 1
 //- faculty: ВТ
 //- input: inline_string
-//- input_default_value: 1911 27
+//- input_default_value: 1272 12
 //- output: html
 //- import: discrete_math
 output.print('<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;">');
@@ -13,6 +13,10 @@ output.print('Результат работы данной программы (�
 output.print('<h3 style="margin:0;">Разработчики</h3>');
 output.print('<b>owl-from-hogvarts</b> - создатель библиотеки для выполнения арифметических действий<br>'); 
 output.print('⟨T⟩ - графическая оболочка над библиотекой');
+output.print('</div><br>');
+
+output.print('<div style="background-color: #ff0000;color: #00ff00;text-align:center;border-radius:10px;font-size:20px">');
+output.print('!!!Обноружена ошибка, проверяйте результат работы алгоритма!!!');
 output.print('</div><br>');
 
 var pb = (b)=>b.data.join('');
@@ -89,12 +93,13 @@ result.steps.map((x,i)=>{
     output.print('    <td style="text-align:left;">[A]<sub>'+xx[4]+'</sub> ←<br>[-B]<sub>'+xx[7]+'</sub><br>R<sub>1</sub></td>');
   else if (i==0)
     output.print("    <td style=\"text-align:left;\">[B]<sub>"+xx[5]+"</sub><br>R<sub>1</sub>'<br>R<sub>1</sub>' ←<br>[B]<sub>"+xx[5]+"</sub><br>R<sub>1</sub></td>");
-  else if (i==result.steps.length-1&&mode)
+  else if (i==8)//result.steps.length-1&&mode)
   	output.print('    <td style="text-align:left;">[B]<sub>'+xx[5]+'</sub><br>R<sub>'+(i+1)+'</sub></td>');
   else{
     f=(x.operandDescription.length-2);
     output.print('    <td style="text-align:left;">'+['R<sub>'+i+'</sub> ←<br>[B]<sub>'+xx[5]+'</sub><br>R<sub>'+(i+1)+'</sub><br>&nbsp;','R<sub>'+i+'</sub> ←<br>[-B]<sub>'+xx[7]+'</sub><br>R<sub>'+(i+1)+'</sub><br>&nbsp;'][f]+'</td>');
   }
+  
   if (i==0&&mode)
     output.print('    <td>'+pb(x.operandDescription[0].data.bytes[0])+'<br>'+
                  '<u>'+pb(x.operandDescription[1].data.bytes[0])+'</u><br>'+
@@ -111,8 +116,8 @@ result.steps.map((x,i)=>{
                  pb(x.operandDescription[4].data.bytes[0])+'<br>'+
                  (pb(x.operandDescription[4].data.bytes[0])[0]==pb(b.bytes[1])[0]?'ЗнR<sub>1</sub> = ЗнB':'ЗнR<sub>1</sub> ≠ ЗнB')+
                  '</td>');
-  }else if (i==result.steps.length-1&&mode)
-    output.print('    <td><u>'+pb(b.bytes[1])+'</u><br>'+
+  }else if (i==8)//result.steps.length-1&&mode)
+    output.print('    <td><u>'+(pb(result.steps[7].operandDescription[result.steps[7].operandDescription.length-1].data.bytes[0])[0]!=pb(b.bytes[1])[0]?pb(b.bytes[1]):pb(nb.bytes[1]))+'</u><br>'+
                  pb(result.result[1].bytes[0])+
                  '</td>');
   else
@@ -133,7 +138,7 @@ result.steps.map((x,i)=>{
                  pb2(x.operandDescription[2].data.bytes[1],i+1)+'<br><br><br><br>'+
                  pb2(x.operandDescription[4].data.bytes[1],i+1).replace(/\d$/,pb(x.operandDescription[4].data.bytes[0])[0]!=pb(b.bytes[1])[0]?0:1)+'<br>&nbsp;'+
                  '</td>');
-  }else if (i==result.steps.length-1&&mode)
+  }else if (i==8)//result.steps.length-1&&mode)
   	output.print('    <td><br>'+
                  pb(result.result[0].bytes[0])+
                  '</td>');
@@ -146,7 +151,7 @@ result.steps.map((x,i)=>{
     output.print('    <td style="text-align:left;">Сдвиг делимого влево<br>Вычитание делителя<br>Знак первого остатка не совпадает со<br>знаком делимого-делителя корректно<br><br>Формирование цифры частного<br>&nbsp;</td>');
   else if (i==0)
     output.print('    <td style="text-align:left;">Сложение с делителем, выровненным<br>по младшим разрядам<br><br>Сдвиг остатка влево<br>Сложение с делителем выровненным по старшим разрядам<br>Знак первого остатка не совпадает<br>со знаком делимого-делителя корректно<br>Формирование знака частного<br>&nbsp;</td>');
-  else if (i==result.steps.length-1&&mode){
+  else if (i==8){//result.steps.length-1&&mode){
     output.print('    <td style="text-align:left;">Коррекция остатка: сложение с делителем<br>Результат</td>');
   }else
   	output.print('    <td style="text-align:left;">Сдвиг остатка влево<br>'+(f?'Вычитание делителя':'Сложение с делителем')+'<br>Формирование цифры частного<br>&nbsp;</td>');
