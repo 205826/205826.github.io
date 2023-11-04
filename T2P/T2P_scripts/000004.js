@@ -152,7 +152,7 @@ result.steps.map((x,i)=>{
   else if (i==0)
     output.print('    <td style="text-align:left;">Сложение с делителем, выровненным<br>по младшим разрядам<br><br>Сдвиг остатка влево<br>Сложение с делителем выровненным по старшим разрядам<br>Знак первого остатка не совпадает<br>со знаком делимого-делителя корректно<br>Формирование знака частного<br>&nbsp;</td>');
   else if (i==8){//result.steps.length-1&&mode){
-    output.print('    <td style="text-align:left;">Коррекция остатка: сложение с делителем<br>Результат</td>');
+    output.print('    <td style="text-align:left;">Коррекция остатка: '+(pb(result.steps[7].operandDescription[result.steps[7].operandDescription.length-1].data.bytes[0])[0]!=pb(b.bytes[1])[0]?'сложение с делителем':'вычитание делителя')+'<br>Результат</td>');
   }else
   	output.print('    <td style="text-align:left;">Сдвиг остатка влево<br>'+(f?'Вычитание делителя':'Сложение с делителем')+'<br>Формирование цифры частного<br>&nbsp;</td>');
   output.print('  </tr>');
