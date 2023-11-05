@@ -137,7 +137,7 @@ result.steps.map((x,i)=>{
   var md=x.operandDescription[x.operandDescription.length-1].data.bytes[0].data[0];
   //output.print(md);
   output.print('    <td>'+x.operandDescription.map((y,ii)=>y.data.bytes[1]?pb2(y.data.bytes[1],y.data.cursorPosition,ii==x.operandDescription.length-1&& i<7):'').join('<br>')+'</td>');
-  output.print('    <td style="text-align:left;">'+([md?'Модифицированный сдвиг СЧП и множителя вправо':'Сдвиг СЧП и множителя вправо','!!!!!!!!!!!!!!',(x.operandDescription[0].comment.indexOf('складываем')?'Вычитание СЧП с множимым<br><br>':'Сложение СЧП с множимым<br><br>')+(md?'Модифицированный сдвиг СЧП и множителя вправо':'Сдвиг СЧП и множителя вправо')][x.operandDescription.length-1])+'</td>');
+  output.print('    <td style="text-align:left;">'+([md?'Арифметический сдвиг СЧП и множителя вправо':'Арифметический сдвиг СЧП и множителя вправо','!!!!!!!!!!!!!!',(x.operandDescription[0].comment.indexOf('складываем')?'Вычитание СЧП с множимым<br><br>':'Сложение СЧП с множимым<br><br>')+(md?'Арифметический сдвиг СЧП и множителя вправо':'Арифметический сдвиг СЧП и множителя вправо')][x.operandDescription.length-1])+'</td>');
   output.print('  </tr>');
 });
 output.print('</table><br>');
