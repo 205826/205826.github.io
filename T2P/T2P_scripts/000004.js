@@ -15,9 +15,9 @@ output.print('<b>owl-from-hogvarts</b> - создатель библиотеки
 output.print('⟨T⟩ - графическая оболочка над библиотекой');
 output.print('</div><br>');
 
-output.print('<div style="background-color: #ff0000;color: #00ff00;text-align:center;border-radius:10px;font-size:20px">');
-output.print('!!!Обноружена ошибка, проверяйте результат работы алгоритма!!!');
-output.print('</div><br>');
+//output.print('<div style="background-color: #ff0000;color: #00ff00;text-align:center;border-radius:10px;font-size:20px">');
+//output.print('!!!Обноружена ошибка, проверяйте результат работы алгоритма!!!');
+//output.print('</div><br>');
 
 var pb = (b)=>b.data.join('');
 var pb2 = (b,i,bb)=>b.data.map((x,j)=>(j==7&&bb?'<b>':'')+x+(i==7-j&&j!=7?'|':'')+(j==7&&bb?'</b>':'')).join('');
