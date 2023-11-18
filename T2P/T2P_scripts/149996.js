@@ -277,11 +277,11 @@ var shift= offsetF1+offsetBF1;
 var nshift=shift;
 output.print('</table><br>');
 var otvF1 = calcansv.toString(16).toUpperCase().padStart(6, "0").replace(/0+$/,'');
-if (otvF1[0]==='0') output.print('Результат произведения денормализован<br><br>');
 while (otvF1[0]==='0'){
   otvF1=otvF1.slice(1);
   nshift--;
 }
+if (nshift!=shift) output.print('X<sub>C</sub> = X<sub>C</sub> – '+(shift-nshift)+'<br><br>');
 output.print('С = (0,'+otvF1.replace(/([\dA-F]{0,3}).*$/,'$1')+')<sub>16</sub> · 2<sup>'+nshift+'</sup> = '+((parseInt(otvF1.replace(/([\dA-F]{0,3}).*$/,'$1').padEnd(3, "0"),16)*(16**(nshift-3))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
 output.print('<br>');
 output.print('Определим абсолютную и относительную погрешности результата:<br>');
@@ -424,12 +424,12 @@ var shift= offsetF2+offsetBF2;
 var nshift=shift;
 output.print('</table><br>');
 var otvF2 = calcansv.toString(2).toUpperCase().padStart(6*4, "0").replace(/0+$/,'');
-if (otvF2[0]==='0') output.print('Результат произведения денормализован<br><br>');
 while (otvF2[0]==='0'){
   otvF2=otvF2.slice(1);
   nshift--;
 }
 
+if (nshift!=shift) output.print('X<sub>C</sub> = X<sub>C</sub> – '+(shift-nshift)+'<br><br>');
 output.print('С = (0,'+otvF2.replace(/([\dA-F]{0,12}).*$/,'$1')+')<sub>2</sub> · 2<sup>'+nshift+'</sup> = '+((parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
 output.print('<br>');
 output.print('Определим абсолютную и относительную погрешности результата:<br>');
@@ -456,7 +456,7 @@ if (Math.abs(pogr2-pogr)<1/10**8){
   output.print('Погрешности результатов вызваны неточным представлением операндов. В формате Ф1 и Ф2 операнды представлены одинаково точно.');
 }else {
   output.print('<br>');
-  output.print('Погрешности результатов вызваны неточным представлением операндов.'+(nshift==shift?' В формате Ф2 операнды представлены точнее и погрешность меньше.':' В формате Ф2 при нормализации результата сдвиг производился на один двоичный разряд, а не на четыре.'));
+  output.print('Погрешности результатов вызваны неточным представлением операндов.'+(nshift==shift||Math.random()>0.25?' В формате Ф2 операнды представлены точнее и погрешность меньше.':' В формате Ф2 при нормализации результата сдвиг производился на один двоичный разряд, а не на четыре.'));
 }
 
 
