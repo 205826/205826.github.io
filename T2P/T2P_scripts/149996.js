@@ -430,7 +430,7 @@ while (otvF2[0]==='0'){
   nshift--;
 }
 
-output.print('С = (0,'+otvF2.replace(/([\dA-F]{0,12}).*$/,'$1')+')<sub>16</sub> · 2<sup>'+nshift+'</sup> = '+((parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
+output.print('С = (0,'+otvF2.replace(/([\dA-F]{0,12}).*$/,'$1')+')<sub>2</sub> · 2<sup>'+nshift+'</sup> = '+((parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
 output.print('<br>');
 output.print('Определим абсолютную и относительную погрешности результата:<br>');
 output.print('ΔС =  '+ansv.toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+' – '+(parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12))).toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+' = '+(ansv-(parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12)))).toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+'<br>');
