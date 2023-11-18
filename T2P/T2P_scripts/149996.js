@@ -13,9 +13,11 @@ output.print('<h2 style="margin:0;">Дисклеймер</h2>');
 output.print('Результат работы данной программы (далее результат) предоставляется только с целью подготовки. Разработчики не несут никакой ответственности за использование этого результата. Продажа результата без разрешения разработчиков запрещена.');
 output.print('<h3 style="margin:0;">Разработчики</h3>');
 output.print('<b>owl-from-hogvarts</b> - создатель библиотеки для выполнения арифметических действий<br>'); 
-output.print('⟨T⟩ - графическая оболочка над библиотекой');
+output.print('⟨T⟩ - графическая оболочка над библиотекой<br>');
+output.print('v3.0<br>');
 output.print('</div><br>');
 //output.all='';
+var printmul = Math.random()>0.5?(Math.random()>0.5?'*':'<sup>*</sup>'):'';
 function toBin(a){
   var s='';
     new Array(92).fill(0).map((x,i)=>51-i).map(x=>{
@@ -282,7 +284,7 @@ while (otvF1[0]==='0'){
   nshift--;
 }
 if (nshift!=shift) output.print('X<sub>C</sub> = X<sub>C</sub> – '+(shift-nshift)+'<br><br>');
-output.print('С = (0,'+otvF1.replace(/([\dA-F]{0,3}).*$/,'$1')+')<sub>16</sub> · 2<sup>'+nshift+'</sup> = '+((parseInt(otvF1.replace(/([\dA-F]{0,3}).*$/,'$1').padEnd(3, "0"),16)*(16**(nshift-3))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
+output.print('С'+printmul+' = (0,'+otvF1.replace(/([\dA-F]{0,3}).*$/,'$1')+')<sub>16</sub> · 2<sup>'+nshift+'</sup> = '+((parseInt(otvF1.replace(/([\dA-F]{0,3}).*$/,'$1').padEnd(3, "0"),16)*(16**(nshift-3))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
 output.print('<br>');
 output.print('Определим абсолютную и относительную погрешности результата:<br>');
 output.print('ΔС =  '+ansv.toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+' – '+(parseInt(otvF1.replace(/([\dA-F]{0,3}).*$/,'$1').padEnd(3, "0"),16)*(16**(nshift-3))).toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+' = '+(ansv-(parseInt(otvF1.replace(/([\dA-F]{0,3}).*$/,'$1').padEnd(3, "0"),16)*(16**(nshift-3)))).toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+'<br>');
@@ -430,7 +432,7 @@ while (otvF2[0]==='0'){
 }
 
 if (nshift!=shift) output.print('X<sub>C</sub> = X<sub>C</sub> – '+(shift-nshift)+'<br><br>');
-output.print('С = (0,'+otvF2.replace(/([\dA-F]{0,12}).*$/,'$1')+')<sub>2</sub> · 2<sup>'+nshift+'</sup> = '+((parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
+output.print('С'+printmul+' = (0,'+otvF2.replace(/([\dA-F]{0,12}).*$/,'$1')+')<sub>2</sub> · 2<sup>'+nshift+'</sup> = '+((parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
 output.print('<br>');
 output.print('Определим абсолютную и относительную погрешности результата:<br>');
 output.print('ΔС =  '+ansv.toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+' – '+(parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12))).toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+' = '+(ansv-(parseInt(otvF2.replace(/([\dA-F]{0,12}).*$/,'$1').padEnd(12, "0"),2)*(2**(nshift-12)))).toFixed(8).replace(/\.?0+$/, '').replace(/\./, ',')+'<br>');
