@@ -283,7 +283,7 @@ while (otvF1[0]==='0'){
   otvF1=otvF1.slice(1);
   nshift--;
 }
-if (nshift!=shift) output.print('X<sub>C</sub> = X<sub>C</sub> – '+(shift-nshift)+'<br><br>');
+//if (nshift!=shift) output.print('X<sub>C</sub> = X<sub>C</sub> – '+(shift-nshift)+'<br><br>');
 output.print('С'+printmul+' = (0,'+otvF1.replace(/([\dA-F]{0,3}).*$/,'$1')+')<sub>16</sub> · 16<sup>'+nshift+'</sup> = '+((parseInt(otvF1.replace(/([\dA-F]{0,3}).*$/,'$1').padEnd(3, "0"),16)*(16**(nshift-3))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
 output.print('<br>');
 output.print('Определим абсолютную и относительную погрешности результата:<br>');
