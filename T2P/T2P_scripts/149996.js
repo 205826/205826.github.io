@@ -283,7 +283,7 @@ while (otvF1[0]==='0'){
   otvF1=otvF1.slice(1);
   nshift--;
 }
-//if (nshift!=shift) output.print('X<sub>C</sub> = X<sub>C</sub> – '+(shift-nshift)+'<br><br>');
+if (nshift!=shift) output.print('X<sub>C</sub> = X<sub>C</sub> – '+(shift-nshift)+'<br><br>');
 output.print('С'+printmul+' = (0,'+otvF1.replace(/([\dA-F]{0,3}).*$/,'$1')+')<sub>16</sub> · 16<sup>'+nshift+'</sup> = '+((parseInt(otvF1.replace(/([\dA-F]{0,3}).*$/,'$1').padEnd(3, "0"),16)*(16**(nshift-3))).toFixed(8).replace(/\.?0+$/, '')).replace('.',',')+'.<br>');
 output.print('<br>');
 output.print('Определим абсолютную и относительную погрешности результата:<br>');
@@ -373,6 +373,7 @@ result.steps.map((x,i)=>{
     if (x.operandDescription.length-1==yi) return;
     op_list.push(nameReplace(x.operandDescription[yi].operandName,1));
   });
+  if (i!=3)
   new Array(3-x.operandDescription.length).fill(0).map(()=>{
     op_list.push(nameReplace('0A',1));
   });
@@ -385,20 +386,20 @@ result.steps.map((x,i)=>{
     x.operandDescription[yi].data.bytes.map(x=>pb(x)).join('').replace(/\d*(\d{17})/,'$1').split('').map(x=>output.print('    <td>'+x+'</td>'));
     if (first){
       first--;
-      new Array(8).fill(0).map((_,_2)=>output.print('    <td'+(_2?'':' style="border-left:3px solid"')+'></td>'));
+      new Array(12-op_list.length*2).fill(0).map((_,_2)=>output.print('    <td'+(_2?'':' style="border-left:3px solid"')+'></td>'));
       op_list.map(x=>output.print('    <td colspan=2>'+x+'</td>'));
     }else{
       new Array(12).fill(0).map((_,_2)=>output.print('    <td'+(_2?'':' style="border-left:3px solid"')+'></td>'));
     }
     output.print('  </tr>');
   });
-  new Array(3-x.operandDescription.length).fill(0).map(()=>{
+  op_list.filter(x=>x==nameReplace('0A',1)).map(()=>{
     output.print('  <tr>');
     output.print('    <td style="border-left:3px solid;border-right:3px solid;">'+nameReplace('0A')+'</td>');
     new Array(17).fill(0).map(()=>output.print('    <td>0</td>'));
     if (first){
       first--;
-      new Array(8).fill(0).map((_,_2)=>output.print('    <td'+(_2?'':' style="border-left:3px solid"')+'></td>'));
+      new Array(12-op_list.length*2).fill(0).map((_,_2)=>output.print('    <td'+(_2?'':' style="border-left:3px solid"')+'></td>'));
       op_list.map(x=>output.print('    <td colspan=2>'+x+'</td>'));
     }else{
       new Array(12).fill(0).map((_,_2)=>output.print('    <td'+(_2?'':' style="border-left:3px solid"')+'></td>'));
@@ -409,13 +410,13 @@ result.steps.map((x,i)=>{
   new Array(2).fill(0).map((nx,op)=>{
     if (i==3&&op)return;
   output.print('  <tr>');
-  if (!op)output.print('    <td rowspan='+(i==3?'1':'4')+' style="border-top:3px solid">'+(i==3?'':(i+1))+'</td>');
+  if (!op)output.print('    <td rowspan='+(i==2?result.steps[i+1].operandDescription.length+1:(i==3?1:4))+' style="border-top:3px solid">'+(i==3?'':(i+1))+'</td>');
   output.print('    <td style="border-left:3px solid;border-right:3px solid;'+(!op?'border-top:3px solid':'')+'">'+(!op?'СЧП':'СЧП->4')+'</td>');
   shiftSCHP.data.bytes.map(x=>pb(x)).join('').replace((!op?/\d{19}(\d{29})\d*/:/\d{15}(\d{29})\d*/),'$1').split('').map((z,zi)=>{
     if (b_text[zi-17-op*4-i*4])output.print('    <td style="'+(!op?'border-top:3px solid;':'')+(zi-17-op*4-i*4==0?'border-left:3px solid;':'')+'">'+b_text[zi-17-op*4-i*4]+'</td>');
     else output.print('    <td style="'+(zi==17?'border-left:3px solid;':'')+(!op?'border-top:3px solid':'')+'">'+z+'</td>');
   });
-  if (!op)output.print('    <td rowspan='+(i==3?'1':'4')+' style="border-top:3px solid">'+(i==3?'':result.steps[i+1].comments[0].split(':')[1])+'</td>');
+  if (!op)output.print('    <td rowspan='+(i==2?result.steps[i+1].operandDescription.length+1:(i==3?1:4))+' style="border-top:3px solid">'+(i==3?'':result.steps[i+1].comments[0].split(':')[1])+'</td>');
   output.print('  </tr>');
   });
 });
