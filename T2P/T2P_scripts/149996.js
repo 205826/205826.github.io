@@ -243,7 +243,7 @@ result.steps.map((x,i)=>{
       else 
         output.print('    <td style="border-left:3px solid;border-right:3px solid;">'+x.operandDescription[yi].operandName+'</td>');
       x.operandDescription[yi].data.bytes.map(x=>pb(x)).join('').replace(/\d{17}(\d{27})\d*/,'$1').split('').map((z,zi)=>{
-        if (b_text[zi-15-(yi>0?2:0)-i*2])output.print('    <td'+(zi-15-(yi>0?2:0)-i*2==0?' style="border-left:3px solid;"':'')+'>'+b_text[zi-15-(yi>1?2:0)-i*2]+'</td>');
+        if (b_text[zi-15-(yi>0?2:0)-i*2])output.print('    <td'+(zi-15-(yi>0?2:0)-i*2==0?' style="border-left:3px solid;"':'')+'>'+b_text[zi-15-(yi>0?2:0)-i*2]+'</td>');
         else output.print('    <td'+(zi==15?' style="border-left:3px solid;"':'')+'>'+z+'</td>');
       });
       output.print('  </tr>');
