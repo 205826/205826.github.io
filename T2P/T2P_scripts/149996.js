@@ -226,7 +226,7 @@ var result = discrete_math.multiplyFast2(a, b);
 var nameReplace=(x,add)=>x.replace(/[АA]/,'M<sub>A</sub>').replace(/(.*)/,(x)=>(add?x:('['+x+']<sub>'+(x[0]=='-'?'доп':'пр')+'</sub>')));
 result.steps.map((x,i)=>{
   if (i>6) return;
-  if (x.operandDescription.length==2){
+  if (x.operandDescription.length==2 && i<6){
     output.print('  <tr>');
     output.print('    <td rowspan=3 style="border-top:3px solid;">'+(i+1)+'</td>');
     output.print('    <td style="border-left:3px solid;border-right:3px solid;border-top:3px solid;">0</td>');
@@ -246,6 +246,30 @@ result.steps.map((x,i)=>{
         if (b_text[zi-15-(yi>0?2:0)-i*2])output.print('    <td'+(zi-15-(yi>0?2:0)-i*2==0?' style="border-left:3px solid;"':'')+'>'+b_text[zi-15-(yi>0?2:0)-i*2]+'</td>');
         else output.print('    <td'+(zi==15?' style="border-left:3px solid;"':'')+'>'+z+'</td>');
       });
+      output.print('  </tr>');
+    });
+  }else if (x.operandDescription.length==2){
+
+    x.operandDescription.map((y,yi)=>{
+      var flag=0;
+      if (i==6&&yi==1){flag=1;yi=0; y=x.operandDescription[yi];}
+      output.print('  <tr>');
+      if (!flag)  output.print('    <td rowspan=2 style="border-top:3px solid;">'+(i+1)+'</td>');
+      if (flag)
+        output.print('    <td style="border-left:3px solid;border-right:3px solid;">M<sub>C</sub></td>');
+      else 
+        output.print('    <td style="border-left:3px solid;border-right:3px solid;border-top:3px solid;">'+x.operandDescription[yi].operandName+'</td>');
+      if (flag)
+        x.operandDescription[yi].data.bytes.map(x=>pb(x)).join('').replace(/\d{17}(\d{27})\d*/,'$1').split('').map((z,zi)=>{
+          if (b_text[zi-15-(yi>0?2:0)-i*2])output.print('    <td'+(zi-15-(yi>0?2:0)-i*2==0?' style="border-left:3px solid;"':'')+'>'+b_text[zi-15-(yi>0?2:0)-i*2]+'</td>');
+          else output.print('    <td'+(zi==15?' style="border-left:3px solid;"':'')+'>'+z+'</td>');
+        });
+      else
+        x.operandDescription[yi].data.bytes.map(x=>pb(x)).join('').replace(/\d{17}(\d{27})\d*/,'$1').split('').map((z,zi)=>{
+          if (b_text[zi-15-(yi>0?2:0)-i*2])output.print('    <td style="border-top:3px solid;'+(zi-15-(yi>0?2:0)-i*2==0?'border-left:3px solid;':'')+'">'+b_text[zi-15-(yi>0?2:0)-i*2]+'</td>');
+          else output.print('    <td style="border-top:3px solid;'+(zi==15?'border-left:3px solid;':'')+'">'+z+'</td>');
+        });
+      if (!flag) output.print('    <td rowspan=3 style="border-top:3px solid;">'+x.comments[0].split(':')[1]+'</td>');
       output.print('  </tr>');
     });
   }else{
