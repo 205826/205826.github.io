@@ -23,8 +23,8 @@
 //- input_default_value: Примеры записи ответа: 5; -4.1; 0.07.<br>
 
 //- input_default_value: <h2>Задача 4</h2>Составьте уравнение касательной плоскости к поверхности<br>
-//- input_default_value: $$f(x,y) =$$ <input type="text" style="width:200px" id="T4F" value="x^2+y^2+10z^3+17x+10y+3"><br>
-//- input_default_value: в точке М(<input type="text" style="width:100px" id="T4M" value="-8, -2, 8.5^(1/3)">).<br>
+//- input_default_value: <input type="text" style="width:200px" id="T4F" value="x^2+y^2+5z^3+5x+4y+9"> $$= 0$$<br>
+//- input_default_value: в точке М(<input type="text" style="width:100px" id="T4M" value="-2, -1, 0^(1/3)">).<br>
 //- input_default_value: Приведите уравнение плоскости к виду<br>
 //- input_default_value: $$x + \beta y + \gamma z + \delta = 0$$<br>
 //- input_default_value: и запишите в ответ числа $$\beta, \gamma,  \delta$$.<br>
@@ -133,9 +133,11 @@ output.print('<h3 style="margin:10px 0px 0px 10px;">Задача 4</h3>');
   if (M.length!=3) return output.print('M.length!=3<br>'); 
   
   var Mobj = {x: M[0], y: M[1], z: M[2]}; 
-  var funcbyx = +math.derivative(func,'x').evaluate(Mobj).toString(); 
-  var funcbyy = +math.derivative(func,'y').evaluate(Mobj).toString();  
-  var asv = math.parse('('+funcbyx+')*(x-('+M[0]+'))+('+funcbyy+')*(y-('+M[1]+'))-(z-('+M[2]+'))');
+  var funcbyx = +math.derivative(math.simplify(func),'x').evaluate(Mobj).toString(); 
+  var funcbyy = +math.derivative(math.simplify(func),'y').evaluate(Mobj).toString(); 
+  var funcbyz = +math.derivative(math.simplify(func),'z').evaluate(Mobj).toString();
+  output.print(math.derivative(math.simplify(func),'y').toString());
+  var asv = math.parse('('+funcbyx+')*(x-('+M[0]+'))+('+funcbyy+')*(y-('+M[1]+'))+('+funcbyz+')*(z-('+M[2]+'))');
   
   var d = asv.evaluate({x:0,y:0,z:0});
   var bx = asv.evaluate({x:1,y:0,z:0})-d;
