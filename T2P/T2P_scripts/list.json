@@ -16,6 +16,14 @@
 		"author": "T"
 	},
 	{
+		"id": 149995,
+		"name": "discrete mathematics HW8",
+		"description": "discrete mathematics HW8",
+		"semester": "1",
+		"faculty": "ВТ",
+		"author": "&#60;T&#62;"
+	},
+	{
 		"id": 149996,
 		"name": "discrete mathematics HW7",
 		"description": "discrete mathematics HW7",
@@ -86,6 +94,14 @@
 		"semester": "2",
 		"faculty": "ВТ",
 		"author": "T"
+	},
+	{
+		"id": 299996,
+		"name": "GL ФНП ",
+		"description": "GL ФНП",
+		"semester": "3",
+		"faculty": "ВТ",
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 299997,
