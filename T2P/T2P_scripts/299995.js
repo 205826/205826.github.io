@@ -5,8 +5,8 @@
 //- faculty: ВТ
 //- input: html_gl
 //- input_default_value: <h2>Задача 1</h2>Вычислить, изменив порядок интегрирования<br><br>
-//- input_default_value: <input type="text" style="width:100px" id="T1F" value="6^(-4/4)"> $$\int_0^{A^{B-1}} dy \int_{y^{1/(B-1)}}^A \sqrt[B]{A^B-x^B} dx$$.<br><br>
-//- input_default_value: при $$A$$ = <input type="text" id="T1A" value="6">, $$B$$ = <input type="text" id="T1B" value="4">.<br>
+//- input_default_value: <input type="text" style="width:100px" id="T1F" value="8^(-10/4)"> $$\int_0^{A^{B-1}} dy \int_{y^{1/(B-1)}}^A \sqrt[C]{A^B-x^B} dx$$.<br><br>
+//- input_default_value: при $$A$$ = <input type="text" id="T1A" value="8">, $$B$$ = <input type="text" id="T1B" value="10">, $$C$$ = <input type="text" id="T1C" value="4">.<br>
 //- input_default_value: Формат ответа: целое число или десятичная дробь.<br>
 //- input_default_value: Примеры записи ответа: 5; -4.1; 0.07.<br>
 
@@ -18,13 +18,13 @@
 
 //- input_default_value: <h2>Задача 3</h2>Вычислите<br>
 //- input_default_value: $$\int_L \sin$$<input type="text" id="T3A" value="9" style="vertical-align: super;">$$x \cos^2x\ ds$$<br>
-//- input_default_value: Где L - кривая $$y=ln(2\cos x), x \in [$$<input type="text" style="width:100px" id="T3L" value="-2pi/4">, <input type="text" style="width:100px" id="T3R" value="2pi/4">$$]$$.<br>
+//- input_default_value: Где L - кривая $$y=ln(A\cos x), x \in [$$<input type="text" style="width:100px" id="T3L" value="-2pi/4">, <input type="text" style="width:100px" id="T3R" value="2pi/4">$$]$$.<br>
 //- input_default_value: Формат ответа: целое число или десятичная дробь.<br>
 //- input_default_value: Примеры записи ответа: 5; -4.1; 0.07.<br>
 
 //- input_default_value: <h2>Задача 4</h2>Вычислите<br>
-//- input_default_value: $$\int_\Gamma y$$<input type="text" id="T4A" value="4" style="vertical-align: super;">$$dx + x$$<input type="text" id="T4B" value="16" style="vertical-align: super;">$$dy$$,<br>
-//- input_default_value: где $$\Gamma$$ - ломаная, соеденяющая точки (<input type="text" id="T4P1" value="-2, 0">), (<input type="text" id="T4P2" value="0, 10">), (<input type="text" id="T4P3" value="2, 0">).<br>
+//- input_default_value: $$\int_\Gamma y$$<input type="text" id="T4A" value="9" style="vertical-align: super;">$$dx + x$$<input type="text" id="T4B" value="16" style="vertical-align: super;">$$dy$$,<br>
+//- input_default_value: где $$\Gamma$$ - ломаная, соеденяющая точки (-A, 0), (0, <input type="text" id="T4D" value="2">), (A, 0), при A = <input type="text" id="T4C" value="6">.<br>
 //- input_default_value: Формат ответа: целое число или десятичная дробь.<br>
 //- input_default_value: Примеры записи ответа: 5; -4.1; 0.07.<br>
 
@@ -36,7 +36,6 @@
 
 //- output: html
 //- import: math
- 
 
 output.print('<h3 style="margin:10px 0px 0px 10px;">Задача 1</h3>');
 (()=>{ 
@@ -44,9 +43,10 @@ output.print('<h3 style="margin:10px 0px 0px 10px;">Задача 1</h3>');
   var func = math.evaluate(input.by_id('T1F').value);
   var A = math.evaluate(input.by_id('T1A').value);
   var B = math.evaluate(input.by_id('T1B').value);
+  var C = math.evaluate(input.by_id('T1C').value);
   
   output.print('<textarea style="width:300px;height:40px;vertical-align:middle;">');
-  output.print((func*((A**(B+1))/(B+1))).toFixed(8).replace(/\.?0+$/, '')); 
+  output.print((func*((C*A**(B*(C+1)/C))/((C+1)*B))).toFixed(7).replace(/\.?0+$/, '')); 
   output.print('</textarea><br>'); 
 })(); 
  
@@ -78,26 +78,13 @@ output.print('<h3 style="margin:10px 0px 0px 10px;">Задача 3</h3>');
  
 output.print('<h3 style="margin:10px 0px 0px 10px;">Задача 4</h3>');
 (()=>{ 
-  // task 4
+  
   var A = +math.evaluate(input.by_id('T4A').value);
-  var B = +math.evaluate(input.by_id('T4B').value);
-  var P = [1,2,3].map(i=>input.by_id('T4P'+i).value.split(',').map(x=>math.evaluate(x)));
-  var k = [0,1].map(i=>(P[1+i][1]-P[i][1])/(P[1+i][0]-P[i][0]));
-  var b = [0,1].map(i=>P[i][1]-k[i]*P[i][0]);
-  function factorial(n) {
-    //output.print_error(n+' ');
-    return n ? n * factorial(n - 1) : 1;
-  }
-  var C = (n,k)=>factorial(n)/(factorial(k)*factorial(n-k));
-  //var r= math.simplify('((('+k[0]+')*x+('+b[0]+'))^('+A+'))');
-  //math.rationalize
-  var sum = 0;
-  [0,1].map(j=>{
-  var f=new Array(A+1).fill(0).map((x,i)=>C(A,i)+'*('+k[j]+')^('+(A-i)+')*(x)^('+(A-i+1)+')/('+(A-i+1)+')*('+b[j]+')^('+i+')').join(' + ');
-  sum+=math.evaluate(f,{x:P[j+1][0]})-math.evaluate(f,{x:P[j][0]})+k[j]*P[j+1][0]**(B+1)/(B+1)-k[j]*P[j][0]**(B+1)/(B+1);
-  });
-  output.print('<textarea style="width:300px;height:40px;vertical-align:middle;">');
-  output.print(sum.toFixed(8).replace(/\.?0+$/, '')); 
+  //var B = +math.evaluate(input.by_id('T4B').value);
+  var R = +math.evaluate(input.by_id('T4C').value);
+  var M = +math.evaluate(input.by_id('T4D').value);
+    output.print('<textarea style="width:300px;height:40px;vertical-align:middle;">');
+  output.print((2*R*M**(A+1)/(A*M+M)).toFixed(8).replace(/\.?0+$/, '')); 
   output.print('</textarea><br>'); 
   
 })();
