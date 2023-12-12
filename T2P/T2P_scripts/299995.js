@@ -18,7 +18,7 @@
 
 //- input_default_value: <h2>Задача 3</h2>Вычислите<br>
 //- input_default_value: $$\int_L \sin$$<input type="text" id="T3A" value="9" style="vertical-align: super;">$$x \cos^2x\ ds$$<br>
-//- input_default_value: Где L - кривая $$y=ln(A\cos x), x \in [$$<input type="text" style="width:100px" id="T3L" value="-2pi/4">, <input type="text" style="width:100px" id="T3R" value="2pi/4">$$]$$.<br>
+//- input_default_value: Где L - кривая $$y=ln($$<input type="text" id="T3RND" value="пох">$$\cos x), x \in [$$<input type="text" style="width:100px" id="T3L" value="-2pi/4">, <input type="text" style="width:100px" id="T3R" value="2pi/4">$$]$$.<br>
 //- input_default_value: Формат ответа: целое число или десятичная дробь.<br>
 //- input_default_value: Примеры записи ответа: 5; -4.1; 0.07.<br>
 
