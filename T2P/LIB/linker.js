@@ -27,7 +27,7 @@ var Linker = {
 			return 2;
 		}
 		
-		var libs = ['calc', 'random', 'url_loader', 'math', 'brython', 'canvas', 'discrete_math'];
+		var libs = ['calc', 'random', 'url_loader', 'math', 'brython', 'canvas', 'discrete_math', 'vivagraph'];
 		
 		if (libs.indexOf(name)>=0) {
 			if (GlobalScope[name]) return false;
@@ -52,64 +52,100 @@ var Linker = {
 
 //<iframe sandbox="allow-scripts" style="position:absolute;top:0;left:0;display:none;height:10px;width:10px;" ></iframe>
 
-var myJSON = {
+/*var myJSON = {
 	parse : (s) => {
 		return JSON.parse(s);
 	},
 	stringify : (s) => {
 		return '"'+JSON.stringify(s).replace(/(["\\])/g,(m,p)=>'\\'+p)+'"';
 	}
-}
+}*/
 
-var safe_data_callback_eval = (()=>{
+var safe_sandbox = (()=>{
+		var real_sandbox_version=0;
+		var sandbox_version=0;
 		var iframe;
 		var mycallback;
 		var commandManager = {
 			'send_rez':(obj, callback)=>{
-				mycallback(obj);
+				sandbox_is_work=2;
+				var current_version = sandbox_version;
+				setTimeout(()=>{
+					mycallback(obj,()=>(current_version==sandbox_version));
+				});
 			},
 			'rebuild_sandbox':(obj, callback)=>{
 				iframe.srcdoc = '';
 				rebuild_sandbox();
+				srun();
 			},
 			'load_libs': (obj, callback)=>{
 				callback([obj,cached_libs[obj]]);
+			},
+			'load_sandbox': (obj, callback)=>{
+				sandbox_is_work=2;
+				callback(real_sandbox_version++);
 			}
 		};
-		var sandbox_is_work = false;
-		var rebuild_sandbox = ()=>{
-			iframe = iframe || document.getElementById('mysandbox') || console.log('ERROR');
-			
-			var js = "";
-			js += "var in_sandbox=true;";
-			// js += "var ____system_data =JSON.parse("+myJSON.stringify(data)+");\n";
-			js += "eval(JSON.parse("+myJSON.stringify(cached_libs.IO)+"));\n";
-			
-			iframe.srcdoc = '<!DOCTYPE html><html><head><script type="text/javascript">'+
-				js.replace(/(?:<!--|<\\!--|<script|<\\script|<\/script|<\\\/script)/g,i=>'__html_tag__')+
-				'</script></head><body></body></html>';
-			sandbox_is_work=true;
-		}
-		//iframe.contentWindow.postMessage('123_!23', "*");
+		setInterval(()=>{
+			if (sandbox_is_work==2) { 
+				iframe.contentWindow.postMessage('onInterval '+JSON.stringify(""), "*");
+			}
+		},100);
+		
 		window.addEventListener('message', (e)=>{
 			if (commandManager[e.data.split(' ')[0]]) {
 				var s = e.data.replace(e.data.split(' ')[0]+' ','');
 				var rez = commandManager[e.data.split(' ')[0]](s==='undefined'?undefined:JSON.parse(s), (rez)=>{iframe.contentWindow.postMessage(e.data.split(' ')[0]+' '+JSON.stringify(rez), "*");});
 				return;
 			}
-			if (iframe && typeof e == 'string')
-				iframe.contentWindow.postMessage(e.split(' ')[0]+' "command not found"', "*");
+			if (typeof e == 'string') console.log('"'+e.split(' ')[0]+'" command not found');
 		});
-		return (data, callback)=>{
-			mycallback = callback;
-			if (!sandbox_is_work) {
-				rebuild_sandbox();
-				setTimeout(()=>{iframe.contentWindow.postMessage('run '+JSON.stringify(data), "*");},100);
-			} else {
-				
-				setTimeout(()=>{iframe.contentWindow.postMessage('run '+JSON.stringify(data), "*");},10);
+		
+		var sandbox_is_work = 0;
+		var rebuild_sandbox = ()=>{
+			iframe = iframe || document.getElementById('mysandbox') || console.log('ERROR');
+			iframe.srcdoc = '<!DOCTYPE html><html><head><script type="text/javascript">var in_sandbox=true;</script><script type="text/javascript">'+
+				cached_libs.IO.replace(/(?:<!--|<\\!--|<script|<\\script|<\/script|<\\\/script)/g,i=>'__html_tag__')+
+				'</script></head><body></body></html>';
+			
+			if (sandbox_is_work!=1){
+				sandbox_is_work=1;
 			}
 		};
+		var st = [];
+		function srun(){
+			console.log('start run');
+			if (!st.length)return;
+			if (sandbox_is_work!=2) { setTimeout(srun,50); return; }
+			console.log('normal start run');
+			var tmp=st.pop();
+			//console.log(tmp);
+			st = [[tmp[0],tmp[1]]];
+			mycallback = st[0][1];
+			sandbox_is_work = 1;
+			iframe.contentWindow.postMessage('run '+JSON.stringify(st[0][0]), "*");
+		}
+		var sb = {
+			init: ()=>{
+				console.log('rebuild_sandbox');
+				rebuild_sandbox();
+			},
+			stop: ()=>{
+				console.log('mycallback clear');
+				mycallback = ()=>{};
+				if (sandbox_is_work==2) {
+					console.log('stop_print');
+					iframe.contentWindow.postMessage('stop_print_low '+JSON.stringify(sandbox_version+1), "*");
+				}
+			},
+			run: (data, callback)=>{
+				data.version = sandbox_version++;
+				st.push([data, callback]);
+				srun();
+			}
+		};
+		return sb;
 	})();
 
 // safe_data_callback_eval('return [1,a,b];', {a:2, b:3}, (r)=>console.log(r));

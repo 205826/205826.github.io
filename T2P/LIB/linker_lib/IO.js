@@ -121,6 +121,8 @@ var input = {
 			var e=input.by_id(id);
 			if (e) return e.value;
 		},
+		"sandbox_version":0,
+		"build_version":0,
 		"init": ()=>{ output.all=''; output.files={}; output.all_error=''; }
 	};
 
@@ -158,6 +160,7 @@ var output = {
 			}
 			throw new IOERROR("Not can print_error "+s);
 		},
+		"flush": ()=>{},
 		"init": ()=>{}
 	};
 
@@ -168,11 +171,27 @@ var output = {
 
 if (in_sandbox) {
 	console.log('sandbox on');
+	var sendMessage = (s, obj)=>{window.parent.postMessage(s+' '+JSON.stringify(obj), '*');};
+	sendMessage('load_sandbox','')
 	var loading_libs = [];
 	var included_libs = [];
-	var sendMessage = (s, obj)=>{window.parent.postMessage(s+' '+JSON.stringify(obj), '*');};
 	var cached_py_sourse = '______________';
 	var cached_py = '';
+	var current_version = 0;
+	
+	var __events = [];
+	var __event_loop=()=>{
+		//console.log('1');
+		__events.map(x=>x).map((x,i)=>{
+			if (!i) __events=[];
+			if (x[1]<=+new Date()){
+				x[0](x[2],x[3],x[4]);
+				return false;
+			}
+			__events.push(x);
+		});
+	};
+				
 	var commandManager = {
 		'run':(____system_data)=>{
 			if (included_libs.filter(x=>____system_data.libs.indexOf(x)<0).length>0) {
@@ -189,33 +208,62 @@ if (in_sandbox) {
 				setTimeout(()=>{commandManager['run'](____system_data)},20);
 				return;
 			}
-			
-			
-			var i = 0;
-			var f = ()=>(((s)=>{
-						sendMessage('send_rez', [s, output.all, output.all_error, output.files]);
-					})(
-							eval("(()=>{try {"+(____system_data.language != 'py'?____system_data.script:''+____system_data.script+'; return 0;')+"} catch(e){ if(e.name === undefined) return 0; if (e.$py_error) {output.print_error('Python runtime error on '+e.$linenos.join(', ')+': \\n '+e.args.join(', ')); return 255;} output.print_error('Ошибка ' + e.name + ': ' + e.message + '\\n' + e.stack); return 255; }})()")
-						));
-			if (____system_data.option.input[1] == 'inline_string')
-				input.all = ____system_data.inputs[0].value;
-			else if (____system_data.option.input[1] == 'text')
-				input.all = ____system_data.inputs[0].value;
-			else if (____system_data.option.input[1] == 'number')
-				input.all = ____system_data.inputs[0].value;
-			else
-				input.all = ____system_data.inputs;
-			if (____system_data.language == 'py') {
-				if (cached_py_sourse!=____system_data.script) {
-					cached_py_sourse = ____system_data.script;
-					cached_py = __BRYTHON__.python_to_js(____system_data.script);
+			current_version = ____system_data.version;
+			//var i = 0;
+			(()=>{
+				var local_version = current_version;
+				var send_result = (code)=>{ if (current_version==local_version) sendMessage('send_rez', [code, output.all, output.all_error, output.files]); };
+				if (____system_data.option.input[1] == 'inline_string')
+					input.all = ____system_data.inputs[0].value;
+				else if (____system_data.option.input[1] == 'text')
+					input.all = ____system_data.inputs[0].value;
+				else if (____system_data.option.input[1] == 'number')
+					input.all = ____system_data.inputs[0].value;
+				else
+					input.all = ____system_data.inputs;
+				if (____system_data.language == 'py') {
+					if (cached_py_sourse!=____system_data.script) {
+						cached_py_sourse = ____system_data.script;
+						cached_py = __BRYTHON__.python_to_js(____system_data.script);
+					}
+					____system_data.script=cached_py;
 				}
-				____system_data.script=cached_py;
-			}
-			if (____system_data.language == 'py') $B.restart_timer();
-			input.init();
-			output.init();
-			f();
+				if (____system_data.language == 'py') $B.restart_timer();
+				input.init();
+				output.init();
+				last_ret_code=0;
+				output.flush=()=>{send_result(last_ret_code);};
+				console.log(local_version);
+				input.build_version=local_version;
+				__events = [];
+				try {
+					var setTimeout = (f,time,arg1,arg2,arg3)=>{
+						__events.push([f,+(new Date())+(time&&time>0?time:0),arg1,arg2,arg3]);
+					}
+					var setInterval = (f,time,arg1,arg2,arg3)=>{
+						var r=()=>{
+							f(arg1,arg2,arg3);
+							setTimeout(r,time);
+						};
+						setTimeout(r,time);
+					}
+					console.log(setTimeout);
+					last_ret_code=eval("(()=>{try {"+
+							(____system_data.language != 'py'?____system_data.script:''+____system_data.script+'; return 0;')+
+						"} catch(e){"+
+							"if(e.name === undefined) return 0;"+
+							"if (e.$py_error) {"+
+								"output.print_error('Python runtime error on '+e.$linenos.join(', ')+': \\n '+e.args.join(', '));"+
+								"return 255;"+
+							"}"+
+							"output.print_error('Ошибка ' + e.name + ': ' + e.message + '\\n' + e.stack);"+
+							"return 255;"+
+						"}})()");
+				} catch(e){
+					output.print_error('Ошибка ' + e.name + ': ' + e.message + '\\n' + e.stack);
+				}
+				send_result(last_ret_code);
+			})();
 			if (____system_data.language == 'py') $B.stop_timer();
 		},
 		'load_libs': (cached_lib)=>{
@@ -248,6 +296,15 @@ if (in_sandbox) {
 				return;
 			}
 			window[cached_lib[0]] = eval(cached_lib[0]);
+		},
+		'stop_print_low': (new_version)=>{
+			current_version = new_version;
+		},
+		'onInterval': ()=>{
+			__event_loop();
+		},
+		'load_sandbox':(v)=>{
+			input.sandbox_version=v;
 		}
 	};
 	
