@@ -1,5 +1,5 @@
 //- name: discrete mathematics HW7
-//- description: discrete mathematics HW7
+//- description: Умножение чисел с плавающей запятой
 //- author: owl from hogvarts (GUI by &#60;T&#62;)
 //- semester: 1
 //- faculty: ВТ
@@ -8,6 +8,7 @@
 //- input_default_value: 2.4 0.32
 //- output: html
 //- import: discrete_math
+
 output.print('<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;">');
 output.print('<h2 style="margin:0;">Дисклеймер</h2>');
 output.print('Результат работы данной программы (далее результат) предоставляется только с целью подготовки. Разработчики не несут никакой ответственности за использование этого результата. Продажа результата без разрешения разработчиков запрещена.');
@@ -16,7 +17,7 @@ output.print('<b>owl-from-hogvarts</b> - создатель библиотеки
 output.print('⟨T⟩ - графическая оболочка над библиотекой<br>');
 output.print('v3.0<br>');
 output.print('</div><br>');
-//output.all='';
+
 var printmul = Math.random()>0.5?(Math.random()>0.5?'*':'<sup>*</sup>'):'';
 function toBin(a){
   var s='';
@@ -31,9 +32,11 @@ function toBin(a){
 function toBin2(a){
   return toBin(a).split('.').map(x=>parseInt(x,2).toString(16).toUpperCase()+(x.length-4?',':'')).join('').replace(/^0+([\dA-F]+?\,)/,'$1').replace(/0+$/,'').replace(/,$/,'');
 }
+
 function toBin3(a){
   return toBin(a).split('.').map(x=>x.slice(0,4)+(x.length-4?',':'')).join('').replace(/^0+([\dA-F]+?\,)/,'$1').replace(/0+$/,'').replace(/,$/,'');
 }
+
 function mfloor(a,f,pos){
   var r;
     //output.print_error(s.split(',')[1][pos]);
@@ -55,6 +58,7 @@ function mfloor(a,f,pos){
   }
   return r+'0'.repeat(pos-r.split(',')[1].length);
 }
+
 function print_f(f, a, offset){
   var mf = {};
   if (f==1) mf = {d: 64, sp: 7, sm: 20-7-1, s: 16};
@@ -86,6 +90,7 @@ function print_f(f, a, offset){
   output.print('</table>');
   output.print('<br>');
 }
+
 function print_st(a,b,f){
   var c;
   var mf = {};
@@ -297,6 +302,7 @@ result.steps.map((x,i)=>{
   }
 });
 //output.all='';
+
 var calcansv = parseInt(mfloor(ia/(16**offsetF1),1, 3).split(',')[1],16)*parseInt(mfloor(ib/(16**offsetBF1),1, 3).split(',')[1],16);
 var ansv = ia*ib;
 var shift= offsetF1+offsetBF1; 
@@ -488,6 +494,5 @@ if (Math.abs(pogr2-pogr)<1/10**8){
   output.print('<br>');
   output.print('Погрешности результатов вызваны неточным представлением операндов. Ф1 оказался точнее из-за неточного представления операндов и отсутствия округления СЧП в Ф2 перед переводом в формат.');
 }
-
 
 return 0;

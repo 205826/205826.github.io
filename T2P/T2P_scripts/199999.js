@@ -1,6 +1,6 @@
 //- name: Алгоритм Вейсмана
 //- description: Алгоритм Вейсмана 6*6
-//- author: T
+//- author: &#60;T&#62;
 //- semester: 2
 //- faculty: ВТ
 //- input: text
@@ -11,7 +11,6 @@
 //- input_default_value: 111101
 //- input_default_value: 111010
 //- output: html
-//- import: calc
 
 let matrix2html = (a,ind) => '&nbsp;&nbsp;&nbsp;&nbsp;' + ind.join(' ')+'<br>'+a.map((x,i)=>ind[i]+' '+x.join('&nbsp;&nbsp;&nbsp;')).join('<br>');
 
@@ -86,19 +85,14 @@ term_list.map(x=>{
 	x.map(y=>out += '$$\\phi_{'+y+'} = \\{e_{'+(phis[y-1][1]).join('},\\ e_{')+'}\\}$$<br>');
 	var poss = matrix.map((x,i)=>[Math.sin(i/matrix.length*3.14159*2)*70+100,Math.cos(i/matrix.length*3.14159*2)*70+100]);
 	out+='<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">';
- 	matrix.map((x,i)=>x.map((y,j)=>y?out+='<line x1="'+poss[i][0] +'" y1="'+poss[i][1] +'" x2="'+poss[j][0] +'" y2="'+poss[j][1] +'" stroke="black" stroke-width="3" />':''));
+ 	matrix.map((x,i)=>x.map((y,j)=>y?out+='<line x1="'+poss[i][0] +'" y1="'+poss[i][1] +'" x2="'+poss[j][0] +'" y2="'+poss[j][1] +'" stroke="#bbb" stroke-width="3" />':''));
 	poss.map((y,i)=>{
-		out+='<circle cx="'+y[0]+'" cy="'+y[1]+'" r="15" fill="'+['','#F00','#FF0','#0F0','#0FF','#00F','#F0F','#F00','#FF0','#0F0','#0FF','#00F','#F0F','#F00','#FF0','#0F0','#0FF','#00F','#F0F'][phis.filter(z=>z[1].indexOf(i+1)>=0 && x.indexOf(z[0])>=0).map(z=>z[0])[0]]+'"/>';
-		out+='<text x="'+y[0]+'" y="'+y[1]+'" dx="-5" dy="5" fill="black">'+(i+1)+'</text>';
+		out+='<circle cx="'+y[0]+'" cy="'+y[1]+'" r="15" fill="'+['','#A00','#AA0','#0A0','#0AA','#00A','#A0A','#A00','#AA0','#0A0','#0AA','#00A','#A0A','#A00','#AA0','#0A0','#0AA','#00A','#A0A'][phis.filter(z=>z[1].indexOf(i+1)>=0 && x.indexOf(z[0])>=0).map(z=>z[0])[0]]+'"/>';
+		out+='<text x="'+y[0]+'" y="'+y[1]+'" dx="-5" dy="5" fill="#fff">'+(i+1)+'</text>';
     });
  	out+='</svg>';
   	out+='<br>';
 });
-
-
-
-//out += JSON.stringify(phis);
-
 
 output.print(out+'<br>');
 return 0;

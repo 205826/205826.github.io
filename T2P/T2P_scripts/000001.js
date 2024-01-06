@@ -1,6 +1,6 @@
 //- name: python test
 //- description: python test
-//- author: T
+//- author: &#60;T&#62;
 //- semester: any
 //- faculty: -
 //- input: text

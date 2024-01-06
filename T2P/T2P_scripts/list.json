@@ -5,15 +5,15 @@
 		"description": "python test",
 		"semester": "any",
 		"faculty": "-",
-		"author": "T"
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 2,
 		"name": "mathjs test",
-		"description": "mathjs test",
+		"description": "Simple calculator",
 		"semester": "any",
 		"faculty": "-",
-		"author": "T"
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 3,
@@ -21,12 +21,12 @@
 		"description": "Clock on T2P",
 		"semester": "any",
 		"faculty": "-",
-		"author": "T"
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 149995,
 		"name": "discrete mathematics HW8",
-		"description": "discrete mathematics HW8",
+		"description": "Деление чисел с плавающей запятой",
 		"semester": "1",
 		"faculty": "ВТ",
 		"author": "&#60;T&#62;"
@@ -34,7 +34,7 @@
 	{
 		"id": 149996,
 		"name": "discrete mathematics HW7",
-		"description": "discrete mathematics HW7",
+		"description": "Умножение чисел с плавающей запятой",
 		"semester": "1",
 		"faculty": "ВТ",
 		"author": "owl from hogvarts (GUI by &#60;T&#62;)"
@@ -42,7 +42,7 @@
 	{
 		"id": 149997,
 		"name": "discrete mathematics HW6",
-		"description": "discrete mathematics HW6",
+		"description": "Операции сложения и вычитания чисел с плавающей запятой",
 		"semester": "1",
 		"faculty": "ВТ",
 		"author": "&#60;T&#62;"
@@ -50,7 +50,7 @@
 	{
 		"id": 149998,
 		"name": "discrete mathematics HW5",
-		"description": "discrete mathematics HW5",
+		"description": "Операция целочисленного деления и способы ее реализации в ЭВМ",
 		"semester": "1",
 		"faculty": "ВТ",
 		"author": "owl from hogvarts (GUI by &#60;T&#62;)"
@@ -58,7 +58,7 @@
 	{
 		"id": 149999,
 		"name": "discrete mathematics HW4",
-		"description": "discrete mathematics HW4",
+		"description": "Операция умножения целых чисел и принципы ее реализации в ЭВМ",
 		"semester": "1",
 		"faculty": "ВТ",
 		"author": "owl from hogvarts (GUI by &#60;T&#62;)"
@@ -68,16 +68,16 @@
 		"name": "первая лабораторная по вебу",
 		"description": "Разработать PHP-скрипт, определяющий попадание точки на координатной...",
 		"semester": "3",
-		"faculty": "-",
-		"author": "T"
+		"faculty": "ВТ",
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 199996,
 		"name": "bcomp 3D-array-generator",
 		"description": "Напишите программу на языке ассемблер для работы с трехмерным массивом",
 		"semester": "2",
-		"faculty": "-",
-		"author": "T"
+		"faculty": "ВТ",
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 199997,
@@ -85,7 +85,7 @@
 		"description": "Метод ветвей и границ",
 		"semester": "2",
 		"faculty": "ВТ",
-		"author": "T"
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 199998,
@@ -93,7 +93,7 @@
 		"description": "Алгоритм Краскала",
 		"semester": "2",
 		"faculty": "ВТ",
-		"author": "T"
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 199999,
@@ -101,12 +101,12 @@
 		"description": "Алгоритм Вейсмана 6*6",
 		"semester": "2",
 		"faculty": "ВТ",
-		"author": "T"
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 299995,
 		"name": "GL ИнтФНП ",
-		"description": "GL ИнтФНП",
+		"description": "Интеграл функции нескольких переменных",
 		"semester": "3",
 		"faculty": "ВТ",
 		"author": "&#60;T&#62;"
@@ -114,7 +114,7 @@
 	{
 		"id": 299996,
 		"name": "GL ФНП ",
-		"description": "GL ФНП",
+		"description": "Функция нескольких переменных",
 		"semester": "3",
 		"faculty": "ВТ",
 		"author": "&#60;T&#62;"
@@ -125,7 +125,7 @@
 		"description": "Евклидово пространство, квадратичные формы, сигнатура",
 		"semester": "2",
 		"faculty": "ВТ",
-		"author": "T"
+		"author": "&#60;T&#62;"
 	},
 	{
 		"id": 299998,
@@ -141,6 +141,6 @@
 		"description": "Спектр, собственные вектора, оператор, базис, образ, ядро",
 		"semester": "2",
 		"faculty": "ВТ",
-		"author": "T"
+		"author": "&#60;T&#62;"
 	}
 ]

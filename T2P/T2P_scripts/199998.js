@@ -1,6 +1,6 @@
 //- name: Алгоритм Краскала
 //- description: Алгоритм Краскала
-//- author: T
+//- author: &#60;T&#62;
 //- semester: 2
 //- faculty: ВТ
 //- input: text
@@ -10,8 +10,6 @@
 //- input_default_value:   3
 //- output: html
 //- import: vivagraph
-
-
 
 var poss = [];
 var out = '';
@@ -50,12 +48,16 @@ output.print('  <tr>');
 
 var eg = [];
 
-all_e.map(x=>{
+var rnd2 = [Math.random()>0.5, Math.random()>0.5];
+all_e.map(y=>{
 	output.print('  <tr>');
-	output.print('    <td>$$e_{'+(x)+'}$$</td>');
-    all_e.map(y=>{
+	output.print('    <td>$$e_{'+(y)+'}$$</td>');
+    all_e.map(x=>{
       	var d = (a,b)=>Math.abs(a[0]-b[0])+Math.abs(a[1]-b[1]);
-        output.print('    <td>'+d(poss.filter(i=>i[2]==x)[0],poss.filter(i=>i[2]==y)[0])+'</td>');
+        if (x<y&&rnd2[0])
+          output.print('    <td></td>');
+      	else
+          output.print('    <td>'+d(poss.filter(i=>i[2]==x)[0],poss.filter(i=>i[2]==y)[0])+'</td>');
       	if (x<y)eg.push([d(poss.filter(i=>i[2]==x)[0],poss.filter(i=>i[2]==y)[0]),x,y]);
     });
 	output.print('  <tr>');
@@ -63,7 +65,7 @@ all_e.map(x=>{
 
 output.print('</table><br>');
 output.print('Упорядочим ребра: ');
-eg = eg.sort((x,y)=>x[0]-y[0]);
+eg = eg.sort((x,y)=>(x[0]-y[0])||(x[1]-y[1])||(x[2]-y[2]));
 output.print(eg.map(x=>'$$(e_{'+x[1]+'}; e_{'+x[2]+'})$$').join('; ')+'<br><br>');
 
 var mkpair = [];
@@ -107,6 +109,5 @@ vivagraph.renderer_svg(_outp,(s)=>{
     output.print('Суммарный вес ребер МСД равен '+cost);
   output.flush();
 });
-
 
 return 0;

@@ -1,5 +1,5 @@
 //- name: discrete mathematics HW8
-//- description: discrete mathematics HW8
+//- description: Деление чисел с плавающей запятой
 //- author: &#60;T&#62;
 //- semester: 1
 //- faculty: ВТ
@@ -8,6 +8,7 @@
 // input_default_value: 7.7 0.028
 // input_default_value: 1.4 0.017
 //- output: html
+
 output.print('<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;">');
 output.print('<h2 style="margin:0;">Дисклеймер</h2>');
 output.print('Результат работы данной программы (далее результат) предоставляется только с целью подготовки. Разработчики не несут никакой ответственности за использование этого результата. Продажа результата без разрешения разработчиков запрещена.');
@@ -30,9 +31,11 @@ function toBin(a){
 function toBin2(a){
   return toBin(a).split('.').map(x=>parseInt(x,2).toString(16).toUpperCase()+(x.length-4?',':'')).join('').replace(/^0+([\dA-F]+?\,)/,'$1').replace(/0+$/,'').replace(/,$/,'');
 }
+
 function toBin3(a){
   return toBin(a).split('.').map(x=>x.slice(0,4)+(x.length-4?',':'')).join('').replace(/^0+([\dA-F]+?\,)/,'$1').replace(/0+$/,'').replace(/,$/,'');
 }
+
 function mfloor(a,f,pos){
   var r;
     //output.print_error(s.split(',')[1][pos]);
@@ -54,6 +57,7 @@ function mfloor(a,f,pos){
   }
   return r+'0'.repeat(pos-r.split(',')[1].length);
 }
+
 function print_f(f, a, offset){
   var mf = {};
   if (f==1) mf = {d: 64, sp: 7, sm: 16-7-1, s: 16};
@@ -120,12 +124,10 @@ output.print('</tr>');
 output.print('</table>');
 
 
-
 output.print('<br>');
 output.print('X<sub>C</sub> = '+offsetF1+' – '+(offsetBF1<0?'(':'')+offsetBF1+(offsetBF1<0?')':'')+' + 64 = '+(offsetF1-offsetBF1+64)+'<br>');
 output.print('P<sub>C</sub> = '+(offsetF1-offsetBF1)+'<br>');
 output.print('<br>');
-
 
 
 //output.print_error(parseInt(mfloor(ia/(16**offsetF1),1, 3).split(',')[1],16)+'\n');

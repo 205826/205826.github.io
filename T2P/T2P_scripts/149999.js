@@ -1,5 +1,5 @@
 //- name: discrete mathematics HW4
-//- description: discrete mathematics HW4
+//- description: Операция умножения целых чисел и принципы ее реализации в ЭВМ
 //- author: owl from hogvarts (GUI by &#60;T&#62;)
 //- semester: 1
 //- faculty: ВТ
@@ -7,6 +7,7 @@
 //- input_default_value: 44 56
 //- output: html
 //- import: discrete_math
+
 output.print('<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;">');
 output.print('<h2 style="margin:0;">Дисклеймер</h2>');
 output.print('Результат работы данной программы (далее результат) предоставляется только с целью подготовки. Разработчики не несут никакой ответственности за использование этого результата. Продажа результата без разрешения разработчиков запрещена.');
@@ -14,15 +15,14 @@ output.print('<h3 style="margin:0;">Разработчики</h3>');
 output.print('<b>owl-from-hogvarts</b> - создатель библиотеки для выполнения арифметических действий<br>'); 
 output.print('⟨T⟩ - графическая оболочка над библиотекой');
 output.print('</div><br>');
+
 var print_num =Math.random()>0.5;
 var ia=+input.all.split(' ')[0];
 var ib=+input.all.split(' ')[1];
 if (ia<=0 || ib<=0) return '"ошибка ввода данных"';
+
 output.print('A = '+ia+'<br>');
 output.print('B = '+ib);
-
-
-
 
 output.print('<h4 style="text-align:center;">№1</h4>');
 var pram='';
@@ -165,4 +165,5 @@ if (Math.random()>0.8)
   output.all=output.all.replace(/<sub>(.*?)<\/sub>/g,'$1');
 if (Math.random()>0.5)
   output.all=output.all.replace(/<th(.*?)>(.*?)<\/th>/g,'<td$1>$2</td>');
+
 return 0;

@@ -1,5 +1,5 @@
 //- name: GL ИнтФНП 
-//- description: GL ИнтФНП
+//- description: Интеграл функции нескольких переменных
 //- author: &#60;T&#62;
 //- semester: 3
 //- faculty: ВТ

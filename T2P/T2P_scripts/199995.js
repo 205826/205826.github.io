@@ -1,7 +1,8 @@
 //- name: первая лабораторная по вебу
 //- description: Разработать PHP-скрипт, определяющий попадание точки на координатной...
-//- author: T
+//- author: &#60;T&#62;
 //- semester: 3
+//- faculty: ВТ
 //- input: html
 //- input_default_value: Разработать PHP-скрипт, определяющий попадание точки на координатной плоскости в заданную область, и создать HTML-страницу, которая формирует данные для отправки их на обработку этому скрипту.<br>
 //- input_default_value: Параметр R и координаты точки должны передаваться скрипту посредством HTTP-запроса. Скрипт должен выполнять валидацию данных и возвращать HTML-страницу с таблицей, содержащей полученные параметры и результат вычислений - факт попадания или непопадания точки в область. Предыдущие результаты должны сохраняться между запросами и отображаться в таблице.<br>
@@ -39,9 +40,11 @@
 //- input_default_value: Изменение R: <select id="r_type"><option>Text</option><option>Checkbox</option><option>Button</option><option>Select</option><option>Radio</option></select> from  <select id="r_from"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select> to <select id="r_to"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select> step <select id="r_step"><option>1</option><option>0.5</option></select><br>
 //- output: html
 //- import: canvas
+
 function get_random(arr) {
   return arr[Math.floor((Math.random()*arr.length))];
 }
+
 function genArr(f,t,s) {
 	var a=[];
   	for (var i=f;i<=t+0.0001;i+=s){
@@ -49,6 +52,7 @@ function genArr(f,t,s) {
 	}
  	return a;
 }
+
 var tabulate=(s,n)=>s.split('\n').map(x=>'\t'.repeat(n)+x).join('\n');
 
 var get_f=(s)=>{

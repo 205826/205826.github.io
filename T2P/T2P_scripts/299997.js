@@ -1,6 +1,6 @@
 //- name: GL LG2
 //- description: Евклидово пространство, квадратичные формы, сигнатура
-//- author: T
+//- author: &#60;T&#62;
 //- semester: 2
 //- faculty: ВТ
 //- input: html_gl
@@ -112,7 +112,7 @@ math.usolveAll = (a,b)=>oldf(math.lup(a).U,b);
 	var Q=[[+getInput('T4V1'),getInput('T4V2')/2],[getInput('T4V2')/2,+getInput('T4V3')]];
 	var G=parseMatrix(getInput('T4V4'));
   	var z=math.transpose(math.multiply(Q,math.pow(G,-1)));
-	out+='4.v3. '+M_tos(z,1)+'<br>';
+	out+='4. '+M_tos(z,1)+'<br>';
 })();
 (()=>{
 	var Q=[[+getInput('T5V00'),getInput('T5V01')/2,getInput('T5V02')/2],[getInput('T5V01')/2,+getInput('T5V11'),getInput('T5V12')/2],[getInput('T5V02')/2,getInput('T5V12')/2,+getInput('T5V22')]];

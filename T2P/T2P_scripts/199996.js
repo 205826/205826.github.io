@@ -1,6 +1,7 @@
 //- name: bcomp 3D-array-generator
 //- description: Напишите программу на языке ассемблер для работы с трехмерным массивом
-//- author: T
+//- author: &#60;T&#62;
+//- faculty: ВТ
 //- semester: 2
 //- input: inline_string
 //- input_default_value: 10
@@ -61,4 +62,5 @@ org 0x`+start.toString(16).toUpperCase()+`
 Количество чётных чисел: `+cnt+`<br>
 Сумма: `+sum+' ('+(0x10000+sum).toString(16).toUpperCase().slice(-4)+`)<br>
 JSON: <br><pre>`+JSON.stringify(arr, null, '  ')+'</pre>');
+
 return 0;

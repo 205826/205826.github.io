@@ -1,6 +1,6 @@
 //- name: GL LG1
 //- description: Спектр, собственные вектора, оператор, базис, образ, ядро
-//- author: T
+//- author: &#60;T&#62;
 //- semester: 2
 //- faculty: ВТ
 //- input: html_gl
@@ -187,4 +187,5 @@ input.all.map(x=>x.id=='BA'?A=x.value.split('\n').map(x=>x.split(' ').map(x=>+x)
   var rez =M_tos(M_FSR(M_stepped(A)),true);
   out+='4.'+(rez==M_tos([],true)?M_tos([],true):rez)+'<br>';
 })();
-return out+deb;
+output.print(out+deb);
+return 0;

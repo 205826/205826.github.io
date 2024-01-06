@@ -1,6 +1,6 @@
 //- name: mathjs test
-//- description: mathjs test
-//- author: T
+//- description: Simple calculator
+//- author: &#60;T&#62;
 //- semester: any
 //- input: inline_string
 //- input_default_value: sqrt(75 / 3) + det([[-1, 2], [3, 1]]) - sin(pi / 4)^2

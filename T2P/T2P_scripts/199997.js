@@ -1,6 +1,6 @@
 //- name: Метод ветвей и границ
 //- description: Метод ветвей и границ
-//- author: T
+//- author: &#60;T&#62;
 //- semester: 2
 //- faculty: ВТ
 //- input: text

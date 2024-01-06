@@ -1,6 +1,6 @@
 //- name: async test
 //- description: Clock on T2P
-//- author: T
+//- author: &#60;T&#62;
 //- semester: any
 //- input: inline_string
 //- input_default_value: 

@@ -1,5 +1,5 @@
 //- name: discrete mathematics HW5
-//- description: discrete mathematics HW5
+//- description: Операция целочисленного деления и способы ее реализации в ЭВМ
 //- author: owl from hogvarts (GUI by &#60;T&#62;)
 //- semester: 1
 //- faculty: ВТ
@@ -7,6 +7,7 @@
 //- input_default_value: 1272 12
 //- output: html
 //- import: discrete_math
+
 output.print('<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;">');
 output.print('<h2 style="margin:0;">Дисклеймер</h2>');
 output.print('Результат работы данной программы (далее результат) предоставляется только с целью подготовки. Разработчики не несут никакой ответственности за использование этого результата. Продажа результата без разрешения разработчиков запрещена.');
@@ -165,6 +166,8 @@ output.print('[R]<sub>пр</sub> = '+result.result[1].bytes[0].data[0]+'.'+(128+
 output.print('<br>');
 output.print('<br>');
 });
+
 if (Math.random()>0.5)
   output.all=output.all.replace(/<th(.*?)>(.*?)<\/th>/g,'<td$1>$2</td>');
+
 return 0;

@@ -1,11 +1,12 @@
 //- name: discrete mathematics HW6
-//- description: discrete mathematics HW6
+//- description: Операции сложения и вычитания чисел с плавающей запятой
 //- author: &#60;T&#62;
 //- semester: 1
 //- faculty: ВТ
 //- input: inline_string
 //- input_default_value: 0,3 15,8
 //- output: html
+
 output.print('<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;">');
 output.print('<h2 style="margin:0;">Дисклеймер</h2>');
 output.print('Результат работы данной программы (далее результат) предоставляется только с целью подготовки. Разработчики не несут никакой ответственности за использование этого результата. Продажа результата без разрешения разработчиков запрещена.');
@@ -53,6 +54,7 @@ function mfloor(a,f,pos){
   }
   return r+'0'.repeat(pos-r.split(',')[1].length);
 }
+
 function print_f(f, a, offset){
   var mf = {};
   if (f==1) mf = {d: 64, sp: 7, sm: 20-7-1, s: 16};
@@ -84,6 +86,7 @@ function print_f(f, a, offset){
   output.print('</table>');
   output.print('<br>');
 }
+
 function print_st(a,b,c,char,f){
   var mf = {};
   if (f==1) mf = {d: 64, sp: 7, sm: 20-7-1, s: 16};
@@ -118,6 +121,7 @@ function print_st(a,b,c,char,f){
   output.print('(X<sub>A</sub>-X<sub>B</sub>) = '+c+'; X<sub>C</sub> = '+(Math.max(a,b)==a?'X<sub>A</sub> = ':'')+(Math.max(a,b)==b?'X<sub>B</sub> = ':'')+Math.max(a,b)+'<br>');
   output.print('<br>');
 }
+
 function print_st2(a,b,char,A,B,f){
   a = a.split('').map(x=>x!=','?(16+parseInt(x,16)).toString(2).slice(1):',').join('').replace(/\d{3}(\d),/,'$1.');
   b = b.split('').map(x=>x!=','?(16+parseInt(x,16)).toString(2).slice(1):',').join('').replace(/\d{3}(\d),/,'$1.');
@@ -185,6 +189,7 @@ function print_st2(a,b,char,A,B,f){
   }
   return {num:c,shift:msh,norm:mc};
 }
+
 function nabs(x) {
 	return x>=0?x:0;
 }
@@ -412,4 +417,5 @@ function print_st3(a,b,char,A,B,f){
 });
 
 output.print('<br>В формате Ф2 результаты получились точнее из-за того, что операнды представлены точнее и при нормализации результата сдвиг производился на один двоичный разряд, а не на четыре.<br>');
+
 return 0;
