@@ -415,7 +415,6 @@ output.all='';
 	})[method]();
 	
 })();
-output.all='';
 (()=>{
 	var a=input.by_id('T5F').value.split('\n').filter(x=>x.trim()).map(x=>x.split('=').map(x=>math.parse(x)));
 	var x0=parseFloat(input.by_id('T5X0').value);
