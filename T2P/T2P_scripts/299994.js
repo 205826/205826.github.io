@@ -82,7 +82,7 @@ output.all='';
 			}
 			output.print('Разобьем отрезок интегрирования на '+n+' равных частей: $$n = '+n+'$$, $$h = \\frac{b-a}{n} = '+_(h)+'$$<br>');
 			output.print('По формулам средних прямоугольников получим:<br>');
-			output.print("$$I$$<sub><i>сред</i></sub>$$= h\\sum_{i=1}^{n}y_i = "+_(h*sum1)+"$$<br>");
+			output.print("$$I$$<sub><i>сред</i></sub>$$= h\\sum_{i=1}^{n}y_{i-\\frac{1}{2}} = "+_(h*sum1)+"$$<br>");
 			output.print("Погрешность в вычислении интеграла составляет:<br>");
 			output.print("$$\\Delta I$$<sub><i>сред</i></sub>$$ = I - I$$<sub><i>сред</i></sub>$$ = "+_(int)+" - "+_(h*sum1)+"="+_(Math.abs(int-h*sum1))+" (\\approx "+_(Math.abs((int-h*sum1)/int)*100,2)+"\\%)$$<br>");
 			
@@ -240,7 +240,7 @@ output.all='';
 		output.print('\\begin{pmatrix}'+
 			c.map(x=>_(x[3])).join(' \\\\')+
 		'\\end{pmatrix}$$<br/>');
-		output.print('Выполним расчеты по формуле:'+(method?'':' $$x^{k+1}=Cx^k+d$$ или:'));
+		output.print('Выполним расчеты по формуле:'+(method?'':' $$x^{k+1}=Cx^k+d$$ или:<br/>'));
 		output.print(ss);
 	  
 		output.print('Для первого приближения получаем:<br>');
@@ -532,24 +532,24 @@ output.all='';
 			var z_ = (x)=>(x<0?_(x):'+'+(_(x)=='1'?'':_(x)));
 			var ev = b.map(x=>x.map(x=>x.evaluate({x:x0,y:y0})));
 			output.print('$$\\left\\{\\begin{align}'+_(ev[0][0])+'\\Delta x  '+z_(ev[0][1])+'\\Delta y &='+_(-f2.evaluate({x:x0,y:y0}))+' \\\\');
-			output.print(_(ev[1][0])+'\\Delta x  '+z_(ev[1][1])+'\\Delta y &='+_(-g2.evaluate({x:x0,y:y0}))+'\\end{align}\\right.$$<br>');
+			output.print(_(ev[1][0])+'\\Delta x  '+z_(ev[1][1])+'\\Delta y &='+_(-g2.evaluate({x:x0,y:y0}))+'\\end{align}\\right.$$<br><br/>');
 			ii++;
 			output.print('Шаг '+ii+'. Решаем полученную систему.<br/>');
 			
 			//output.print(x0+' '+y0);
 			//output.print('<br>');
 			var nxy = math.multiply( math.inv(ev),[f2,g2].map(x=>[-x.evaluate({x:x0,y:y0})]));
-			output.print('Получаем $$\\Delta x='+_(nxy[0][0])+'$$ и $$\\Delta y='+_(nxy[1][0])+'$$.<br/>');
+			output.print('Получаем $$\\Delta x='+_(nxy[0][0])+'$$ и $$\\Delta y='+_(nxy[1][0])+'$$.<br/><br/>');
 			ii++;
 			output.print('Шаг '+ii+'. Вычисляем очередные приближения:<br/>');
 			var nx2 = x0+nxy[0][0];
 			var ny2 = y0+nxy[1][0];
 			output.print('$$x_'+(j+1)+' = x_'+j+' + \\Delta x = '+_(x0)+z_(nxy[0][0])+'='+_(nx2)+'$$<br/>');
-			output.print('$$y_'+(j+1)+' = y_'+j+' + \\Delta y = '+_(y0)+z_(nxy[1][0])+'='+_(ny2)+'$$<br/>');
+			output.print('$$y_'+(j+1)+' = y_'+j+' + \\Delta y = '+_(y0)+z_(nxy[1][0])+'='+_(ny2)+'$$<br/><br/>');
 			ii++;
 			output.print('Шаг '+ii+'.  Проверяем критерий окончания итерационного процесса при $$\\varepsilon = 0.01$$<br/>');
 			output.print('$$|x_'+(j+1)+' - x_'+j+'|\\le \\varepsilon \\quad |y_'+(j+1)+' - y_'+j+'|\\le \\varepsilon$$<br/>');
-			output.print('$$|'+_(nx2)+' - '+_(x0)+'| '+(Math.abs(x0-nx2)<0.01?'\\le':'>')+' \\varepsilon \\quad |'+_(ny2)+' - '+_(y0)+'|'+(Math.abs(y0-ny2)<0.01?'\\le':'>')+' \\varepsilon$$<br/>');
+			output.print('$$|'+_(nx2)+' - '+_(x0)+'| '+(Math.abs(x0-nx2)<0.01?'\\le':'>')+' \\varepsilon \\quad |'+_(ny2)+' - '+_(y0)+'|'+(Math.abs(y0-ny2)<0.01?'\\le':'>')+' \\varepsilon$$<br/><br/>');
 			
 			
 			if (Math.abs(x0-nx2)<0.01 && Math.abs(y0-ny2)<0.01) break;
