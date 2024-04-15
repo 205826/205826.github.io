@@ -380,7 +380,7 @@
 			__load_file('T2P_scripts/'+findGetParameter('id').padStart(6,'0')+'.js?v='+(+new Date()), (x) => {
 				if (localStorage.getItem('T2P_script_'+findGetParameter('id').padStart(6,'0'))==='YES')
 					if (localStorage.getItem('T2P_script_'+findGetParameter('id').padStart(6,'0')+'_text').split('').filter(x=>x.trim()!='').join('')!=x.split('').filter(x=>x.trim()!='').join(''))
-						if (confirm('Скрипт был изменён. Восстановить прошлую версию?'))
+						if (!confirm('Скрипт на сервере был изменён. Использовать новую версию?'))
 							x = localStorage.getItem('T2P_script_'+findGetParameter('id').padStart(6,'0')+'_text');
 				load3();
 				load2();
