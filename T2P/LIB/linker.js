@@ -27,7 +27,7 @@ var Linker = {
 			return 2;
 		}
 		
-		var libs = ['calc', 'random', 'url_loader', 'math', 'brython', 'canvas', 'discrete_math', 'vivagraph'];
+		var libs = ['calc', 'random', 'url_loader', 'math', 'brython', 'canvas', 'discrete_math', 'vivagraph', 'nerdamer'];
 		
 		if (libs.indexOf(name)>=0) {
 			if (GlobalScope[name]) return false;
