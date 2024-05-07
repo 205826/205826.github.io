@@ -22,7 +22,7 @@ const _2 = (s,i)=>math.round(s,i||5);
 var _toTex = (values,labels_f)=>values.map((x,i)=>_(`${x}!=0`)?(_(`${x}<0`)?'-':'+')+(Math.abs(x)!=1?_2(Math.abs(x)):'')+''+(Math.abs(x)==1?labels_f(i+1)||1:labels_f(i+1)):'').join('').replace(/^\+/,'');
 var parseMatrix = (a)=>a.split('\n').filter(x=>x.trim()).map(x=>x.split(' ').filter(y=>y.trim()).map(x=>parseFloat(x)));
 
-const find_min = true;
+const find_min = input.by_id('T1m').value=='минимума';
 const C = parseMatrix(input.by_id('T1c').value)[0];
 const B = parseMatrix(input.by_id('T1b').value)[0];
 const A = parseMatrix(input.by_id('T1a').value);
