@@ -6,7 +6,7 @@
 //- input_default_value: $$c($$<input type="text" style="width:100px" id="T1c" value="0.1 0.255"><br>
 //- input_default_value: $$b($$<input type="text" style="width:100px" id="T1b" value="3 27 22"><br>
 //- input_default_value: $$a\Bigg($$<textarea id="T1a" style="width:110px;height:55px;vertical-align:middle;">0 1 -1 0 0\n3 2.17 0 -1 0\n1 2.67 0 0 -1</textarea>$$\Bigg)$$<br>
-//- input_default_value: Поиск <select id="T1m"><option>минимума</option><option>максимума</option></select><br>
+//- input_default_value: Поиск <select id="T1m"><option>минимума</option><option selected>максимума</option></select><br>
 //- input_default_value: Отображение формул: <select id="T1tex"><option>Mathjs</option><option>Tex</option></select><br>
 //- output: html
 //- import: math
@@ -301,7 +301,7 @@ while (!(check_is_answer_ready_max(f) || !(max_iter--))) {
 	print_matrix(lables[0], lables[1],matrix, sel_column, sel_row);
 	//output.print(matrix);
 	delete matrix.f;
-	output.print('Выбираем большую по модулю отрицательную $$\\Delta$$. Видим, что при увеличении $$'+sel_column+'$$ быстрее всего до нуля доходит $$'+sel_row+'$$.<br>');
+	output.print('Выбираем большую по модулю положительную $$\\Delta$$. Видим, что при увеличении $$'+sel_column+'$$ быстрее всего до нуля доходит $$'+sel_row+'$$.<br>');
 	output.print('Меняем $$'+sel_row+'$$ и $$'+sel_column+'$$ местами.<br>');
 	
 	// выражаем переменную, которая была в sel_column из строки sel_row
