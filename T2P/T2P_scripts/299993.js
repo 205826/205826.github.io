@@ -353,12 +353,12 @@ while (!(check_is_answer_ready_max(f) || !(max_iter--))) {
 matrix.f = f;
 print_matrix(lables[0], lables[1],matrix, '', '');
 output.print('Обе характеристические разности отрицательные. Найдено оптимальное решение.<br>');
-Object.keys(matrix).sort((x,y)=>x=='f'?1:y=='f'?-1:x>y?1:-1).map(x=>{
-	if (find_min&&x=='f')
-		output.print('$$'+x+'^* = '+_2(-1*matrix[x].b||0)+'$$<br>');
-	else
-		output.print('$$'+x+'^* = '+_2(matrix[x].b||0)+'$$<br>');
+
+C.map((x,i)=>{
+	output.print('$$x_'+(i+1)+'^* = '+_2((matrix['x_'+(i+1)]||{}).b||0)+'$$<br>');
 });
+
+output.print('$$f^* = '+_2((find_min?-1:1)*(matrix.f.b||0))+'$$<br>');
 if (input.by_id('T1tex').value=='Tex'){output.all=output.all.replace(/\$\$\$\$/g,'').replace(/\$/g,'<span>$</span>');}
 /*})();}catch(e){
 	output.all='!!!!!'+e+'<br>'+output.all;
