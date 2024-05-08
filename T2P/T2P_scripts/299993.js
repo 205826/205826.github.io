@@ -389,18 +389,18 @@ function dual(){
 		x.map((y,j)=>{
 			if (lables[1][j]) matrix[lables[0][i]][lables[1][j]]=y;
 		});
-		matrix[lables[0][i]].b=dual_B[i];
+		matrix[lables[0][i]].b=-dual_B[i];
 	});
 	
 	
 	lables[0].push('f');
 	lables[1].push('b');
 	let f = {};
-	dual_C.map((x,i)=>f['y_'+(i+1)]=-x);
+	dual_C.map((x,i)=>f['y_'+(i+1)]=x);
 	
 	function dual_check_is_answer_ready_max(w_row) {
 	//output.print(w_row);
-		return Object.keys(w_row).filter(x=>x!='b').every((k, i) => _(`${w_row[k]} <= 0`));
+		return Object.keys(w_row).filter(x=>x!='b').every((k, i) => _(`${w_row[k]} >= 0`));
 	}
 	function dual_select_next_column_max() {
 		let res = "0";
@@ -408,7 +408,7 @@ function dual(){
 		for (let key of Object.keys(f)) {
 			if (key === "b") continue;
 
-			if (_(`${f[key]} > 0`) && _(`${f[key]} > ${res}`)) {
+			if (_(`${f[key]} < 0`) && _(`${f[key]} < ${res}`)) {
 				res = f[key];
 				res_key = key;
 			}
@@ -431,7 +431,7 @@ function dual(){
 			let b = row.b || 0;
 			let v = row[column_var] || 0;
 			if (v==0) continue;
-			let approx_b_val = _(`(${b})/(${v})`);
+			let approx_b_val = _(`-(${b})/(${v})`);
 			if (_(`${approx_b_val} < ${res_val}`) && _(`${approx_b_val} > 0`)) {
 				res_key = row_key;
 				res_val = approx_b_val;
@@ -477,7 +477,7 @@ function dual(){
 		print_matrix(lables[0], lables[1],matrix, sel_column, sel_row);
 		//output.print(matrix);
 		delete matrix.f;
-		output.print('Выбираем большую по модулю положительную $$\\Delta$$. Видим, что при увеличении $$'+sel_column+'$$ быстрее всего до нуля доходит $$'+sel_row+'$$.<br>');
+		output.print('Выбираем большую по модулю отрицательную $$\\Delta$$. Видим, что при увеличении $$'+sel_column+'$$ быстрее всего до нуля доходит $$'+sel_row+'$$.<br>');
 		output.print('Меняем $$'+sel_row+'$$ и $$'+sel_column+'$$ местами.<br>');
 
 		// выражаем переменную, которая была в sel_column из строки sel_row
