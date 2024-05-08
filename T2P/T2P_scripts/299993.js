@@ -396,11 +396,11 @@ function dual(){
 	lables[0].push('f');
 	lables[1].push('b');
 	let f = {};
-	dual_C.map((x,i)=>f['y_'+(i+1)]=x);
+	dual_C.map((x,i)=>f['y_'+(i+1)]=-x);
 	
 	function dual_check_is_answer_ready_max(w_row) {
 	//output.print(w_row);
-		return Object.keys(w_row).filter(x=>x!='b').every((k, i) => _(`${w_row[k]} >= 0`));
+		return Object.keys(w_row).filter(x=>x!='b').every((k, i) => _(`${w_row[k]} <= 0`));
 	}
 	function dual_select_next_column_max() {
 		let res = "0";
@@ -408,7 +408,7 @@ function dual(){
 		for (let key of Object.keys(f)) {
 			if (key === "b") continue;
 
-			if (_(`${f[key]} < 0`) && _(`${f[key]} < ${res}`)) {
+			if (_(`${f[key]} > 0`) && _(`${f[key]} > ${res}`)) {
 				res = f[key];
 				res_key = key;
 			}
@@ -530,7 +530,7 @@ function dual(){
 	print_matrix(lables[0], lables[1],matrix, '', '');
 	output.print('Обе характеристические разности отрицательные. Найдено оптимальное решение.<br>');
 
-	output.print('$$f^* = '+_2((find_min?1:-1)*(matrix.f.b||0))+'$$<br>');
+	output.print('$$f^* = '+_2((find_min?-1:1)*(matrix.f.b||0))+'$$<br>');
 
 	if (input.by_id('T1tex').value=='Tex'){output.all=output.all.replace(/\$\$\$\$/g,'').replace(/\$/g,'<span>$</span>');}
 	return 0;
