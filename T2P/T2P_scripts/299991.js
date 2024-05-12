@@ -222,6 +222,7 @@ F.map((x,i)=>{
 });
 
 output.print('$$f^* = '+_2(matrix.f.b||0)+'$$<br>');
+	if (input.by_id('T1tex').value=='Tex'){output.all=output.all.replace(/\$\$\$\$/g,'').replace(/\$/g,'<span>$</span>');}
 return 0;
 })();}catch(e){
 	output.all='<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;">'+e+'</div><br>'+output.all;
