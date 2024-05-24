@@ -615,6 +615,6 @@ function task3(f,y0,xl,xr,n,m){
 var __h = (parseFloat(input.by_id('T3xe').value.trim())-parseFloat(input.by_id('T3x0').value.trim()))/parseFloat(input.by_id('T3h').value.trim());
 task3((x,y)=>math.evaluate(input.by_id('T3f').value,{x:x,y:y}),parseFloat(input.by_id('T3y0').value.trim()),parseFloat(input.by_id('T3x0').value.trim()),parseFloat(input.by_id('T3xe').value.trim()),Math.round(__h),input.by_id('T3m').value);
 
-output.all='<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;"><h2 style="margin:0;">Это бета версия для тестирования!<br>Некоторые возможности могут быть недоступны</div><br>'+output.all;
+//output.all='<div style="background-color: #FFB7B7;color: #570000;text-align:center;border-radius: 10px;"><h2 style="margin:0;">Это бета версия для тестирования!<br>Некоторые возможности могут быть недоступны</div><br>'+output.all;
 	
 return 0;
