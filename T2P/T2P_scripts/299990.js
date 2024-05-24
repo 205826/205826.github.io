@@ -310,7 +310,11 @@ function nuton(_xs,_ys,_x){
 
 		output.print('$$N_'+(xs.length-1)+'(x)= $$ ');
 		output.print('$$'+(ans_to_compute2.join('+'))+'= $$ ');
-		output.print('$$'+math.parse(s).toTex({parenthesis: 'keep'})+'=TODO$$');
+		output.print('$$'+math.parse(s).toTex({parenthesis: 'keep'})+'$$ ');
+		
+		
+		var _t=nerdamer.coeffs(s,'x').toString().replace(/[\[\]]/g,'').split(',').map(x=>x.replace(/(.*)\/(.*)/g,'\\frac{$1}{$2}'));
+		output.print('$$='+_t.map((x,i)=>i?x+(i-1?'x^{'+i+'}':'x'):x).reverse().join('+')+'$$');
 
 	}
 	if (target_x) solve_newton(); else newton_get_formula();
@@ -414,7 +418,6 @@ task2(parseMatrix(input.by_id('T2t').value)[0], parseMatrix(input.by_id('T2t').v
 output.print('<h2>Задание 3</h2>');
 _2 = (s,i)=>math.round(s,i||3);
 function task3(f,y0,xl,xr,n,m){
-	output.print(f(1,1));
 	var ny;
 	var add_col={name:[], f:[]};
 	var h = (xr-xl)/n;
