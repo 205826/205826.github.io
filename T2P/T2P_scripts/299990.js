@@ -125,6 +125,29 @@ function nuton(_xs,_ys,_x){
 		return r;
 	};
 
+	// 24 слайд
+	function neravnoots_solve() {    
+		// здесь не нужен вывод таблицы 
+
+		let t = table_for_neravnoots();
+		let ans_to_compute = "0";
+		let all = new Array(xs.length).fill(0).map((_, i) => `(x - x_${i})`);
+		for(let i = 0; i < t.length; i++){
+			let skobki = all.slice(0, i).join("*");
+			ans_to_compute += " + " + `${t[i][0]}` + (skobki === "" ? "" : "*") + skobki;
+		}
+
+		let x_val = Object.fromEntries(xs.map((v, i) => ["x_" + i, v]));
+		x_val.x = target_x;
+
+		output.print(ans_to_compute);
+		let ans = _(nerdamer(ans_to_compute).evaluate(x_val).toString());
+
+		output.print(ans);
+	}
+
+
+
 	const table_for_ravnoots = () => {
 		let a = [...ys];
 		let r = [];
