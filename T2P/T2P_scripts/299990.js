@@ -231,7 +231,7 @@ function nuton(_xs,_ys,_x){
 		
 		table = rotate_table(table);
 
-		let start_x_i = xs.findIndex((v, i) => _("" + target_x + " < " + v));
+		let start_x_i = xs.length-1;//xs.findIndex((v, i) => _("" + target_x + " < " + v));
 		let diff = xs[1] - xs[0];
 		let t = _(`(${target_x} - ${xs[start_x_i]}) / ${diff}`);
 		
@@ -319,13 +319,19 @@ function nuton(_xs,_ys,_x){
 	}
 	if (target_x) solve_newton(); else newton_get_formula();
 }
+function gaus(_xs,_ys,_x){
+	
+}
+
 
 output.print('<h2>Задание 1.a.</h2>');
 if (input.by_id('T1am').value=='l')lagrnj(parseMatrix(input.by_id('T1at').value)[0], parseMatrix(input.by_id('T1at').value)[1], input.by_id('T1ax').value.trim());
 if (input.by_id('T1am').value=='n')nuton(parseMatrix(input.by_id('T1at').value)[0], parseMatrix(input.by_id('T1at').value)[1], input.by_id('T1ax').value.trim());
+if (input.by_id('T1am').value=='g')gaus(parseMatrix(input.by_id('T1at').value)[0], parseMatrix(input.by_id('T1at').value)[1], input.by_id('T1ax').value.trim());
 output.print('<h2>Задание 1.b.</h2>');
 if (input.by_id('T1bm').value=='l')lagrnj(parseMatrix(input.by_id('T1bt').value)[0], parseMatrix(input.by_id('T1bt').value)[1]);
 if (input.by_id('T1bm').value=='n')nuton(parseMatrix(input.by_id('T1bt').value)[0], parseMatrix(input.by_id('T1bt').value)[1]);
+if (input.by_id('T1bm').value=='g')gaus(parseMatrix(input.by_id('T1bt').value)[0], parseMatrix(input.by_id('T1bt').value)[1]);
 //lagrnj(["0.1", "0.2", "0.3", "0.4", "0.5"], ["1.25", "2.38", "3.79", "5.44", "7.14"]);
 //lagrnj(["1", "2", "3", "4"], ["0", "3", "5", "7"]);
 
@@ -352,7 +358,7 @@ function task2(_xs,_ys,f){
 		output.print('Получаем линейную зависимость: $$'+loc[1]+'='+loc[2]+loc[0]+'+'+loc[3]+'$$.<br>');
 		output.print('Определеним коэффициенты А и В:');
 		print_matrix(table,loc);
-		table = {x:[1.2, 2.9, 4.1, 5.5, 6.7, 7.8, 9.2, 10.3],y:[7.4, 9.5, 11.1,12.9, 14.6, 17.3, 18.2, 20.7]};
+		//table = {x:[1.2, 2.9, 4.1, 5.5, 6.7, 7.8, 9.2, 10.3],y:[7.4, 9.5, 11.1,12.9, 14.6, 17.3, 18.2, 20.7]};
 		let n=2;
 		let a=new Array(n).fill(0).map((x,i)=>new Array(n).fill(0).map((y,j)=>table.x.map(y=>y**(i+j)).reduce((x,y)=>x+y)));
 		let b=new Array(n).fill(0).map((x,i)=>table.x.map((y,j)=>table.y[j]*y**i).reduce((x,y)=>x+y));
@@ -373,7 +379,9 @@ function task2(_xs,_ys,f){
 		output.print('$$'+loc[3]+'= \\frac{\\Delta_2}{\\Delta} = '+_2(B)+'$$<br>');
 		output.print('В вернемся к принятым ранее обозначениям:<br>');
 		
-		output.print('$$a=e^A='+_2(A)+'\\ \\ \\ b=B='+_2(B)+'$$<br>');
+		output.print('$$a=A='+_2(A)+'\\ \\ \\ b=B='+_2(B)+'$$<br>');
+		F = (x)=>A*Math.log(x)+B;
+		output.print('$$\\delta = \\sqrt{\\frac{\\sum_{i=1}^{n}(\\varphi(x_i)-y_i)^2}{n}}='+_2(aprox_D({x:_xs,y:_ys},F))+'$$<br>');
 		return;
 	}else if(f=='poc') {
 		output.print('Аппроксимирующая функция задана степенной функцией вида:<br>');
@@ -406,14 +414,27 @@ function task2(_xs,_ys,f){
 	output.print('$$'+loc[2]+'= \\frac{\\Delta_1}{\\Delta} = '+_2(A)+'$$<br>');
 	output.print('$$'+loc[3]+'= \\frac{\\Delta_2}{\\Delta} = '+_2(B)+'$$<br>');
 	output.print('В вернемся к принятым ранее обозначениям:<br>');
+	var F;
 	if (f=='exp'){
 		output.print('$$a=e^A='+_2(Math.exp(A))+'\\ \\ \\ b=B='+_2(B)+'$$<br>');
+		A = Math.exp(A);
+		F = (x)=>A*Math.exp(B*x);
 	}else if(f=='poc') {
 		output.print('$$a=e^A='+_2(Math.exp(A))+'\\ \\ \\ b=B='+_2(B)+'$$<br>');
+		A = Math.exp(A);
+		F = (x)=>A*Math.pow(x,B);
 	}
+	function aprox_S(xy, f) {
+		return xy.x.map((x,i)=>(f(x)-xy.y[i])**2).reduce((x,y)=>x+y);
+	}
+	function aprox_D(xy, f) {
+		return Math.sqrt(aprox_S(xy, f)/xy.x.length);
+	}
+	//output.all='';
+	output.print('$$\\delta = \\sqrt{\\frac{\\sum_{i=1}^{n}(\\varphi(x_i)-y_i)^2}{n}}='+_2(aprox_D({x:_xs,y:_ys},F))+'$$<br>');
 }
 output.print('<h2>Задание 2</h2>');
-//task2([1.1,2.3,3.7,4.5,5.4,6.8,7.5],[2.73,5.12,7.74,8.91,10.59,12.75,13.43],'poc');
+//task2([1.1,2.3,3.7,4.5,5.4,6.8,7.5],[2.73,5.12,7.74,8.91,10.59,12.75,13.43],'log');
 task2(parseMatrix(input.by_id('T2t').value)[0], parseMatrix(input.by_id('T2t').value)[1],input.by_id('T2m').value);
 output.print('<h2>Задание 3</h2>');
 _2 = (s,i)=>math.round(s,i||3);
