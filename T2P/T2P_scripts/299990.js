@@ -320,8 +320,8 @@ function nuton(_xs,_ys,_x){
 	if (target_x) solve_newton(); else newton_get_formula();
 }
 function gaus(_xs,_ys,_x){
-	let xs = ["0.1", "0.2", "0.3", "0.4", "0.5"];
-	let ys = ["1.25", "2.38", "3.79", "5.44", "7.14"];
+	let xs = _xs;//["0.1", "0.2", "0.3", "0.4", "0.5"];
+	let ys = _ys;//["1.25", "2.38", "3.79", "5.44", "7.14"];
 
 	function differenceTable() {
 		const n = ys.length;
@@ -439,7 +439,7 @@ function gaus(_xs,_ys,_x){
 	}
 
 
-	output.print(gauss({}, 0.28, 0.1));
+	output.print(gauss({}, _x));
 }
 
 
