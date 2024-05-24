@@ -4,7 +4,7 @@
 //- semester: 4
 //- input: html
 //- input_default_value: 1.a.
-//- input_default_value: Найти приблеженное значение функции при x=<input type="text" style="width:50px" id="T1ax" value="0.35"> для заданной таблицы с помощью <select id="T1am"><option value="n">Ньютона</option><option value="g" disabled>Гаусса</option><option value="l" selected>Лагранж</option></select>:<br>
+//- input_default_value: Найти приблеженное значение функции при x=<input type="text" style="width:50px" id="T1ax" value="0.35"> для заданной таблицы с помощью <select id="T1am"><option value="n">Ньютона</option><option value="g">Гаусса</option><option value="l" selected>Лагранж</option></select>:<br>
 //- input_default_value: <textarea id="T1at" style="width:300px;height:40px;vertical-align:middle;">0.1 0.2 0.3 0.4 0.5\n1.25 2.38 3.79 5.44 7.14</textarea><br>
 //- input_default_value: 1.b.
 //- input_default_value: Построить <select id="T1bm"><option value="n">многочлен Ньютона</option><option value="g" disabled>многочлен Гаусса</option><option value="l" selected>многочлен Лагранжа</option></select>, если функция $$y=f(x)$$ задана таблицей:<br>
@@ -320,7 +320,126 @@ function nuton(_xs,_ys,_x){
 	if (target_x) solve_newton(); else newton_get_formula();
 }
 function gaus(_xs,_ys,_x){
-	
+	let xs = ["0.1", "0.2", "0.3", "0.4", "0.5"];
+	let ys = ["1.25", "2.38", "3.79", "5.44", "7.14"];
+
+	function differenceTable() {
+		const n = ys.length;
+		const defy = Array.from({ length: n }, () => Array(n).fill(0));
+
+		for (let i = 0; i < n; i++) {
+			defy[i][0] = ys[i];
+		}
+
+		for (let i = 1; i < n; i++) {
+			for (let j = 0; j < n - i; j++) {
+				defy[j][i] = defy[j + 1][i - 1] - defy[j][i - 1];
+			}
+		}
+
+		return defy;
+	}
+
+	function gauss(self, v,) {
+		self.defy = differenceTable();
+		var h = _xs[1]-_xs[0];
+		var title = ['y_i','\\Delta y_i', '\\Delta^2 y_i'];
+		new Array(20).fill(0).forEach((row,i) => {
+			title.push('\\Delta^'+(i+3)+' y_i');
+		});
+		let html = '<table border="1">';
+		html += `<tr><td>$$x_i$$</td>`;
+		new Array(xs.length).fill(0).forEach((_,i) => {
+			html += '<td>$$'+title[i]+'$$</td>';
+		});
+		html += '</tr>';
+		new Array(xs.length).fill(0).forEach((row,i) => {
+			html += `<tr><td>${_xs[i]}</td>`;
+			new Array(xs.length).fill(0).forEach((col,j) => {
+				html += j>=xs.length-i?'<td></td>':`<td>$$${_2(self.defy[i][j])}$$</td>`;
+			});
+			html += '</tr>';
+		});
+		html += '</table>';
+		output.print(html);
+		//output.print(self.defy);
+		self.x = xs;
+		self.y = ys;
+		let a = Math.floor(self.y.length / 2);
+		let formula = [];
+
+		if (_(`${v} > ${self.x[a]}`)) {
+
+			let t = _(`(${v} - ${self.x[a]}) / ${h}`); 
+			let n = self.defy.length;
+			let pn = _(`${self.defy[a][0]} + ${t}*${self.defy[a][1]} + ((${t}*(${t}-1)) /2) * ${self.defy[a - 1][2]}`);
+			formula.push(`${_2(self.defy[a][0])} + ${_2(t)}*${_2(self.defy[a][1])} + ((${_2(t)}*(${_2(t)}-1)) /2) * ${_2(self.defy[a - 1][2])}`);
+
+			let tn = _(`${t} * (${t} - 1)`); 
+			for (let i = 3; i < n; i++) {
+				let _n;
+				if (i % 2 === 1) {
+					_n = Math.floor((i + 1) / 2);
+					tn = _(`${tn} * (${t} + ${_n} - 1)`);
+					pn = _(`${pn} + ((${tn}/${factorial(i)}) * ${self.defy[a - _n + 1][i]})`); 
+
+					let tn_fromula = `${_2(tn)} * (${_2(t)} + ${_n} - 1)`;
+					formula.push(`((${tn_fromula}/${factorial(i)}) * ${_2(self.defy[a - _n + 1][i])})`);
+				} else {
+					_n = Math.floor(i / 2);
+					tn = _(`${tn} * (${t} - ${_n})`); 
+					pn = _(`${pn} + ((${tn} / ${factorial(i)}) * ${self.defy[a - _n][i]})`); 
+
+					let tn_fromula = `${_2(tn)} * (${_2(t)} - ${_n})`;
+					formula.push(`((${tn_fromula} / ${factorial(i)}) * ${_2(self.defy[a - _n][i])})`);
+				}
+			}
+
+			output.print('$$y('+(_x)+')\\approx $$ ');
+			output.print('$$'+math.parse(formula.join(" + ")).toTex({parenthesis: 'keep'})+'\\approx $$ ');
+			return pn;
+		} else if (v < self.x[a]) {
+			
+			let t = _(`(${v} - ${self.x[a]}) / ${h}`); 
+			let n = self.defy.length;
+			let pn = _(`${self.defy[a][0]} + ${t} * ${self.defy[a - 1][1]} + ((${t} * (${t} + 1)) / 2) * ${self.defy[a - 1][2]}`);
+			formula.push(`${_2(self.defy[a][0])} + ${_2(t)} * ${_2(self.defy[a - 1][1])} + ((${_2(t)} * (${_2(t)} + 1)) / 2) * ${_2(self.defy[a - 1][2])}`);
+
+			let tn = _(`${t} * (${t} + 1)`);
+
+			for (let i = 3; i < n; i++) {
+				//output.print('!'+i+'!');
+				let _n;
+				if (i % 2 === 1) {
+					_n = Math.floor((i + 1) / 2);
+					tn = _(`${tn} * (${t} + ${_n} - 1)`); 
+				} else {
+					_n = Math.floor(i / 2);
+					tn = _(`${tn} * (${t} - ${_n})`); 
+				}
+				let fact = factorial(i);
+				pn = _(`${pn} + (${tn} / ${fact}) * ${self.defy[a - _n][i]}`);
+				formula.push(`(${_2(tn)} / ${fact}) * ${_2(self.defy[a - _n][i])}`);
+			}
+
+			output.print('$$y('+(_x)+')\\approx $$ ');
+			output.print('$$'+math.parse(formula.join(" + ")).toTex({parenthesis: 'keep'})+'\\approx $$ ');
+			return pn;
+		} else {
+			throw new Error("Error in Gauss");
+		}
+	}
+
+	function factorial(n) {
+		if (n === 0) {
+			return 1;
+		} else {
+			return n * factorial(n - 1);
+		}
+	}
+
+
+	output.print(gauss({}, 0.28, 0.1));
 }
 
 
