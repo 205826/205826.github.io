@@ -10,7 +10,7 @@
 //- input_default_value: Построить <select id="T1bm"><option value="n">многочлен Ньютона</option><option value="g" disabled>многочлен Гаусса</option><option value="l" selected>многочлен Лагранжа</option></select>, если функция $$y=f(x)$$ задана таблицей:<br>
 //- input_default_value: <textarea id="T1bt" style="width:300px;height:40px;vertical-align:middle;">1 2 3 4\n0 3 5 7</textarea><br>
 //- input_default_value: 2.
-//- input_default_value: Найти кофициенты аппроксимации функции <select id="T2m"><option value="log">y=alnx + b</option><option value="exp">y=ae^bx</option><option value="poc">y=ax^b</option></select> методом наименьших квадратов для таблицы заданой функции. Вычислить среднеквадратичное отклонение.<br>
+//- input_default_value: Найти кофициенты аппроксимации функции <select id="T2m"><option value="lin">y=ax + b</option><option value="log">y=alnx + b</option><option value="exp">y=ae^bx</option><option value="poc">y=ax^b</option></select> методом наименьших квадратов для таблицы заданой функции. Вычислить среднеквадратичное отклонение.<br>
 //- input_default_value: <textarea id="T2t" style="width:300px;height:40px;vertical-align:middle;">1.1 2.3 3.7 4.5 5.4 6.8 7.5\n2.73 5.12 7.74 8.91 10.59 12.75 13.43</textarea><br>
 //- input_default_value: 3.
 //- input_default_value: Составить решение задачи Коши для обыкновенного дифференциального уравнения первого порядка методом <select id="T3m"><option value="me">модифицированным методом Эйлера</option><option value="e">Эйлера</option><option value="d2">Рунге-Кутта 2 порядка</option><option value="d4">Рунге-Кутта 4 порядка</option></select> с шагом h=<input type="text" style="width:50px" id="T3h" value="0.1">. Вычисления выполнять с тремя десятичными знаками.<br>
@@ -390,61 +390,79 @@ function gaus(_xs,_ys,_x){
 		self.y = ys;
 		let a = Math.floor(self.y.length / 2);
 		let formula = [];
+		let formula2 = [];
 
 		if (_(`${v} > ${self.x[a]}`)) {
 
 			let t = _(`(${v} - ${self.x[a]}) / ${h}`); 
+			output.print(`$$t=\\frac{x-x_0}{h}=\\frac{${_2(v)} - ${_2(self.x[a])}}{${_2(h)}}=${_2(t)}$$<br>`);
 			let n = self.defy.length;
 			let pn = _(`${self.defy[a][0]} + ${t}*${self.defy[a][1]} + ((${t}*(${t}-1)) /2) * ${self.defy[a - 1][2]}`);
 			formula.push(`${_2(self.defy[a][0])} + ${_2(t)}*${_2(self.defy[a][1])} + ((${_2(t)}*(${_2(t)}-1)) /2) * ${_2(self.defy[a - 1][2])}`);
+			formula2.push(`y_0 + t \\Delta y_0 + \\frac{t(t-1)}{2!} \\Delta^2y_{-1}`);
 
 			let tn = _(`${t} * (${t} - 1)`); 
+			let tn2 = 't(t-1)'; 
 			for (let i = 3; i < n; i++) {
 				let _n;
 				if (i % 2 === 1) {
 					_n = Math.floor((i + 1) / 2);
 					tn = _(`${tn} * (${t} + ${_n} - 1)`);
+					tn2 += `(t+${_n-1})`;
+					if (tn2=='t(t-1)(t+1)')tn2='t(t+1)(t-1)';
 					pn = _(`${pn} + ((${tn}/${factorial(i)}) * ${self.defy[a - _n + 1][i]})`); 
-
-					let tn_fromula = `${_2(tn)} * (${_2(t)} + ${_n} - 1)`;
+					
+					let tn_fromula = `${_2(tn)} * (${_2(t)} + ${_n - 1})`;
 					formula.push(`((${tn_fromula}/${factorial(i)}) * ${_2(self.defy[a - _n + 1][i])})`);
+					formula2.push(`\\frac{${tn2}}{${i}!} * \\Delta^{${i}} y_{${_n+1}}`);
 				} else {
 					_n = Math.floor(i / 2);
 					tn = _(`${tn} * (${t} - ${_n})`); 
+					tn2 += `(t-${_n})`;
+					if (tn2=='t(t-1)(t+1)')tn2='t(t+1)(t-1)';
 					pn = _(`${pn} + ((${tn} / ${factorial(i)}) * ${self.defy[a - _n][i]})`); 
 
 					let tn_fromula = `${_2(tn)} * (${_2(t)} - ${_n})`;
 					formula.push(`((${tn_fromula} / ${factorial(i)}) * ${_2(self.defy[a - _n][i])})`);
+					formula2.push(`\\frac{${tn2}}{${i}!} * \\Delta^{${i}} y_{${_n}}`);
 				}
 			}
 
+			output.print('$$P_{'+(_xs.length-1)+'}(x) = '+formula2.join(" + ")+'$$ <br>');
 			output.print('$$y('+(_x)+')\\approx $$ ');
 			output.print('$$'+math.parse(formula.join(" + ")).toTex({parenthesis: 'keep'})+'\\approx $$ ');
 			return pn;
 		} else if (v < self.x[a]) {
 			
 			let t = _(`(${v} - ${self.x[a]}) / ${h}`); 
+			output.print(`$$t=\\frac{x-x_0}{h}=\\frac{${_2(v)} - ${_2(self.x[a])}}{${_2(h)}}=${_2(t)}$$<br>`);
 			let n = self.defy.length;
 			let pn = _(`${self.defy[a][0]} + ${t} * ${self.defy[a - 1][1]} + ((${t} * (${t} + 1)) / 2) * ${self.defy[a - 1][2]}`);
 			formula.push(`${_2(self.defy[a][0])} + ${_2(t)} * ${_2(self.defy[a - 1][1])} + ((${_2(t)} * (${_2(t)} + 1)) / 2) * ${_2(self.defy[a - 1][2])}`);
+			formula2.push(`y_0 + t \\Delta y_{-1} + \\frac{t(t+1)}{2!} \\Delta^2y_{-1}`);
 
 			let tn = _(`${t} * (${t} + 1)`);
+			let tn2 = 't(t+1)';
 
 			for (let i = 3; i < n; i++) {
 				//output.print('!'+i+'!');
 				let _n;
 				if (i % 2 === 1) {
 					_n = Math.floor((i + 1) / 2);
-					tn = _(`${tn} * (${t} + ${_n} - 1)`); 
+					tn = _(`${tn} * (${t} - ${_n} - 1)`); 
+					tn2+='(t-'+(_n-1)+')';
 				} else {
 					_n = Math.floor(i / 2);
-					tn = _(`${tn} * (${t} - ${_n})`); 
+					tn = _(`${tn} * (${t} + ${_n})`);
+					tn2+='(t+'+(_n)+')';
 				}
 				let fact = factorial(i);
 				pn = _(`${pn} + (${tn} / ${fact}) * ${self.defy[a - _n][i]}`);
 				formula.push(`(${_2(tn)} / ${fact}) * ${_2(self.defy[a - _n][i])}`);
+				formula2.push(`\\frac{${tn2}}{${i}!} * \\Delta^{${i}} y_{${-_n}}`);
 			}
 
+			output.print('$$P_{'+(_xs.length-1)+'}(x) = '+formula2.join(" + ")+'$$ <br>');
 			output.print('$$y('+(_x)+')\\approx $$ ');
 			output.print('$$'+math.parse(formula.join(" + ")).toTex({parenthesis: 'keep'})+'\\approx $$ ');
 			return pn;
@@ -462,7 +480,7 @@ function gaus(_xs,_ys,_x){
 	}
 
 
-	output.print(gauss({}, _x));
+	output.print(_2(gauss({}, _x)));
 }
 
 
@@ -489,6 +507,34 @@ function task2(_xs,_ys,f){
 		loc = ['x','Y','A','B'];
 		table.x = _xs.map(x=>x);
 		table.y = _ys.map(x=>Math.log(x));
+	}else if(f=='lin') {
+		loc = ['X','Y','a','b'];
+		table.x = _xs.map(x=>x);
+		table.y = _ys.map(x=>x);
+		
+		print_matrix(table,loc);
+		//table = {x:[1.2, 2.9, 4.1, 5.5, 6.7, 7.8, 9.2, 10.3],y:[7.4, 9.5, 11.1,12.9, 14.6, 17.3, 18.2, 20.7]};
+		let n=2;
+		let a=new Array(n).fill(0).map((x,i)=>new Array(n).fill(0).map((y,j)=>table.x.map(y=>y**(i+j)).reduce((x,y)=>x+y)));
+		let b=new Array(n).fill(0).map((x,i)=>table.x.map((y,j)=>table.y[j]*y**i).reduce((x,y)=>x+y));
+		let obj = {'SX':a[0][1], 'SXX':a[1][1], 'SY':b[0], 'SXY':b[1], 'n':table.x.length};
+		output.print('Вычисляем суммы: $$SX='+_2(obj.SX)+'\\ \\ \\ SXX='+_2(obj.SXX)+'\\ \\ \\ SY='+_2(obj.SY)+'\\ \\ \\ SXY='+_2(obj.SXY)+'$$<br>');
+		output.print('Получаем систему линейных уравнений:<br>');
+		output.print('$$\\left\\{\\begin{align}'+
+			_2(a[1][1])+loc[2]+'+'+_2(a[0][1])+loc[3]+'&='+_2(b[1])+'\\\\'+
+			_2(a[1][0])+loc[2]+'+'+_2(a[0][0])+loc[3]+'&='+_2(b[0])+'\\\\'+
+		'\\end{align}\\right.$$<br/>');
+		output.print('из которой находим (правило Крамера):<br/>');
+		output.print('$$\\Delta=SXX \\cdot n - SX \\cdot SX = '+_2(obj.SXX*obj.n-obj.SX*obj.SX)+'$$<br>');
+		output.print('$$\\Delta_1=SXY \\cdot n - SX \\cdot SY = '+_2(obj.SXY*obj.n-obj.SX*obj.SY)+'$$<br>');
+		output.print('$$\\Delta_2=SXX \\cdot SY - SX \\cdot SXY = '+_2(obj.SXX*obj.SY-obj.SX*obj.SXY)+'$$<br>');
+		let A = (obj.SXY*obj.n-obj.SX*obj.SY)/(obj.SXX*obj.n-obj.SX*obj.SX);
+		let B = (obj.SXX*obj.SY-obj.SX*obj.SXY)/(obj.SXX*obj.n-obj.SX*obj.SX);
+		output.print('$$'+loc[2]+'= \\frac{\\Delta_1}{\\Delta} = '+_2(A)+'$$<br>');
+		output.print('$$'+loc[3]+'= \\frac{\\Delta_2}{\\Delta} = '+_2(B)+'$$<br>');
+		F = (x)=>A*x+B;
+		output.print('$$\\delta = \\sqrt{\\frac{\\sum_{i=1}^{n}(\\varphi(x_i)-y_i)^2}{n}}='+_2(aprox_D({x:_xs,y:_ys},F))+'$$<br>');
+		return;
 	}else if(f=='log') {
 		output.print('Аппроксимирующая функция задана логарифмической функцией вида:<br>');
 		output.print('$$\\varphi(x)=a\\ln(x)+b$$<br>');
@@ -596,7 +642,7 @@ function task3(f,y0,xl,xr,n,m){
 		add_col.f=[(yi,xi)=>yi+h*f(xi,yi)];
 		ny=(yi,xi)=>yi+h/2*(f(xi,yi)+f(xi+h,yi+h*f(xi,yi)));
 	} else  if (m=='d2') {
-		output.print('$$y_{i+1}=y_i+\\frac{h}{2}(k_1+k_2),$$<br>');
+		output.print('$$y_{i+1}=y_i+\\frac{1}{2}(k_1+k_2),$$<br>');
 		output.print('$$k_1=hf(x_i,y_i)\\ \\ \\ k_2 = hf(x_i+h,y_i+k_1)$$<br>');
 		add_col.name=['k_1','k_2'];
 		let k1 = (yi,xi)=>h*f(xi,yi);
@@ -604,7 +650,7 @@ function task3(f,y0,xl,xr,n,m){
 		add_col.f=[k1, k2];
 		ny=(yi,xi)=>yi+1/2*(k1(yi,xi)+k2(yi,xi));
 	} else  if (m=='d4') {
-		output.print('$$y_{i+1}=y_i+\\frac{h}{6}(k_1+2k_2+2k_3+k_4),$$<br>');
+		output.print('$$y_{i+1}=y_i+\\frac{1}{6}(k_1+2k_2+2k_3+k_4),$$<br>');
 		output.print('$$k_1=hf(x_i,y_i)$$<br>');
 		output.print('$$k_2=hf(x_i+\\frac{h}{2},y_i+\\frac{k_1}{2})$$<br>');
 		output.print('$$k_3=hf(x_i+\\frac{h}{2},y_i+\\frac{k_2}{2})$$<br>');
