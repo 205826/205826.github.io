@@ -398,33 +398,33 @@ function gaus(_xs,_ys,_x){
 			output.print(`$$t=\\frac{x-x_0}{h}=\\frac{${_2(v)} - ${_2(self.x[a])}}{${_2(h)}}=${_2(t)}$$<br>`);
 			let n = self.defy.length;
 			let pn = _(`${self.defy[a][0]} + ${t}*${self.defy[a][1]} + ((${t}*(${t}-1)) /2) * ${self.defy[a - 1][2]}`);
-			formula.push(`${_2(self.defy[a][0])} + ${_2(t)}*${_2(self.defy[a][1])} + ((${_2(t)}*(${_2(t)}-1)) /2) * ${_2(self.defy[a - 1][2])}`);
+			formula.push(`${_2(self.defy[a][0])} + ${_2(t)}*${_2(self.defy[a][1])} + ${_2(t)}*(${_2(_(`${t}-1`))}) /2 * ${_2(self.defy[a - 1][2])}`);
 			formula2.push(`y_0 + t \\Delta y_0 + \\frac{t(t-1)}{2!} \\Delta^2y_{-1}`);
 
-			let tn = _(`${t} * (${t} - 1)`); 
+			let tn = `${_2(t)} * (${_2(_(`${t} - 1`))})`; 
 			let tn2 = 't(t-1)'; 
 			for (let i = 3; i < n; i++) {
 				let _n;
 				if (i % 2 === 1) {
 					_n = Math.floor((i + 1) / 2);
-					tn = _(`${tn} * (${t} + ${_n} - 1)`);
+					tn = `${tn} * (${_2(_(`${t} + ${_n} - 1`))})`;
 					tn2 += `(t+${_n-1})`;
 					if (tn2=='t(t-1)(t+1)')tn2='t(t+1)(t-1)';
 					pn = _(`${pn} + ((${tn}/${factorial(i)}) * ${self.defy[a - _n + 1][i]})`); 
 					
-					let tn_fromula = `${_2(tn)} * (${_2(t)} + ${_n - 1})`;
-					formula.push(`((${tn_fromula}/${factorial(i)}) * ${_2(self.defy[a - _n + 1][i])})`);
-					formula2.push(`\\frac{${tn2}}{${i}!} * \\Delta^{${i}} y_{${_n+1}}`);
+					//let tn_fromula = `${tn} * (${_2(t)} + ${_n - 1})`;
+					formula.push(`${tn}/${factorial(i)} * ${_2(self.defy[a - _n + 1][i])}`);
+					formula2.push(`\\frac{${tn2}}{${i}!} * \\Delta^{${i}} y_{-${_n-1}}`);
 				} else {
 					_n = Math.floor(i / 2);
-					tn = _(`${tn} * (${t} - ${_n})`); 
+					tn = `${tn} * (${_2(_(`${t} - ${_n}`))})`;
 					tn2 += `(t-${_n})`;
 					if (tn2=='t(t-1)(t+1)')tn2='t(t+1)(t-1)';
 					pn = _(`${pn} + ((${tn} / ${factorial(i)}) * ${self.defy[a - _n][i]})`); 
 
-					let tn_fromula = `${_2(tn)} * (${_2(t)} - ${_n})`;
-					formula.push(`((${tn_fromula} / ${factorial(i)}) * ${_2(self.defy[a - _n][i])})`);
-					formula2.push(`\\frac{${tn2}}{${i}!} * \\Delta^{${i}} y_{${_n}}`);
+					//let tn_fromula = `${tn} * (${_2(t)} - ${_n})`;
+					formula.push(`${tn} / ${factorial(i)} * ${_2(self.defy[a - _n][i])}`);
+					formula2.push(`\\frac{${tn2}}{${i}!} * \\Delta^{${i}} y_{-${_n}}`);
 				}
 			}
 
@@ -438,10 +438,10 @@ function gaus(_xs,_ys,_x){
 			output.print(`$$t=\\frac{x-x_0}{h}=\\frac{${_2(v)} - ${_2(self.x[a])}}{${_2(h)}}=${_2(t)}$$<br>`);
 			let n = self.defy.length;
 			let pn = _(`${self.defy[a][0]} + ${t} * ${self.defy[a - 1][1]} + ((${t} * (${t} + 1)) / 2) * ${self.defy[a - 1][2]}`);
-			formula.push(`${_2(self.defy[a][0])} + ${_2(t)} * ${_2(self.defy[a - 1][1])} + ((${_2(t)} * (${_2(t)} + 1)) / 2) * ${_2(self.defy[a - 1][2])}`);
+			formula.push(`${_2(self.defy[a][0])} + ${_2(t)} * ${_2(self.defy[a - 1][1])} + ${_2(t)} * (${_2(_(`${t}+1`))}) / 2 * ${_2(self.defy[a - 1][2])}`);
 			formula2.push(`y_0 + t \\Delta y_{-1} + \\frac{t(t+1)}{2!} \\Delta^2y_{-1}`);
 
-			let tn = _(`${t} * (${t} + 1)`);
+			let tn = `${_2(t)} * (${_2(_(`${t}+1`))})`;
 			let tn2 = 't(t+1)';
 
 			for (let i = 3; i < n; i++) {
@@ -449,16 +449,16 @@ function gaus(_xs,_ys,_x){
 				let _n;
 				if (i % 2 === 1) {
 					_n = Math.floor((i + 1) / 2);
-					tn = _(`${tn} * (${t} - ${_n} - 1)`); 
+					tn = `${tn} * (${_2(_(`${t}-${_n}+1`))})`; 
 					tn2+='(t-'+(_n-1)+')';
 				} else {
 					_n = Math.floor(i / 2);
-					tn = _(`${tn} * (${t} + ${_n})`);
+					tn = `${tn} * (${_2(_(`${t}+${_n}`))})`;
 					tn2+='(t+'+(_n)+')';
 				}
 				let fact = factorial(i);
 				pn = _(`${pn} + (${tn} / ${fact}) * ${self.defy[a - _n][i]}`);
-				formula.push(`(${_2(tn)} / ${fact}) * ${_2(self.defy[a - _n][i])}`);
+				formula.push(`${tn} / ${fact} * ${_2(self.defy[a - _n][i])}`);
 				formula2.push(`\\frac{${tn2}}{${i}!} * \\Delta^{${i}} y_{${-_n}}`);
 			}
 
