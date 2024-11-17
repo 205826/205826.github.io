@@ -10,3 +10,4 @@
 * [Кик](./KIK/)
 * [Картинки](./photos.zip) + [itmo.enter](./itmo_enter.zip)
 * [gelius - auto connect](./auto_connect_gelius.zip)
+* Поисковик по тестам на moodle (моделирование): [README](./moodle_find_README.pdf) + [файлы](./moodle_find.zip)
