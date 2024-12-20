@@ -7454,7 +7454,7 @@ function renderer_svg (arr,callback) {
 		while (desiredScale < currentScale && t-->0) currentScale = renderer.zoomOut();
 		};
 		fit();
-		frames.push('<svg xmlns="http://www.w3.org/2000/svg" width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'" fill="none">'+div.getElementsByTagName('svg')[0].getInnerHTML()+'</svg>');
+		frames.push('<svg xmlns="http://www.w3.org/2000/svg" width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'" fill="none">'+div.getElementsByTagName('svg')[0].innerHTML+'</svg>');
 		
 		arr.map((ar,i)=>{
 			if (!i)return;
