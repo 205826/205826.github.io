@@ -7510,7 +7510,7 @@ function renderer_svg (arr,callback) {
 			
 			renderer.prerender();
 			fit();
-			frames.push('<svg xmlns="http://www.w3.org/2000/svg" width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'" fill="none">'+div.getElementsByTagName('svg')[0].getInnerHTML()+'</svg>');
+			frames.push('<svg xmlns="http://www.w3.org/2000/svg" width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'" fill="none">'+div.getElementsByTagName('svg')[0].innerHTML+'</svg>');
 			//renderer.dispose();
 		});
 		document.body.removeChild(div);
