@@ -69,7 +69,6 @@ while(p3[0]>0&&t--&&file_size>=0) {
 		p3[2] = sp32;
 	}
 	p3[1] = sp3;
-	output.print('1+');
 }
 output.print('Системных данных: ' + (system_sum+L0) + ' байт (' + (1+system_sum/L1L2L3)+' блоков)<br>');
 output.print('Файл: ' + file_sum + ' байт (' + (file_sum/file_block)+' блоков)<br>');
