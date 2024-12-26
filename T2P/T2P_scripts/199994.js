@@ -8,7 +8,7 @@
 //- input_default_value: Количество указателей p2: <input type="text" style="width:100px" id="p2" value="128 128"> (L1 L2)<br>
 //- input_default_value: Количество указателей p3: <input type="text" style="width:100px" id="p3" value="128 128 128"> (L1 L2 L3)<br><br>
 
-//- input_default_value: Главный блок с указателями (L0): <input type="text" style="width:100px" id="L0" value="512"> байт<br>
+//- input_default_value: Главный блок с указателями (L0): <input type="text" style="width:100px" id="L0" value="0"> байт<br>
 //- input_default_value: Каждый блок с указателями весит (L1, L2, L3): <input type="text" style="width:100px" id="L1L2L3" value="512"> байт<br>
 //- input_default_value: Размер блока (файла): <input type="text" style="width:100px" id="file_block" value="512"> байт<br><br>
 
@@ -70,7 +70,7 @@ while(p3[0]>0&&t--&&file_size>=0) {
 	}
 	p3[1] = sp3;
 }
-output.print('Системных данных: ' + (system_sum+L0) + ' байт (' + (1+system_sum/L1L2L3)+' блоков)<br>');
+output.print('Системных данных: ' + (system_sum+L0) + ' байт (' + ((L0?1:0)+system_sum/L1L2L3)+' блоков)<br>');
 output.print('Файл: ' + file_sum + ' байт (' + (file_sum/file_block)+' блоков)<br>');
-output.print('Сумарно: ' + (file_sum+system_sum) + ' байт (' + ((1+system_sum/L1L2L3)+(file_sum/file_block))+' блоков)');
+output.print('Сумарно: ' + (file_sum+system_sum) + ' байт (' + (((L0?1:0)+system_sum/L1L2L3)+(file_sum/file_block))+' блоков)');
 return 0;
