@@ -805,7 +805,7 @@ function validateInput(a, b) {
     console.assert(b.numberSigned >= 0, "both operands should be positive or zero!");
 }
 
-const divide = function divide(dividendInput, dividerInput) {
+const divide = function divide(dividendInput, dividerInput, r) {
     // init result and current reminder (dividend may be copied to current reminder)
     const dividend = dividendInput.snapshot();
     const divider = new Register(dividerInput.snapshot().lowHalf);
@@ -819,7 +819,8 @@ const divide = function divide(dividendInput, dividerInput) {
     // check validity of division
     const isCorrect = isDivisionValid(currentReminder, dividend, divider);
     if (!isCorrect[0]) {
-        throw new Error("division could not be performed");
+        r.r = true;
+        //throw new Error("division could not be performed");
     }
     steps.push(isCorrect[1]);
     // start division
