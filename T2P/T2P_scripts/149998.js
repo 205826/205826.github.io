@@ -14,7 +14,7 @@ output.print('Результат работы данной программы (�
 output.print('<h3 style="margin:0;">Разработчики</h3>');
 output.print('<b>owl-from-hogvarts</b> - создатель библиотеки для выполнения арифметических действий<br>'); 
 output.print('⟨T⟩ - графическая оболочка над библиотекой');
-output.print('</div><br>');
+output.print('</div><br><!-- $$$$! -->');
 
 //output.print('<div style="background-color: #ff0000;color: #00ff00;text-align:center;border-radius:10px;font-size:20px">');
 //output.print('!!!Обноружена ошибка, проверяйте результат работы алгоритма!!!');
@@ -56,7 +56,14 @@ output.print('<br>');
 a = new discrete_math.Register(aBytes).set(xx[0]*ia);
 b = new discrete_math.Register(bBytes).set(xx[1]*ib);
 var nb = new discrete_math.Register(discrete_math.Byte.fill(2)).set(-xx[1]*ib);
-const result = discrete_math.divide(a, b);
+var rrr={};
+const result = discrete_math.divide(a, b, rrr);
+if (rrr.r){
+	var s = '<div style="background-color: #ff0000;color: #00ff00;text-align:center;border-radius:10px;font-size:20px">';
+	s+= 'Результат работы алгоритма может быть неверным!!!';
+ 	s+='</div><br>';
+	output.all=output.all.replace('<!-- $$$$! -->',s);
+}
 //output.print(result);
 //output.print('<BR><BR>'+result.steps.map(JSON.stringify).join('<br><br>'));
 //output.print(result.result[1].formatBeauty("reminder"));
