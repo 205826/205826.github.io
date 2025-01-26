@@ -45,7 +45,7 @@
 	output.print('calculate_time = ' + stripes + ' * '+SU_calc+' мкс = ' + calculate_time + ' мкс<br><br>');
 	
 	output.print('6) Сколько нам придется читать:<br>');
-	var read_time = block_count * block_read * 1;
+	var read_time = block_count * block_read * valid_disks;
 	output.print('calculate_time = ' + block_count + ' * '+block_read+' мкс * ' + valid_disks + ' = ' + read_time + ' мкс<br><br>');
 	output.print('7) Итого:<br>');
     var answer = read_time + calculate_time + write_time;
