@@ -17,7 +17,7 @@
 
 var p0 = parseInt(input.by_id('p0').value);
 var p1 = input.by_id('p1').value.split(' ').map(x=>parseInt(x));
-var kp1 = input.by_id('p2').value.split(' ').map(x=>parseInt(x));
+var kp1 = input.by_id('p1').value.split(' ').map(x=>parseInt(x));
 var p2 = input.by_id('p2').value.split(' ').map(x=>parseInt(x));
 var kp2 = input.by_id('p2').value.split(' ').map(x=>parseInt(x));
 var p3 = input.by_id('p3').value.split(' ').map(x=>parseInt(x));
@@ -31,8 +31,8 @@ var file_size = parseInt(input.by_id('file_size').value);
 var system_sum = 0;
 var file_sum = 0;
 var t = 1000000000;
-while(p0>0&&t--&&file_size>=0) {file_sum+=file_block;file_size-=file_block;--p0;}
-while(p1[0]>0&&t--&&file_size>=0) {
+while(p0>0&&t-->0&&file_size>=0) {file_sum+=file_block;file_size-=file_block;--p0;}
+while(p1[0]>0&&t-->0&&file_size>=0) {
 	if (p1[0] == kp1[0]) system_sum+=L1L2L3;
 	p1[0]--;
 	{
@@ -40,11 +40,11 @@ while(p1[0]>0&&t--&&file_size>=0) {
 		file_size-=file_block;
 	}
 }
-while(p2[0]>0&&t--&&file_size>=0) {
+while(p2[0]>0&&t-->0&&file_size>=0) {
 	if (p2[0] == kp2[0]) system_sum+=L1L2L3;
 	p2[0]--;
 	var sp2 = p2[1];
-	while(p2[1]>0&&t--&&file_size>=0) {
+	while(p2[1]>0&&t-->0&&file_size>=0) {
 		if (p2[1] == kp2[1]) system_sum+=L1L2L3;
 		file_sum+=file_block;
 		file_size-=file_block;
@@ -52,15 +52,15 @@ while(p2[0]>0&&t--&&file_size>=0) {
 	}
 	p2[1] = sp2;
 }
-while(p3[0]>0&&t--&&file_size>=0) {
+while(p3[0]>0&&t-->0&&file_size>=0) {
 	if (p3[0] == kp3[0]) system_sum+=L1L2L3;
 	p3[0]--;
 	var sp3 = p3[1];
-	while(p3[1]>0&&t--&&file_size>=0) {
+	while(p3[1]>0&&t-->0&&file_size>=0) {
 		if (p3[1] == kp3[1]) system_sum+=L1L2L3;
 		p3[1]--;
 		var sp32 = p3[2];
-		while(p3[2]>0&&t--&&file_size>=0) {
+		while(p3[2]>0&&t-->0&&file_size>=0) {
 			if (p3[2] == kp3[2]) system_sum+=L1L2L3;
 			file_sum+=file_block;
 			file_size-=file_block;
@@ -70,6 +70,7 @@ while(p3[0]>0&&t--&&file_size>=0) {
 	}
 	p3[1] = sp3;
 }
+if (t<0) return 'долгое выполнение';
 output.print('Системных данных: ' + (system_sum+L0) + ' байт (' + ((L0?1:0)+system_sum/L1L2L3)+' блоков)<br>');
 output.print('Файл: ' + file_sum + ' байт (' + (file_sum/file_block)+' блоков)<br>');
 output.print('Сумарно: ' + (file_sum+system_sum) + ' байт (' + (((L0?1:0)+system_sum/L1L2L3)+(file_sum/file_block))+' блоков)');
