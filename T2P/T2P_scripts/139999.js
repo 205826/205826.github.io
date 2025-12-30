@@ -64,31 +64,103 @@ function randomInt(min, max) {
 //    return arr[Math.floor(rand() * arr.length)];
 //}
 
+function shuffleArray(array) {
+    const shuffled = [...array];
+    
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(rand() * (i + 1));
+        
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    
+    return shuffled;
+}
+
 // Генерация параметров для задачи 1
 function generateTask1() {
-    var pricePO = Math.round(randomInRange(300000, 500000) / 100) * 100; // Цена ПО с НДС
-    var sum1 = Math.round(randomInRange(40000, 60000) / 100) * 100; // С НДС
-    var sum2 = Math.round(randomInRange(30000, 50000) / 100) * 100; // С НДС
-    var sum3 = Math.round(randomInRange(60000, 80000) / 100) * 100; // Без НДС
-    var sum4_nds = Math.round(randomInRange(3000, 6000) / 100) * 100; // НДС отдельно
+    // Генерация формата для цены ПО компании
+    const companyPriceType = Math.floor(rand() * 2); // 0 - цена с НДС, 1 - цена без НДС
     
-    // Расчёт правильного ответа
-    var nds_realiz = pricePO * 20 / 120;
-    var nds1 = sum1 * 20 / 120;
-    var nds2 = sum2 * 20 / 120;
-    var nds3 = sum3 * 0.2;
-    var nds4 = sum4_nds;
+    // Генерация базовых сумм в зависимости от формата
+    let pricePO, priceText, nds_realiz;
     
-    var nds_vichet = nds1 + nds2 + nds3 + nds4;
-    var nds_uplata = nds_realiz - nds_vichet;
+    if (companyPriceType === 0) {
+        // Цена с НДС (как было в оригинале)
+        pricePO = Math.round(randomInRange(300000, 500000) / 100) * 100;
+        nds_realiz = pricePO * 20 / 120;
+        priceText = `Цена ПО ПАО для заказчиков составляет ${pricePO.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей, включая НДС.`;
+    } else {
+        // Цена без НДС
+        pricePO = Math.round(randomInRange(250000, 450000) / 100) * 100;
+        nds_realiz = pricePO * 0.2;
+        priceText = `Цена ПО ПАО для заказчиков составляет ${pricePO.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей без учета НДС.`;
+    }
+    
+    // Генерация услуг (от 3 до 5)
+    const serviceCount = randomInRange(3, 5);
+    const services = [];
+    const companyNames = [
+        "АйТи-Прорыв", "Оптимизировали хуже", "Клик-клак-код", 
+        "Кэш и Соль", "Веб-мастодонты", "Байт-стандарт", 
+        "Код-мейкеры", "Бит-системы", "Техно-лидеры"
+    ];
+    
+    // Перемешиваем имена компаний
+    const shuffledNames = shuffleArray(companyNames);
+    
+    let nds_vichet = 0;
+    const serviceTexts = [];
+    
+    for (let i = 0; i < serviceCount; i++) {
+        const serviceType = Math.floor(rand() * 4); // 0 - с НДС, 1 - без НДС, 2 - отдельно НДС, 3 - вообще нет НДС (например, УСН)
+        
+        let serviceSum, serviceNds, serviceText, serviceName = shuffledNames[i];
+        
+        if (serviceType === 0) {
+            // С НДС
+            serviceSum = Math.round(randomInRange(20000, 70000) / 100) * 100;
+            serviceNds = serviceSum * 20 / 120;
+            serviceText = `${serviceName}: услуг разработки ПО на ${serviceSum.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей с НДС`;
+        } else if (serviceType === 1) {
+            // Без НДС
+            serviceSum = Math.round(randomInRange(20000, 70000) / 100) * 100;
+            serviceNds = serviceSum * 0.2;
+            serviceText = `${serviceName}: услуг разработки ПО на ${serviceSum.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей без НДС`;
+        } else if (serviceType === 2) {
+            // Отдельно указан НДС
+            serviceNds = Math.round(randomInRange(3000, 10000) / 100) * 100;
+            const sumWithoutNds = Math.round(randomInRange(20000, 60000) / 100) * 100;
+            serviceSum = sumWithoutNds + serviceNds;
+            serviceText = `${serviceName}: услуг разработки ПО на сумму, где НДС составляет ${serviceNds.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей`;
+        } else {
+            // Нет НДС (например, компания на УСН)
+            serviceSum = Math.round(randomInRange(20000, 70000) / 100) * 100;
+            serviceNds = 0;
+            serviceText = `${serviceName} (на УСН, без НДС): услуг разработки ПО на ${serviceSum.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей`;
+        }
+        
+        services.push({
+            name: serviceName,
+            type: serviceType,
+            sum: serviceSum,
+            nds: serviceNds,
+            text: serviceText
+        });
+        
+        nds_vichet += serviceNds;
+        serviceTexts.push(serviceText);
+    }
+    
+    // Расчёт итогового НДС к уплате
+    const nds_uplata = nds_realiz - nds_vichet;
     
     return {
-        pricePO: pricePO,
-        sum1: sum1,
-        sum2: sum2,
-        sum3: sum3,
-        sum4_nds: sum4_nds,
-        correctAnswer: Math.round(nds_uplata * 100) / 100
+        priceText: priceText,
+        services: services,
+        serviceTexts: serviceTexts,
+        correctAnswer: Math.round(nds_uplata * 100) / 100,
+        nds_realiz: Math.round(nds_realiz * 100) / 100,
+        nds_vichet: Math.round(nds_vichet * 100) / 100
     };
 }
 
@@ -239,17 +311,16 @@ output.print('<h2>Тренажёр по расчётным задачам</h2>')
 output.print('<p><strong>Seed:</strong> ' + seedStr + '</p>');
 
 output.print('<h3>Задание 1</h3>');
-output.print('<p>Не прошедшее IT-регистрацию ПАО "Ой, всё упало" в этой контрольной работе для студентов ведет разработку ПО с использованием ОСНО в 2025 году. ПАО воспользовалось услугами субподрядчиков на ОСНО, и получила документарные подтверждения указанных в задании работ, включенных в разработанное ПО. Цена ПО ПАО для заказчиков составляет ' + task1.pricePO.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей включая НДС. Какую, рассчитанную вручную сумму НДС, должно уплатить ПАО в бюджет после продажи своего ПО?</p>');
+output.print('<p>Не прошедшее IT-регистрацию ПАО "Ой, всё упало" в этой контрольной работе для студентов ведет разработку ПО с использованием ОСНО в 2025 году. ПАО воспользовалось услугами субподрядчиков, и получила документарные подтверждения указанных в задании работ, включенных в разработанное ПО. ' + task1.priceText + ' Какую, рассчитанную вручную сумму НДС, должно уплатить ПАО в бюджет после продажи своего ПО?</p>');
 output.print('<ul>');
-output.print('<li>ООО "АйТи-Прорыв": услуг разработки ПО на ' + task1.sum1.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей с НДС;</li>');
-output.print('<li>ООО "Оптимизировали хуже": услуг разработки ПО на ' + task1.sum2.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей с НДС;</li>');
-output.print('<li>ООО "Клик-клак-код": услуг разработки ПО на ' + task1.sum3.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей без НДС;</li>');
-output.print('<li>ООО "Кэш и Соль": услуг разработки ПО на сумму, где НДС составляет ' + task1.sum4_nds.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей;</li>');
+for (let serviceText of task1.serviceTexts) {
+    output.print('<li>' + serviceText + ';</li>');
+}
 output.print('</ul>');
-if (Math.abs(input.value_by_id("answer1")-task1.correctAnswer)<1) {
-	output.print('Ответ верный!!!');
+if (Math.abs(input.value_by_id("answer1") - task1.correctAnswer) < 1) {
+    output.print('Ответ верный!!!');
 } else if (input.value_by_id("answer1")) {
-	output.print('<b>Ответ НЕ верный!!!</b>');
+    output.print('<b>Ответ НЕ верный!!!</b>');
 }
 
 output.print('<h3>Задание 2</h3>');
