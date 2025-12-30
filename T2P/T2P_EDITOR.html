@@ -739,21 +739,85 @@
 							'output': (val,callerr)=> {
 								if (!~'text,inline_string,html,pdf'.split(',').indexOf(val)) callerr();
 								var so='<h3 class="divlable">output</h3>';
-								if (val == 'inline_string') {so += '<div class="target_output istext"><pre id="target_output_pre" class="inline_pre"></pre></div>'; system_output.out = (s) => {if (typeof s == 'number') document.getElementById('target_output_pre').innerHTML = ''; else document.getElementById('target_output_pre').innerText += s.replace(/\t/g,'    ').replace(/\n/g,' ');}; }
-								if (val == 'html') {so += '<div class="target_output ishtml scrolled" id="target_output_div"></div>'; system_output.out = (s) => {if (typeof s == 'number') document.getElementById('target_output_div').innerHTML = ''; else document.getElementById('target_output_div').innerHTML += DOMPurify.sanitize(s.replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'$$'+Base64.encode(p1)+'$$')).replace(/\$\$c2F2ZSBidXR0b24=\$\$/g,'<input onclick="saveAs(files_content, \'T2P_\'+(+new Date())+\'.zip\');" style="margin: 5px;width: calc(100% - 10px);" type="button" value="Сохранить файлы">').replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'<script type="math\/tex">'+Base64.decode(p1).replace(/<\//g,'')+'<\/script>'); MathJax.Hub.Update(document.getElementById('target_output_div'));}; }
-								if (val == 'text') {so += '<div class="target_output istext scrolled"><pre id="target_output_pre"></pre></div>'; system_output.out = (s) => {if (typeof s == 'number') document.getElementById('target_output_pre').innerHTML = ''; else document.getElementById('target_output_pre').innerText += s.replace(/\t/g,'    ');}; }
+								if (val == 'inline_string') {
+								    so += '<div class="target_output istext"><pre id="target_output_pre" class="inline_pre"></pre></div>'; 
+								    system_output.out = (s) => {
+								        if (typeof s == 'number') document.getElementById('target_output_pre').innerHTML = ''; 
+								        else document.getElementById('target_output_pre').innerText += s.replace(/\t/g,'    ').replace(/\n/g,' '); 
+								    }; 
+								}
+								if (val == 'html') {
+								    so += '<div class="target_output ishtml scrolled" id="target_output_div"></div>'; 
+								    system_output.out = (s) => {
+								        var targetDiv = document.getElementById('target_output_div');
+								        // Сохраняем позицию скролла
+								        var scrollTop = targetDiv.scrollTop;
+								        var scrollHeight = targetDiv.scrollHeight;
+								        
+								        if (typeof s == 'number') {
+								            targetDiv.innerHTML = ''; 
+								        } else {
+								            targetDiv.innerHTML += DOMPurify.sanitize(s.replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'$$'+Base64.encode(p1)+'$$')).replace(/\$\$c2F2ZSBidXR0b24=\$\$/g,'<input onclick="saveAs(files_content, \'T2P_\'+(+new Date())+\'.zip\');" style="margin: 5px;width: calc(100% - 10px);" type="button" value="Сохранить файлы">').replace(/\$\$([\S\s]+?)\$\$/g,(m,p1)=>'<script type="math\/tex">'+Base64.decode(p1).replace(/<\//g,'')+'<\/script>'); 
+								        }
+								        
+								        // Восстанавливаем позицию скролла
+								        if (typeof s != 'number') {
+								            // Даем небольшой таймаут для применения изменений DOM
+								            setTimeout(() => {
+								                var newScrollHeight = targetDiv.scrollHeight;
+								                // Сохраняем относительную позицию скролла
+								                if (scrollHeight !== newScrollHeight) {
+								                    targetDiv.scrollTop = scrollTop + (newScrollHeight - scrollHeight);
+								                } else {
+								                    targetDiv.scrollTop = scrollTop;
+								                }
+								            }, 100);
+								        }
+								        
+								        MathJax.Hub.Update(targetDiv);
+								    }; 
+								}
+								if (val == 'text') {
+								    so += '<div class="target_output istext scrolled"><pre id="target_output_pre"></pre></div>'; 
+								    system_output.out = (s) => {
+								        var targetPre = document.getElementById('target_output_pre');
+								        // Сохраняем позицию скролла
+								        var scrollTop = targetPre.scrollTop;
+								        var scrollHeight = targetPre.scrollHeight;
+								        
+								        if (typeof s == 'number') {
+								            targetPre.innerHTML = ''; 
+								        } else {
+								            targetPre.innerText += s.replace(/\t/g,'    '); 
+								        }
+								        
+								        // Восстанавливаем позицию скролла
+								        if (typeof s != 'number') {
+								            // Даем небольшой таймаут для применения изменений DOM
+								            setTimeout(() => {
+								                var newScrollHeight = targetPre.scrollHeight;
+								                // Сохраняем относительную позицию скролла
+								                if (scrollHeight !== newScrollHeight) {
+								                    targetPre.scrollTop = scrollTop + (newScrollHeight - scrollHeight);
+								                } else {
+								                    targetPre.scrollTop = scrollTop;
+								                }
+								            }, 100);
+								        }
+								    }; 
+								}
 								if (val == 'pdf') so += '<div class="target_output ishtml scrolled">...</div>';
 								if (sep!=0) {
-									document.getElementById('output_div').innerHTML = so;
-									if(document.getElementById('target_output_div'))
-										document.getElementById('target_output_div').oncopy=()=>{
-											var e=document.getElementById('target_output_div');
-											e.classList.add("copystyle");
-											window.setTimeout(function() {
-												e.classList.remove("copystyle");
-											}, 0);
-										};
-									document.getElementById('output_div').style.height = 'calc('+(100-sep)+'% - 5px)';
+								    document.getElementById('output_div').innerHTML = so;
+								    if(document.getElementById('target_output_div'))
+								        document.getElementById('target_output_div').oncopy=()=>{
+								            var e=document.getElementById('target_output_div');
+								            e.classList.add("copystyle");
+								            window.setTimeout(function() {
+								                e.classList.remove("copystyle");
+								            }, 0);
+								        };
+								    document.getElementById('output_div').style.height = 'calc('+(100-sep)+'% - 5px)';
 								}
 							}
 						};
@@ -877,3 +941,4 @@
 	<iframe id="mysandbox" sandbox="allow-scripts" style="position:absolute;top:0;left:0;visibility:hidden;height:10px;width:10px;" ></iframe>
 </body>
 </html>
+
