@@ -750,9 +750,9 @@
 								    so += '<div class="target_output ishtml scrolled" id="target_output_div"></div>'; 
 								
 									var targetDiv = document.getElementById('target_output_div');
-									var scrollTop = targetDiv.scrollTop;
+									var scrollTop = targetDiv?targetDiv.scrollTop:0;
 									setTimeout(() => {
-										document.getElementById('target_output_div').scrollTop = scrollTop;
+										if(document.getElementById('target_output_div'))document.getElementById('target_output_div').scrollTop = scrollTop;
 									}, 100);
 								    system_output.out = (s) => {
 								        
@@ -770,9 +770,9 @@
 									
 								
 									var targetDiv = document.getElementById('target_output_pre');
-									var scrollTop = targetDiv.scrollTop;
+									var scrollTop = targetDiv?targetDiv.scrollTop:0;
 									setTimeout(() => {
-										document.getElementById('target_output_pre').scrollTop = scrollTop;
+										if(document.getElementById('target_output_pre'))document.getElementById('target_output_pre').scrollTop = scrollTop;
 									}, 100);
 								    system_output.out = (s) => {
 								        var targetPre = document.getElementById('target_output_pre');
@@ -919,5 +919,6 @@
 	<iframe id="mysandbox" sandbox="allow-scripts" style="position:absolute;top:0;left:0;visibility:hidden;height:10px;width:10px;" ></iframe>
 </body>
 </html>
+
 
 
