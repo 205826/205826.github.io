@@ -24,6 +24,14 @@
 		"author": "&#60;T&#62;"
 	},
 	{
+		"id": 139999,
+		"name": "Тренажёр по расчётным задачам",
+		"description": "ЭПИ",
+		"semester": "7",
+		"faculty": "ВТ",
+		"author": "&#60;T&#62;"
+	},
+	{
 		"id": 149995,
 		"name": "discrete mathematics HW8",
 		"description": "Деление чисел с плавающей запятой",
@@ -224,3 +232,4 @@
 		"author": "&#60;T&#62;"
 	}
 ]
+
