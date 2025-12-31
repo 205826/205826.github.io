@@ -1,7 +1,7 @@
 //- name: Тренажёр по расчётным задачам
 //- semester: 7
 //- description: Генератор случайных задач с проверкой ответов
-//- author: <T>
+//- author: &#60;T&#62;
 //- input: html
 //- input_default_value: Номер варианта (seed): <input id="seed" type="number" value="1"><br>
 //- input_default_value: Ответ на задание 1: <input id="answer1" type="number" step="0.01"><br>
@@ -205,30 +205,89 @@ function generateTask2() {
 
 // Генерация параметров для задачи 3
 function generateTask3() {
-    var variation = randomInt(1, 2);
-    var contractSum = Math.round(randomInRange(2000000, 4000000) / 100000) * 100000;
-    var deposit = Math.round(randomInRange(500000, 1000000) / 100000) * 100000;
-    var correctAnswer = -1;
-    if (variation === 1) {
-        // Вариация 1: просрочка 15 дней
-        let penaltyPerDay = contractSum * 0.004;
-        let penalty = penaltyPerDay * 15;
-        penalty = Math.min(penalty, 186000);
-        let fine = 92800;
-        correctAnswer = 2*deposit + penalty + fine;
+    // Рандомные параметры для разнообразия
+    const variations = [
+        { type: "пени", calc: "ежедневные" },
+        { type: "штраф", calc: "фиксированный" },
+        { type: "пени+штраф", calc: "комбинированные" }
+    ];
+    
+    const variation = variations[Math.floor(Math.random() * variations.length)];
+    
+    // Генерация базовых параметров с разными диапазонами
+    const contractSum = Math.round(randomInRange(1500000, 5000000) / 100000) * 100000;
+    
+    // Тип обеспечительного актива (может быть задаток, аванс или залог)
+    const depositTypes = ["задаток", "аванс", "обеспечительный платеж"];
+    const depositType = depositTypes[Math.floor(Math.random() * depositTypes.length)];
+    
+    // Сумма обеспечительного актива (от 10% до 30% от суммы контракта)
+    const depositPercent = randomInRange(10, 30) / 100;
+    const deposit = Math.round(contractSum * depositPercent / 100000) * 100000;
+    
+    // Параметры просрочки
+    const maxThreshold = randomInt(7, 20); // Максимальный порог для расторжения
+    const actualDelay = Math.floor(randomInRange(maxThreshold - 5, maxThreshold + 5)); // Фактическая просрочка
+    const canTerminate = actualDelay >= maxThreshold;
+    
+    // Генерация штрафных санкций
+    let penaltyRate, maxPenalty, fixedFine;
+    
+    if (variation.type === "пени") {
+        penaltyRate = randomInRange(0.2, 0.5) / 100; // 0.2% - 0.5%
+        maxPenalty = Math.round(randomInRange(100000, 250000) / 10000) * 10000;
+        fixedFine = 0;
+    } else if (variation.type === "штраф") {
+        penaltyRate = 0;
+        maxPenalty = 0;
+        fixedFine = Math.round(randomInRange(50000, 200000) / 10000) * 10000;
+    } else { // пени+штраф
+        penaltyRate = randomInRange(0.1, 0.4) / 100; // 0.1% - 0.4%
+        maxPenalty = Math.round(randomInRange(80000, 200000) / 10000) * 10000;
+        fixedFine = Math.round(randomInRange(30000, 150000) / 10000) * 10000;
+    }
+    
+    // Налоговый режим компании (может быть УСН или ОСНО)
+    const taxRegimes = ["ОСНО"];
+    const taxRegime = taxRegimes[Math.floor(Math.random() * taxRegimes.length)];
+    
+    // Расчёт правильного ответа
+    let correctAnswer = 0;
+    
+    // Возврат обеспечительного актива
+    if (depositType === "задаток" && canTerminate) {
+        // Задаток возвращается в двойном размере при расторжении по вине исполнителя
+        correctAnswer += 2 * deposit;
     } else {
-        // Вариация 2: просрочка 9 дней
-        let penaltyPerDay = contractSum * 0.004;
-        let penalty = penaltyPerDay * 9;
-        penalty = Math.min(penalty, 186000);
-        let fine = 92800;
-        correctAnswer = deposit + penalty + fine;
+        // Аванс или обеспечительный платеж возвращается в одинарном размере
+        correctAnswer += deposit;
+    }
+    
+    // Пени за просрочку
+    let penalty = 0;
+    if (penaltyRate > 0) {
+        penalty = contractSum * penaltyRate * actualDelay;
+        penalty = Math.min(penalty, maxPenalty);
+        correctAnswer += penalty;
+    }
+    
+    // Штраф
+    if (fixedFine > 0) {
+        correctAnswer += fixedFine;
     }
     
     return {
-        variation: variation,
         contractSum: contractSum,
+        depositType: depositType,
         deposit: deposit,
+        taxRegime: taxRegime,
+        maxThreshold: maxThreshold,
+        actualDelay: actualDelay,
+        canTerminate: canTerminate,
+        penaltyRate: penaltyRate,
+        maxPenalty: maxPenalty,
+        fixedFine: fixedFine,
+        variationType: variation.type,
         correctAnswer: Math.round(correctAnswer)
     };
 }
@@ -337,15 +396,27 @@ if (Math.abs(input.value_by_id("answer2")-task2.correctAnswer)<1) {
 }
 
 output.print('<h3>Задание 3</h3>');
-if (task3.variation === 1) {
-    output.print('<p>ООО "Разработчик выжил", именуемое в дальнейшем Заказчик и ООО "Шифрую что вижу", именуемое в дальнейшем Исполнитель, в этом итоговом тесте заключили договор о разработке программного обеспечения на общую сумму ' + task3.contractSum.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей. Исполнитель использует УСН, его услуги в настоящее время НДС не облагаются. Обеспечительным активом по договору является задаток в сумме ' + task3.deposit.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей. Договор может быть расторгнут Заказчиком, если если просрочка сдачи промежуточного релиза ПО Исполнителем составила 14 и более календарных дней. Штрафные санкции по договору составляют пени 0.4% за каждый день просрочки, но не более 186000 рублей. За каждый случай просрочки предусмотрен штраф 92800 рублей. Договор был расторгнут Заказчиком на 15 день после несостоявшегося показа ПО. Положения ст. 395 ГК РФ к настоящему студенческому контролю неприменимы. Посчитайте какую итоговую сумму должен вернуть Исполнитель Заказчику?</p>');
+let taskText = `<p>ООО "Разработчик выжил", именуемое в дальнейшем Заказчик и ООО "Шифрую что вижу", именуемое в дальнейшем Исполнитель, заключили договор о разработке программного обеспечения на общую сумму ${task3.contractSum.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей. Исполнитель использует ${task3.taxRegime}, его услуги в настоящее время НДС не облагаются.</p>`;
+taskText += `<p>Обеспечительным активом по договору является ${task3.depositType} в сумме ${task3.deposit.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей.`;
+if (task3.depositType === "задаток") {
+    taskText += ` Договор может быть расторгнут Заказчиком, если просрочка сдачи промежуточного релиза ПО Исполнителем составила ${task3.maxThreshold} и более календарных дней.`;
 } else {
-    output.print('<p>ООО "Разработчик выжил", именуемое в дальнейшем Заказчик и ООО "Шифрую что вижу", именуемое в дальнейшем Исполнитель, в этом итоговом тесте заключили договор о разработке программного обеспечения на общую сумму ' + task3.contractSum.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей. Исполнитель использует УСН, его услуги в настоящее время НДС не облагаются. Обеспечительным активом по договору является задаток в сумме ' + task3.deposit.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' рублей. Договор может быть расторгнут Заказчиком, если если просрочка сдачи промежуточного релиза ПО Исполнителем составила 10 и более календарных дней. Штрафные санкции по договору составляют пени 0.4% за каждый день просрочки, но не более 186000 рублей. За каждый случай просрочки предусмотрен штраф 92800 рублей. Договор был расторгнут Заказчиком на 9 день после несостоявшегося показа ПО. Положения ст. 395 ГК РФ к настоящему студенческому контролю неприменимы. Посчитайте какую итоговую сумму должен вернуть Исполнитель Заказчику?</p>');
+    taskText += ` Договор может быть расторгнут Заказчиком в одностороннем порядке, если просрочка сдачи промежуточного релиза ПО Исполнителем составила ${task3.maxThreshold} и более календарных дней.`;
 }
-if (Math.abs(input.value_by_id("answer3")-task3.correctAnswer)<1) {
-	output.print('Ответ верный!!!');
+if (task3.variationType === "пени") {
+    taskText += ` Штрафные санкции по договору составляют пени ${(task3.penaltyRate * 100).toFixed(1)}% за каждый день просрочки, но не более ${task3.maxPenalty.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей.`;
+} else if (task3.variationType === "штраф") {
+    taskText += ` Штрафные санкции по договору составляют фиксированный штраф ${task3.fixedFine.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей за каждый случай просрочки.`;
+} else {
+    taskText += ` Штрафные санкции по договору составляют пени ${(task3.penaltyRate * 100).toFixed(1)}% за каждый день просрочки (но не более ${task3.maxPenalty.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей) и фиксированный штраф ${task3.fixedFine.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей за каждый случай просрочки.`;
+}
+taskText += ` Договор был расторгнут Заказчиком на ${task3.actualDelay} день после несостоявшегося показа ПО. Положения ст. 395 ГК РФ к настоящему студенческому контролю неприменимы.</p>`;
+taskText += `<p>Посчитайте какую итоговую сумму должен вернуть Исполнитель Заказчику?</p>`;
+output.print(taskText);
+if (Math.abs(input.value_by_id("answer3") - task3.correctAnswer) < 1) {
+    output.print('Ответ верный!!!');
 } else if (input.value_by_id("answer3")) {
-	output.print('<b>Ответ НЕ верный!!!</b>');
+    output.print('<b>Ответ НЕ верный!!!</b>');
 }
 
 output.print('<h3>Задание 4</h3>');
@@ -372,8 +443,28 @@ if (Math.abs(input.value_by_id("answer5")-task5.correctAnswer)<1) {
 if (input.value_by_id("show_answers")) {
     output.print('<hr><h3>Правильные ответы:</h3>');
     output.print('<p><strong>Задание 1:</strong> ' + task1.correctAnswer.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' руб.</p>');
+	output.print('<div style="font-size: 0.8em; color: #666; margin-top: 20px;">');
+	output.print('<p><strong>Отладочная информация:</strong></p>');
+	output.print('<p>НДС с реализации: ' + task1.nds_realiz.toLocaleString('ru-RU') + ' руб.</p>');
+	output.print('<p>НДС к вычету: ' + task1.nds_vichet.toLocaleString('ru-RU') + ' руб.</p>');
+	output.print('</div>');
     output.print('<p><strong>Задание 2:</strong> ' + task2.correctAnswer.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' руб.</p>');
     output.print('<p><strong>Задание 3:</strong> ' + task3.correctAnswer.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' руб.</p>');
+	output.print('<div style="font-size: 0.8em; color: #666; margin-top: 20px;">');
+	output.print('<p><strong>Отладочная информация:</strong></p>');
+	output.print(`<p>Тип обеспечительного актива: ${task3.depositType}</p>`);
+	output.print(`<p>Порог для расторжения: ${task3.maxThreshold} дней</p>`);
+	output.print(`<p>Фактическая просрочка: ${task3.actualDelay} дней</p>`);
+	output.print(`<p>Можно ли расторгнуть: ${task3.canTerminate ? 'Да' : 'Нет'}</p>`);
+	output.print(`<p>Возврат обеспечительного актива: ${task3.canTerminate && task3.depositType === 'задаток' ? '2 × ' + task3.deposit.toLocaleString('ru-RU') + ' = ' + (2 * task3.deposit).toLocaleString('ru-RU') + ' руб.' : task3.deposit.toLocaleString('ru-RU') + ' руб.'}</p>`);
+	if (task3.penaltyRate > 0) {
+		const penalty = Math.min(task3.contractSum * task3.penaltyRate * task3.actualDelay, task3.maxPenalty);
+		output.print(`<p>Пени: ${(task3.penaltyRate * 100).toFixed(1)}% × ${task3.contractSum.toLocaleString('ru-RU')} × ${task3.actualDelay} дней = ${penalty.toLocaleString('ru-RU')} руб.</p>`);
+	}
+	if (task3.fixedFine > 0) {
+		output.print(`<p>Штраф: ${task3.fixedFine.toLocaleString('ru-RU')} руб.</p>`);
+	}
+	output.print('</div>');
     output.print('<p><strong>Задание 4:</strong> ' + task4.correctAnswer.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + '</p>');
     output.print('<p><strong>Задание 5:</strong> ' + task5.correctAnswer.toLocaleString('ru-RU', { maximumFractionDigits: 2 }) + ' руб.</p>');
 }
