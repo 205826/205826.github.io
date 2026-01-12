@@ -234,7 +234,7 @@ function generateTask3() {
     let penaltyRate, maxPenalty, fixedFine;
     
     if (variation.type === "пени") {
-        penaltyRate = randomInRange(0.2, 0.5) / 100; // 0.2% - 0.5%
+        penaltyRate = Math.round(randomInRange(0.2, 0.5)*10)/10 / 100; // 0.2% - 0.5%
         maxPenalty = Math.round(randomInRange(100000, 250000) / 10000) * 10000;
         fixedFine = 0;
     } else if (variation.type === "штраф") {
@@ -242,7 +242,7 @@ function generateTask3() {
         maxPenalty = 0;
         fixedFine = Math.round(randomInRange(50000, 200000) / 10000) * 10000;
     } else { // пени+штраф
-        penaltyRate = randomInRange(0.1, 0.4) / 100; // 0.1% - 0.4%
+        penaltyRate = Math.round(randomInRange(0.1, 0.4)*10)/10 / 100; // 0.1% - 0.4%
         maxPenalty = Math.round(randomInRange(80000, 200000) / 10000) * 10000;
         fixedFine = Math.round(randomInRange(30000, 150000) / 10000) * 10000;
     }
