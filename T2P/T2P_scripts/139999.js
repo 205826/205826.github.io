@@ -136,7 +136,7 @@ function generateTask1() {
             // Нет НДС (например, компания на УСН)
             serviceSum = Math.round(randomInRange(20000, 70000) / 100) * 100;
             serviceNds = 0;
-            serviceText = `${serviceName} (на УСН, без НДС): услуг разработки ПО на ${serviceSum.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей`;
+            serviceText = `${serviceName}: услуг разработки ПО на ${serviceSum.toLocaleString('ru-RU', { maximumFractionDigits: 2 })} рублей без НДС; (услуги не облагаются ндс)`;
         }
         
         services.push({
@@ -344,8 +344,8 @@ function generateTask5() {
     var nacisPremia = premiaNaRuki / 0.87;
     var limitBase = 2225000;
     
-    var partInLimit = Math.max(0, limitBase - alreadyPaid);
-    var partOverLimit = Math.max(0, nacisPremia - partInLimit);
+	var partInLimit = Math.min(nacisPremia, Math.max(0, limitBase - alreadyPaid));
+	var partOverLimit = Math.max(0, nacisPremia - partInLimit);
     
     var vzosy = partInLimit * 0.3 + partOverLimit * 0.151;
     var sumForAccount = nacisPremia + vzosy;
