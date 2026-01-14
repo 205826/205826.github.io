@@ -212,14 +212,14 @@ function generateTask3() {
         { type: "пени+штраф", calc: "комбинированные" }
     ];
     
-    const variation = variations[Math.floor(Math.random() * variations.length)];
+    const variation = variations[Math.floor(rand() * variations.length)];
     
     // Генерация базовых параметров с разными диапазонами
     const contractSum = Math.round(randomInRange(1500000, 5000000) / 100000) * 100000;
     
     // Тип обеспечительного актива (может быть задаток, аванс или залог)
     const depositTypes = ["задаток", "аванс", "обеспечительный платеж"];
-    const depositType = depositTypes[Math.floor(Math.random() * depositTypes.length)];
+    const depositType = depositTypes[Math.floor(rand() * depositTypes.length)];
     
     // Сумма обеспечительного актива (от 10% до 30% от суммы контракта)
     const depositPercent = randomInRange(10, 30) / 100;
@@ -249,7 +249,7 @@ function generateTask3() {
     
     // Налоговый режим компании (может быть УСН или ОСНО)
     const taxRegimes = ["ОСНО"];
-    const taxRegime = taxRegimes[Math.floor(Math.random() * taxRegimes.length)];
+    const taxRegime = taxRegimes[Math.floor(rand() * taxRegimes.length)];
     
     // Расчёт правильного ответа
     let correctAnswer = 0;
