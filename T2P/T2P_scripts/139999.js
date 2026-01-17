@@ -227,7 +227,7 @@ function generateTask3() {
     
     // Параметры просрочки
     const maxThreshold = randomInt(7, 20); // Максимальный порог для расторжения
-    const actualDelay = Math.floor(randomInRange(maxThreshold - 5, maxThreshold + 5)); // Фактическая просрочка
+    const actualDelay = Math.floor(randomInRange(maxThreshold + 1, maxThreshold + 5)); // Фактическая просрочка
     const canTerminate = actualDelay >= maxThreshold;
     
     // Генерация штрафных санкций
